@@ -30,3 +30,7 @@ npm-debug.log*
 # Local serve / temp
 .temp/
 .tmp/
+
+# Legacy vanilla (si quedan)
+# css/
+# js/

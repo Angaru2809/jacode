@@ -1,0 +1,30 @@
+:root {
+  --magenta: #ff006e;
+  --magenta-dim: rgba(255, 0, 110, 0.12);
+  --magenta-mid: rgba(255, 0, 110, 0.35);
+  --pitch: #080808;
+  --white: #ffffff;
+  --gray-50: #f7f7f8;
+  --gray-100: #efeff1;
+  --gray-200: #e2e2e6;
+  --gray-400: #9a9aa3;
+  --gray-600: #5c5c66;
+  --gray-800: #2a2a2e;
+
+  --font-display: "Syne", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 7rem;
+
+  --radius: 2px;
+  --header-h: 72px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --focus-ring: 0 0 0 3px var(--white), 0 0 0 5px var(--magenta);
+}

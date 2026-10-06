@@ -3,34 +3,7 @@
    Hot Magenta #FF006E · Pitch #080808 · White
    ============================================ */
 
-:root {
-  --magenta: #ff006e;
-  --magenta-dim: rgba(255, 0, 110, 0.12);
-  --magenta-mid: rgba(255, 0, 110, 0.35);
-  --pitch: #080808;
-  --white: #ffffff;
-  --gray-50: #f7f7f8;
-  --gray-100: #efeff1;
-  --gray-200: #e2e2e6;
-  --gray-400: #9a9aa3;
-  --gray-600: #5c5c66;
-  --gray-800: #2a2a2e;
-
-  --font-display: "Syne", sans-serif;
-  --font-body: "IBM Plex Sans", sans-serif;
-
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
-  --space-md: 1.5rem;
-  --space-lg: 2.5rem;
-  --space-xl: 4rem;
-  --space-2xl: 7rem;
-
-  --radius: 2px;
-  --header-h: 72px;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-}
+/* Tokens live in tokens.css */
 
 *,
 *::before,
@@ -72,6 +45,12 @@ button {
   background: none;
   cursor: pointer;
   color: inherit;
+}
+
+/* Nielsen #6 / #9 — visible focus for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--magenta);
+  outline-offset: 3px;
 }
 
 ul,
@@ -181,6 +160,29 @@ ol {
 .nav-cta:hover {
   background: var(--magenta) !important;
   transform: translateY(-1px);
+}
+
+.nav-motion {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--gray-600);
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.nav-motion:hover,
+.nav-motion[aria-pressed="true"] {
+  color: var(--pitch);
+  border-color: var(--pitch);
+}
+
+.nav-motion[aria-pressed="true"] {
+  background: var(--magenta-dim);
+  border-color: var(--magenta);
+  color: var(--magenta);
 }
 
 .nav-toggle {
@@ -406,13 +408,14 @@ ol {
 }
 
 .story-caption {
+  text-align: center;
+  margin-top: 0.75rem;
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--magenta);
   min-height: 1.2em;
-  transition: opacity 0.4s var(--ease);
 }
 
 .scroll-cue {
@@ -673,7 +676,7 @@ ol {
   gap: 0.5rem;
 }
 
-.concept-list li {
+.concept-list button {
   padding: 0.45rem 0.85rem;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -685,14 +688,14 @@ ol {
   transition: background 0.25s, color 0.25s, border-color 0.25s;
 }
 
-.concept-list li:hover,
-.concept-list li.is-active {
+.concept-list button:hover,
+.concept-list button.is-active {
   background: var(--pitch);
   color: var(--white);
   border-color: var(--pitch);
 }
 
-.concept-list li.is-active {
+.concept-list button.is-active {
   background: var(--magenta);
   border-color: var(--magenta);
 }
@@ -890,7 +893,13 @@ ol {
   gap: 0.75rem;
 }
 
-.mode-flow span {
+.mode-flow-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mode-flow-step {
   padding: 0.65rem 1rem;
   background: var(--pitch);
   color: var(--white);
@@ -905,6 +914,7 @@ ol {
   height: 1px;
   background: var(--magenta);
   position: relative;
+  display: inline-block;
 }
 
 .mode-flow i::after {
@@ -931,37 +941,42 @@ ol {
 }
 
 .journey-steps li {
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.journey-steps button {
   display: flex;
+  width: 100%;
   align-items: center;
   gap: 1rem;
   padding: 1.1rem 0;
-  border-bottom: 1px solid var(--gray-200);
   font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--gray-400);
-  cursor: pointer;
-  transition: color 0.3s, padding-left 0.3s var(--ease);
+  text-align: left;
+  transition: color 0.3s, padding-left 0.3s var(--ease), border-color 0.3s;
+  border-left: 3px solid transparent;
 }
 
-.journey-steps li span {
+.journey-steps button span {
   font-size: 0.75rem;
   color: var(--gray-400);
   letter-spacing: 0.08em;
   min-width: 2rem;
 }
 
-.journey-steps li.is-active {
+.journey-steps button.is-active {
   color: var(--pitch);
   padding-left: 0.75rem;
-  border-left: 3px solid var(--magenta);
+  border-left-color: var(--magenta);
 }
 
-.journey-steps li.is-active span {
+.journey-steps button.is-active span {
   color: var(--magenta);
 }
 
-.journey-steps li:hover {
+.journey-steps button:hover {
   color: var(--pitch);
 }
 

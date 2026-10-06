@@ -1,46 +1,42 @@
 # JACODE
 
-Landing page premium e interactiva + plantilla de cotización.
+Landing premium en **React** con arquitectura en capas modular + plantilla de cotización.
 
-## Concepto
+## Arquitectura
 
-**Ordenamos la complejidad. Creamos soluciones.**
-
-El cubo geométrico (inspirado en el isotipo) narra la historia de la marca:
-
-1. Complejidad desordenada  
-2. JACODE interviene  
-3. Las piezas se organizan  
-4. Solución  
-
-## Cómo verla
-
-Abre `index.html` en el navegador, o sirve la carpeta localmente:
-
-```bash
-npx --yes serve .
+```
+src/
+  app/              → composición (main, App, providers, estilos)
+  domain/           → modelos, contenido, geometría del cubo (puro)
+  application/      → hooks / casos de uso de UI
+  presentation/     → componentes y páginas React
+  infrastructure/   → (reservado para APIs / analytics)
 ```
 
-## Archivos
+## Principios UX (Nielsen)
 
-| Archivo | Descripción |
-|---------|-------------|
-| `index.html` | Landing principal |
-| `cotizacion.html` | Plantilla editable / imprimible de cotización |
-| `css/main.css` | Estilos de la landing |
-| `css/cotizacion.css` | Estilos de la cotización |
-| `js/cube.js` | Motor 3D del cubo modular |
-| `js/main.js` | Interacciones de la página |
-| `assets/logo-jacode.png` | Logo oficial |
+- Estado visible (`aria-live`, caption del cubo, modo edición)
+- Control del usuario (reducir animaciones, Escape cierra menú, teclado en cubo)
+- Consistencia (botones, secciones, tokens)
+- Reconocimiento (nav clara, etiquetas de piezas)
+- Accesibilidad (skip link, `:focus-visible`, roles ARIA)
+
+## Scripts
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build
+npm run preview
+```
+
+## Rutas
+
+- `/` — Landing
+- `/cotizacion` — Plantilla editable / PDF
 
 ## Colores
 
 - Hot Magenta `#FF006E`
 - Pitch `#080808`
 - Blanco `#FFFFFF`
-
-## Cotización
-
-1. Abre `cotizacion.html`
-2. Pulsa **Editar** y completa los campos
-3. **Imprimir / PDF** para guardar o enviar

@@ -1,29 +1,22 @@
 /* JACODE — Cotización printable template */
 
-:root {
-  --magenta: #ff006e;
-  --pitch: #080808;
-  --white: #ffffff;
-  --gray-50: #f7f7f8;
-  --gray-200: #e2e2e6;
-  --gray-400: #9a9aa3;
-  --gray-600: #5c5c66;
-  --font-display: "Syne", sans-serif;
-  --font-body: "IBM Plex Sans", sans-serif;
-}
+/* Quote page — scoped so it doesn't reset the app shell */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
+.quote-page {
   font-family: var(--font-body);
   background: #ececef;
   color: var(--pitch);
   line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.quote-page .edit-banner {
+  text-align: center;
+  padding: 0.65rem 1rem;
+  background: var(--magenta-dim);
+  color: var(--magenta);
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .toolbar {
