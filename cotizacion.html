@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JACODE — Plantilla de Cotización</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/cotizacion.css" />
+</head>
+<body>
+  <div class="toolbar no-print">
+    <a href="index.html" class="back">← Volver a JACODE</a>
+    <div class="toolbar-actions">
+      <button type="button" id="btn-edit" class="tool-btn">Editar</button>
+      <button type="button" id="btn-print" class="tool-btn primary">Imprimir / PDF</button>
+    </div>
+  </div>
+
+  <article class="quote" id="quote" contenteditable="false">
+    <header class="quote-header">
+      <div class="quote-brand">
+        <img src="assets/logo-jacode.png" alt="JACODE" width="150" height="45" />
+        <p>Tecnología · Innovación · Desarrollo</p>
+      </div>
+      <div class="quote-meta">
+        <span class="badge">Cotización</span>
+        <p><strong>N.º</strong> <span data-field="numero">JAC-2026-001</span></p>
+        <p><strong>Fecha</strong> <span data-field="fecha">05 / 10 / 2026</span></p>
+        <p><strong>Válida hasta</strong> <span data-field="validez">05 / 11 / 2026</span></p>
+      </div>
+    </header>
+
+    <section class="quote-parties">
+      <div>
+        <h2>De</h2>
+        <p data-field="emisor-nombre"><strong>JACODE</strong></p>
+        <p data-field="emisor-desc">Soluciones digitales · Software · IA</p>
+        <p data-field="emisor-contacto">hola@jacode.co</p>
+      </div>
+      <div>
+        <h2>Para</h2>
+        <p data-field="cliente-nombre"><strong>Nombre del cliente</strong></p>
+        <p data-field="cliente-empresa">Empresa / Organización</p>
+        <p data-field="cliente-contacto">correo@cliente.com</p>
+      </div>
+    </section>
+
+    <section class="quote-intro">
+      <h1 data-field="titulo">Propuesta de solución digital</h1>
+      <p data-field="resumen">
+        JACODE transforma tu idea en una solución tecnológica funcional. Esta cotización detalla el alcance, entregables, modalidad de trabajo e inversión estimada para el proyecto.
+      </p>
+    </section>
+
+    <section class="quote-block">
+      <h2><span>01</span> Entendimiento del problema</h2>
+      <p data-field="problema">
+        Describa aquí la necesidad, el contexto y el problema que se busca resolver. JACODE parte de entender la complejidad antes de proponer la arquitectura de la solución.
+      </p>
+    </section>
+
+    <section class="quote-block">
+      <h2><span>02</span> Alcance propuesto</h2>
+      <ul class="scope-list" data-field="alcance">
+        <li>Descubrimiento y definición del problema</li>
+        <li>Diseño de experiencia e interfaz</li>
+        <li>Desarrollo de la solución</li>
+        <li>Integraciones y APIs necesarias</li>
+        <li>Pruebas, despliegue y documentación</li>
+        <li>Capacitación y soporte inicial</li>
+      </ul>
+    </section>
+
+    <section class="quote-block">
+      <h2><span>03</span> Entregables</h2>
+      <div class="deliverables-grid" data-field="entregables">
+        <span>Diseño UI/UX</span>
+        <span>Prototipo</span>
+        <span>Código fuente</span>
+        <span>Plataforma funcional</span>
+        <span>Base de datos</span>
+        <span>Integraciones / API</span>
+        <span>Documentación técnica</span>
+        <span>Manual de usuario</span>
+        <span>Despliegue</span>
+        <span>Capacitación</span>
+        <span>Pruebas</span>
+        <span>Soporte inicial</span>
+      </div>
+    </section>
+
+    <section class="quote-block">
+      <h2><span>04</span> Modalidad</h2>
+      <p data-field="modalidad"><strong>Proyecto</strong> — Alcance → Desarrollo → Pruebas → Entrega</p>
+      <p class="muted" data-field="modalidad-nota">También disponibles: Evolutivo (MVP continuo) y Por fases.</p>
+    </section>
+
+    <section class="quote-block">
+      <h2><span>05</span> Inversión</h2>
+      <table class="quote-table">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>Detalle</th>
+            <th class="num">Valor</th>
+          </tr>
+        </thead>
+        <tbody data-field="inversion">
+          <tr>
+            <td>Descubrimiento y planeación</td>
+            <td>Análisis, alcance y arquitectura</td>
+            <td class="num">$ —</td>
+          </tr>
+          <tr>
+            <td>Diseño UX/UI</td>
+            <td>Experiencia, interfaz y prototipo</td>
+            <td class="num">$ —</td>
+          </tr>
+          <tr>
+            <td>Desarrollo</td>
+            <td>Construcción de la solución</td>
+            <td class="num">$ —</td>
+          </tr>
+          <tr>
+            <td>Pruebas e implementación</td>
+            <td>QA, despliegue y entrega</td>
+            <td class="num">$ —</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"><strong>Total estimado</strong></td>
+            <td class="num"><strong data-field="total">$ —</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+      <p class="muted" data-field="nota-precio">Valores en moneda local. Impuestos aplicables según normativa vigente.</p>
+    </section>
+
+    <section class="quote-block">
+      <h2><span>06</span> Tiempo estimado</h2>
+      <p data-field="tiempo"><strong>X – Y semanas</strong>, sujeto a definición final de alcance y disponibilidad de información.</p>
+    </section>
+
+    <section class="quote-cta">
+      <div class="cube-mark" aria-hidden="true"></div>
+      <p class="cta-line">De la idea al código. Del código a la solución.</p>
+      <p data-field="cierre">¿Listo para ordenar la complejidad? Conversemos.</p>
+      <p class="contact" data-field="cta-contacto">hola@jacode.co</p>
+    </section>
+
+    <footer class="quote-footer">
+      <p>JACODE — Ordenamos la complejidad. Creamos soluciones.</p>
+      <p class="tiny">Documento confidencial · Uso exclusivo del destinatario</p>
+    </footer>
+  </article>
+
+  <script>
+    const quote = document.getElementById("quote");
+    const btnEdit = document.getElementById("btn-edit");
+    const btnPrint = document.getElementById("btn-print");
+    let editing = false;
+
+    btnEdit.addEventListener("click", () => {
+      editing = !editing;
+      quote.contentEditable = editing ? "true" : "false";
+      quote.classList.toggle("is-editing", editing);
+      btnEdit.textContent = editing ? "Listo" : "Editar";
+      btnEdit.classList.toggle("primary", editing);
+    });
+
+    btnPrint.addEventListener("click", () => {
+      if (editing) btnEdit.click();
+      window.print();
+    });
+
+    // Default date
+    const fecha = document.querySelector('[data-field="fecha"]');
+    const validez = document.querySelector('[data-field="validez"]');
+    const now = new Date();
+    const fmt = (d) =>
+      `${String(d.getDate()).padStart(2, "0")} / ${String(d.getMonth() + 1).padStart(2, "0")} / ${d.getFullYear()}`;
+    if (fecha) fecha.textContent = fmt(now);
+    if (validez) {
+      const v = new Date(now);
+      v.setDate(v.getDate() + 30);
+      validez.textContent = fmt(v);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+/* JACODE — Cotización printable template */
+
+:root {
+  --magenta: #ff006e;
+  --pitch: #080808;
+  --white: #ffffff;
+  --gray-50: #f7f7f8;
+  --gray-200: #e2e2e6;
+  --gray-400: #9a9aa3;
+  --gray-600: #5c5c66;
+  --font-display: "Syne", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: #ececef;
+  color: var(--pitch);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  background: rgba(247, 247, 248, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.back {
+  color: var(--gray-600);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.back:hover {
+  color: var(--magenta);
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tool-btn {
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  cursor: pointer;
+  color: var(--pitch);
+}
+
+.tool-btn.primary {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  color: var(--white);
+}
+
+.quote {
+  max-width: 820px;
+  margin: 2rem auto 4rem;
+  background: var(--white);
+  padding: 3rem 3.25rem;
+  box-shadow: 0 20px 60px rgba(8, 8, 8, 0.08);
+  position: relative;
+  outline: none;
+}
+
+.quote.is-editing {
+  box-shadow: 0 0 0 2px var(--magenta), 0 20px 60px rgba(8, 8, 8, 0.08);
+}
+
+.quote-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--gray-200);
+  margin-bottom: 2rem;
+}
+
+.quote-brand img {
+  height: 40px;
+  width: auto;
+}
+
+.quote-brand p {
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--gray-400);
+}
+
+.quote-meta {
+  text-align: right;
+  font-size: 0.875rem;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--magenta);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.quote-meta p {
+  color: var(--gray-600);
+  margin-top: 0.25rem;
+}
+
+.quote-parties {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.quote-parties h2 {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.quote-intro {
+  margin-bottom: 2.5rem;
+}
+
+.quote-intro h1 {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 0.85rem;
+}
+
+.quote-intro p {
+  color: var(--gray-600);
+  font-weight: 300;
+  max-width: 58ch;
+}
+
+.quote-block {
+  margin-bottom: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.quote-block h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.quote-block h2 span {
+  color: var(--magenta);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.scope-list {
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.scope-list li {
+  padding-left: 1.15rem;
+  position: relative;
+  color: var(--gray-600);
+}
+
+.scope-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  background: var(--magenta);
+}
+
+.deliverables-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.deliverables-grid span {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--gray-200);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  background: var(--gray-50);
+}
+
+.muted {
+  margin-top: 0.65rem;
+  font-size: 0.8125rem;
+  color: var(--gray-400);
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.quote-table th,
+.quote-table td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  text-align: left;
+}
+
+.quote-table th {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  font-weight: 600;
+}
+
+.quote-table .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.quote-table tfoot td {
+  border-bottom: none;
+  padding-top: 1rem;
+  font-size: 1rem;
+}
+
+.quote-cta {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--pitch);
+  color: var(--white);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cube-mark {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 1rem;
+  background: var(--magenta);
+  clip-path: polygon(0 0, 100% 0, 100% 40%, 40% 40%, 40% 100%, 0 100%);
+}
+
+.cta-line {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact {
+  margin-top: 1rem;
+  color: var(--magenta);
+  font-weight: 500;
+}
+
+.quote-footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}
+
+.tiny {
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .quote {
+    margin: 0;
+    padding: 1.75rem 1.25rem;
+    box-shadow: none;
+  }
+
+  .quote-header,
+  .quote-parties,
+  .quote-footer,
+  .deliverables-grid {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .quote-header {
+    display: flex;
+  }
+
+  .quote-meta {
+    text-align: left;
+  }
+
+  .quote-parties {
+    display: grid;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+
+  .quote {
+    margin: 0;
+    max-width: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .quote-cta {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .badge,
+  .deliverables-grid span,
+  .scope-list li::before,
+  .cube-mark {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
