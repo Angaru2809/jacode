@@ -2,14 +2,11 @@ import { useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { brand, navLinks } from "@domain/content/brand";
 import { useScrolled } from "@application/hooks/useScrolled";
-import { useMotionPreference } from "@app/providers/MotionProvider";
 
 export function Header() {
   const scrolled = useScrolled();
   const [open, setOpen] = useState(false);
   const menuId = useId();
-  const { reducedMotion, userPreferReduce, toggleReduceMotion } =
-    useMotionPreference();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -47,15 +44,6 @@ export function Header() {
               {link.label}
             </a>
           ))}
-          <button
-            type="button"
-            className="nav-motion"
-            onClick={toggleReduceMotion}
-            aria-pressed={userPreferReduce || reducedMotion}
-            title="Reducir animaciones"
-          >
-            {reducedMotion ? "Animaciones: off" : "Animaciones: on"}
-          </button>
         </nav>
 
         <button

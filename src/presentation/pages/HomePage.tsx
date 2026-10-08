@@ -12,6 +12,8 @@ import { JourneySection } from "@presentation/components/sections/JourneySection
 import { WhySection } from "@presentation/components/sections/WhySection";
 import { CtaSection } from "@presentation/components/sections/CtaSection";
 import { useMotionPreference } from "@app/providers/MotionProvider";
+import { CustomCursor } from "@presentation/components/experience/CustomCursor";
+import { MotionFab } from "@presentation/components/experience/MotionFab";
 
 type CubeApi = {
   reorganize: () => void;
@@ -60,6 +62,8 @@ export function HomePage() {
       <SkipLink />
       <div className="noise" aria-hidden="true" />
       <div className="grid-bg" aria-hidden="true" />
+      <CustomCursor />
+      <MotionFab />
       <Header />
       <main id="contenido">
         <HeroSection onExplore={onExplore} cubeApiRef={cubeApiRef} />

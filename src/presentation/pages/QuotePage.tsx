@@ -18,7 +18,7 @@ export function QuotePage() {
   useEffect(() => {
     document.title = "JACODE — Plantilla de Cotización";
     return () => {
-      document.title = "JACODE — Ordenamos la complejidad. Creamos soluciones.";
+      document.title = "JACODE — Lo que imaginas puede evolucionar. Lo hacemos realidad.";
     };
   }, []);
 

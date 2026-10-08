@@ -18,11 +18,12 @@ export function HeroSection({ onExplore, cubeApiRef }: HeroSectionProps) {
     <section className="hero" id="hero" aria-labelledby="hero-title">
       <div className="hero-stage">
         <JacodeCube
-          size={180}
+          size={210}
           playIntroStory
           interactive
           showHint
           showStoryStatus
+          hint="Arrastra para rotar · Estructura 3D interactiva"
           labelledBy={statusId.current}
           onReady={(api) => {
             cubeApiRef.current = api;
@@ -30,30 +31,28 @@ export function HeroSection({ onExplore, cubeApiRef }: HeroSectionProps) {
         />
 
         <div className="hero-copy">
-          <p className="eyebrow">{brand.tagline}</p>
-          <h1 className="brand-title" id="hero-title">
-            <span className="brand-word">{brand.name}</span>
-          </h1>
-          <p className="hero-headline">
-            {brand.headline[0]}
-            <br />
-            {brand.headline[1]}
+          <p className="hero-badge">
+            <span className="hero-badge__dot" aria-hidden="true" />
+            {brand.heroBadge}
           </p>
+          <h1 className="hero-headline" id="hero-title">
+            <span className="hero-headline__line">{brand.headline[0]}</span>
+            <span className="hero-headline__accent">{brand.headline[1]}</span>
+          </h1>
           <p className="hero-lead">{brand.lead}</p>
           <div className="hero-actions">
             <Button
               variant="primary"
+              size="lg"
+              className="hero-cta"
               href="#que-hacemos"
-              showEnter
+              showArrow
               onClick={(e) => {
                 e.preventDefault();
                 onExplore();
               }}
             >
-              Conoce lo que hacemos
-            </Button>
-            <Button variant="ghost" href="#contacto">
-              Cuéntanos tu idea
+              Descubre cómo lo hacemos
             </Button>
           </div>
         </div>

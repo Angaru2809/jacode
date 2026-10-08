@@ -4,7 +4,7 @@ import {
   useCubeEngine,
   type UseCubeEngineOptions,
 } from "@application/index";
-import { isDarkModule } from "@domain/cube/geometry";
+import { moduleTone } from "@domain/cube/geometry";
 import { storyLabels } from "@domain/content/brand";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 
@@ -76,7 +76,7 @@ export function JacodeCube({
           {Array.from({ length: MODULE_COUNT }, (_, i) => (
             <div
               key={i}
-              className={`cube-module${isDarkModule(i) ? " is-dark" : ""}`}
+              className={`cube-module is-${moduleTone(i)}`}
               data-index={i}
               onClick={() => {
                 if (!interactive) return;
@@ -102,11 +102,32 @@ export function JacodeCube({
         </div>
       </div>
 
-      {/* Nielsen #1 — visibility of system status */}
       {showStoryStatus ? (
-        <p className="story-caption" aria-live="polite">
-          {storyLabels[engine.storyState]}
-        </p>
+        <div className="story-phases" aria-live="polite">
+          {(["scrambled", "intervening", "solution"] as const).map((phase, i) => {
+            const active =
+              engine.storyState === phase ||
+              (phase === "intervening" && engine.storyState === "ordered");
+            const label =
+              phase === "intervening"
+                ? storyLabels.intervening
+                : storyLabels[phase];
+            return (
+              <span key={phase} className="story-phases__item">
+                {i > 0 ? (
+                  <span className="story-phases__sep" aria-hidden="true">
+                    →
+                  </span>
+                ) : null}
+                <span
+                  className={`story-phases__label${active ? " is-active" : ""}`}
+                >
+                  {label}
+                </span>
+              </span>
+            );
+          })}
+        </div>
       ) : null}
 
       {showHint ? (

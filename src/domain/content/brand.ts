@@ -3,7 +3,8 @@ import type { NavLink } from "@domain/models/types";
 export const brand = {
   name: "JACODE",
   tagline: "Tecnología · Innovación · Desarrollo",
-  headline: ["Ordenamos la complejidad.", "Creamos soluciones."],
+  headline: ["Lo que imaginas puede evolucionar.", "Lo hacemos realidad."],
+  heroBadge: "Soluciones digitales",
   lead:
     "Desarrollamos soluciones digitales que convierten ideas, procesos y problemas reales en tecnología funcional.",
   secondaryLine: "De la idea al código. Del código a la solución.",
@@ -19,9 +20,9 @@ export const brand = {
 } as const;
 
 export const storyLabels: Record<string, string> = {
-  scrambled: "Complejidad desordenada",
-  intervening: "JACODE interviene",
-  ordered: "Las piezas se organizan",
+  scrambled: "Complejidad",
+  intervening: "Organización",
+  ordered: "Organización",
   solution: "Solución",
 };
 
