@@ -1,6 +1,5 @@
 import { services } from "@domain/content/services";
 import { brand } from "@domain/content/brand";
-import { Section, SectionHead } from "@presentation/components/ui/Section";
 
 interface ServicesSectionProps {
   onHoverService?: (index: number | null) => void;
@@ -8,18 +7,27 @@ interface ServicesSectionProps {
 
 export function ServicesSection({ onHoverService }: ServicesSectionProps) {
   return (
-    <Section id="que-hacemos" className="section-services" labelledBy="services-title">
-      <SectionHead
-        index="01"
-        title="Convertimos ideas en tecnología."
-        lead={brand.secondaryLine}
-        titleId="services-title"
-      />
+    <section
+      id="que-hacemos"
+      className="section section-services"
+      aria-labelledby="services-title"
+    >
+      <header className="services-intro reveal">
+        <div className="services-intro__left">
+          <span className="section-index" aria-hidden="true">
+            01
+          </span>
+          <h2 id="services-title">Convertimos ideas en tecnología.</h2>
+          <p className="services-intro__tagline">{brand.secondaryLine}</p>
+        </div>
+        <p className="services-intro__lead">{brand.lead}</p>
+      </header>
+
       <div className="services-grid" role="list">
         {services.map((service, i) => (
           <article
             key={service.id}
-            className="service-card reveal"
+            className="service-card reveal interaction-halo"
             role="listitem"
             tabIndex={0}
             onMouseEnter={() => onHoverService?.(i)}
@@ -34,6 +42,6 @@ export function ServicesSection({ onHoverService }: ServicesSectionProps) {
           </article>
         ))}
       </div>
-    </Section>
+    </section>
   );
 }

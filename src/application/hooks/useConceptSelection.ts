@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import type { ConceptItem } from "@domain/models/types";
 import { concepts } from "@domain/content/concepts";
+import { conceptIndexForCubie } from "@domain/cube/geometry";
 
 export function useConceptSelection(initialId = "idea") {
   const initial =
@@ -17,9 +18,10 @@ export function useConceptSelection(initialId = "idea") {
   }, []);
 
   const selectByModule = useCallback((index: number) => {
-    const concept = concepts[index % concepts.length];
+    const conceptIdx = conceptIndexForCubie(index);
+    const concept = concepts[conceptIdx] ?? concepts[0];
     setActive(concept);
-    setModuleIndex(index % concepts.length);
+    setModuleIndex(conceptIdx);
   }, []);
 
   return { active, moduleIndex, selectById, selectByModule, concepts };

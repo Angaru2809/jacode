@@ -11,6 +11,11 @@ export const brand = {
   definition:
     "JACODE es una empresa de innovación tecnológica que transforma ideas en soluciones digitales mediante software, desarrollo e inteligencia artificial.",
   contactEmail: "hola@jacode.co",
+  /** Número en formato internacional sin + (ej. 573001234567) */
+  whatsappPhone: "573001234567",
+  instagramUrl: "https://instagram.com/jacode",
+  whatsappMessage:
+    "Hola JACODE, quiero convertir una idea en una solución digital.",
   logoSrc: "/assets/logo-jacode.png",
   colors: {
     magenta: "#FF006E",

@@ -4,13 +4,21 @@ import {
   useCubeEngine,
   type UseCubeEngineOptions,
 } from "@application/index";
-import { moduleTone } from "@domain/cube/geometry";
+import {
+  moduleTone,
+  moduleToneAmbient,
+  moduleToneConcept,
+} from "@domain/cube/geometry";
 import { storyLabels } from "@domain/content/brand";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 
 const FACES = ["front", "back", "right", "left", "top", "bottom"] as const;
 
+export type JacodeCubeVariant = "default" | "ambient" | "concept";
+
 interface JacodeCubeProps extends UseCubeEngineOptions {
+  variant?: JacodeCubeVariant;
+  conceptIndex?: number;
   showHint?: boolean;
   showStoryStatus?: boolean;
   hint?: string;
@@ -26,6 +34,7 @@ export function JacodeCube({
   autoRotate = true,
   interactive = true,
   playIntroStory = false,
+  variant = "default",
   stageIndex,
   showHint = false,
   showStoryStatus = false,
@@ -33,30 +42,42 @@ export function JacodeCube({
   onPieceClick,
   onReady,
   highlightIndex = null,
+  conceptIndex = 0,
   className = "",
   labelledBy,
 }: JacodeCubeProps) {
   const { reducedMotion } = useMotionPreference();
+  const isAmbient = variant === "ambient";
+  const isConcept = variant === "concept";
   const engine = useCubeEngine({
     size,
     autoRotate,
     interactive,
-    playIntroStory,
+    playIntroStory: isAmbient || isConcept ? false : playIntroStory,
+    playAmbientPulse: isAmbient,
+    playConceptFocus: isConcept,
+    conceptIndex,
     reducedMotion,
     stageIndex,
   });
+  const toneFor = (i: number) => {
+    if (isConcept) return moduleToneConcept(i, conceptIndex);
+    if (isAmbient) return moduleToneAmbient(i);
+    return moduleTone(i);
+  };
 
   useEffect(() => {
     onReady?.({ reorganize: engine.reorganize, highlight: engine.highlight });
   }, [onReady, engine.reorganize, engine.highlight]);
 
   useEffect(() => {
+    if (isConcept) return;
     engine.highlight(highlightIndex);
-  }, [highlightIndex, engine]);
+  }, [highlightIndex, engine, isConcept]);
 
   return (
     <div
-      className={`cube-stage ${className}`.trim()}
+      className={`cube-stage${isAmbient ? " cube-stage--ambient" : ""}${isConcept ? " cube-stage--concept" : ""} ${className}`.trim()}
       tabIndex={interactive ? 0 : undefined}
       role={interactive ? "application" : undefined}
       aria-roledescription={interactive ? "Cubo interactivo 3D" : undefined}
@@ -76,7 +97,7 @@ export function JacodeCube({
           {Array.from({ length: MODULE_COUNT }, (_, i) => (
             <div
               key={i}
-              className={`cube-module is-${moduleTone(i)}`}
+              className={`cube-module is-${toneFor(i)}`}
               data-index={i}
               onClick={() => {
                 if (!interactive) return;

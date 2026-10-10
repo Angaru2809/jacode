@@ -39,12 +39,11 @@ export function HeroSection({ onExplore, cubeApiRef }: HeroSectionProps) {
             <span className="hero-headline__line">{brand.headline[0]}</span>
             <span className="hero-headline__accent">{brand.headline[1]}</span>
           </h1>
-          <p className="hero-lead">{brand.lead}</p>
           <div className="hero-actions">
             <Button
               variant="primary"
               size="lg"
-              className="hero-cta"
+              className="hero-cta interaction-halo"
               href="#que-hacemos"
               showArrow
               onClick={(e) => {

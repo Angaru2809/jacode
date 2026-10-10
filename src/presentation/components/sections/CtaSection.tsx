@@ -2,15 +2,23 @@ import { Link } from "react-router-dom";
 import { brand } from "@domain/content/brand";
 import { Button } from "@presentation/components/ui/Button";
 import { JacodeCube } from "@presentation/components/cube/JacodeCube";
+import { InstagramIcon, WhatsAppIcon } from "@presentation/components/ui/SocialIcons";
+
+function whatsappHref() {
+  const text = encodeURIComponent(brand.whatsappMessage);
+  return `https://wa.me/${brand.whatsappPhone}?text=${text}`;
+}
 
 export function CtaSection() {
   return (
     <section className="section section-cta" id="contacto" aria-labelledby="cta-title">
       <div className="cta-inner">
         <JacodeCube
-          size={110}
-          interactive={false}
+          size={175}
+          variant="ambient"
           autoRotate
+          interactive={false}
+          showHint={false}
           className="cta-cube"
         />
         <h2 id="cta-title">¿Qué problema quieres convertir en una solución?</h2>
@@ -18,14 +26,39 @@ export function CtaSection() {
         <Button
           variant="primary"
           size="lg"
-          href={`mailto:${brand.contactEmail}?subject=Quiero%20hablar%20con%20JACODE`}
+          className="interaction-halo"
+          href={whatsappHref()}
           showArrow
         >
           Hablar con JACODE
         </Button>
+        <div className="cta-social">
+          <a
+            href={brand.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-social__link interaction-halo"
+          >
+            <InstagramIcon />
+            Instagram
+          </a>
+          <a
+            href={whatsappHref()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-social__link cta-social__link--wa interaction-halo"
+          >
+            <WhatsAppIcon />
+            WhatsApp
+          </a>
+        </div>
         <Link className="cta-secondary" to="/cotizacion">
           Ver plantilla de cotización
         </Link>
+        <p className="cta-email">
+          <span className="cta-email__label">Email</span>
+          <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>
+        </p>
       </div>
     </section>
   );

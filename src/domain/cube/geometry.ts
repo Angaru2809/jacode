@@ -21,7 +21,7 @@ export const ORDERED_POSES: CubePose[] = AXIS.flatMap((z) =>
 
 export const MODULE_COUNT = 27;
 
-export type ModuleTone = "dark" | "accent" | "light";
+export type ModuleTone = "dark" | "accent" | "light" | "scaffold";
 
 export function gridCoord(index: number): { x: number; y: number; z: number } {
   const i = ((index % MODULE_COUNT) + MODULE_COUNT) % MODULE_COUNT;
@@ -174,4 +174,117 @@ export function isAccentModule(index: number): boolean {
 export function poseToTransform(pose: CubePose): string {
   const { x, y, z, rx = 0, ry = 0, rz = 0 } = pose;
   return `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg)`;
+}
+
+/** CTA / contact — assembled cube with a soft breathing offset (no story loop). */
+export function ambientPose(index: number, size: number, timeSec: number): CubePose {
+  const base = scaledOrdered(index, size);
+  const k = size / 180;
+  const phase = index * 0.38 + gridCoord(index).x * 0.2;
+  const breathe = Math.sin(timeSec * 1.05 + phase) * 3.5 * k;
+  const drift = Math.cos(timeSec * 0.72 + phase * 1.1) * 2 * k;
+  return {
+    ...base,
+    x: base.x + drift * 0.35,
+    y: base.y + breathe * 0.45,
+    z: base.z + breathe,
+  };
+}
+
+/** Palette tuned for dark CTA band — more light on top, fewer story beats. */
+/** Maps each cubie to one of 8 concept tags (IDEA … RESULTADO). */
+export function conceptIndexForCubie(cubieIndex: number): number {
+  const { x, y, z } = gridCoord(cubieIndex);
+  const r = Math.abs(x) + Math.abs(y) + Math.abs(z);
+  if (r === 0) return 5;
+  if (y === -1) return 0;
+  if (z === 1) return 1;
+  if (y === 0 && z === 0) return 2;
+  if (r === 1) return 3;
+  if (y === 1) return 4;
+  if (r === 2 && (x === -1 || z === -1)) return 6;
+  if (r === 3) return 7;
+  return (cubieIndex + 2) % 8;
+}
+
+export const CONCEPT_CUBIE_GROUPS: number[][] = (() => {
+  const groups = Array.from({ length: 8 }, () => [] as number[]);
+  for (let i = 0; i < MODULE_COUNT; i++) {
+    groups[conceptIndexForCubie(i)].push(i);
+  }
+  return groups;
+})();
+
+function scaffoldPose(cubieIndex: number, size: number, timeSec: number): CubePose {
+  const scale = size / 180;
+  const base = ORDERED_POSES[cubieIndex];
+  const { x: gx, y: gy, z: gz } = gridCoord(cubieIndex);
+  const wobble = Math.sin(timeSec * 0.85 + cubieIndex * 0.31) * 2.5 * scale;
+  const shell = 1.85;
+  return {
+    x: base.x * scale * shell + gx * 14 * scale + wobble,
+    y: base.y * scale * shell + gy * 12 * scale - wobble * 0.6,
+    z: base.z * scale * shell + gz * 16 * scale,
+    rx: jitter(cubieIndex, 11) * 18,
+    ry: jitter(cubieIndex, 12) * 22,
+    rz: jitter(cubieIndex, 13) * 14,
+  };
+}
+
+export function conceptFocusPose(
+  cubieIndex: number,
+  size: number,
+  activeConceptIndex: number,
+  timeSec: number
+): CubePose {
+  const step = conceptIndexForCubie(cubieIndex);
+  const k = size / 180;
+
+  if (step > activeConceptIndex) {
+    return scaffoldPose(cubieIndex, size, timeSec);
+  }
+
+  const base = scaledOrdered(cubieIndex, size);
+  const isSnapping = step === activeConceptIndex;
+  if (!isSnapping) return base;
+
+  const { x, y, z } = gridCoord(cubieIndex);
+  const pulse = Math.sin(timeSec * 2.1 + cubieIndex * 0.14) * 1.8 * k;
+  const push = 7 * k + pulse;
+  const nx = x === 0 ? 0 : x;
+  const ny = y === 0 ? 0 : y;
+  const nz = z === 0 ? 0 : z;
+
+  return {
+    ...base,
+    x: base.x + nx * push * 0.35,
+    y: base.y + ny * push * 0.35,
+    z: base.z + nz * push * 0.35,
+  };
+}
+
+export function moduleToneConcept(
+  cubieIndex: number,
+  activeConceptIndex: number
+): ModuleTone {
+  const step = conceptIndexForCubie(cubieIndex);
+  if (step > activeConceptIndex) return "scaffold";
+  if (step === activeConceptIndex) return "accent";
+  const { x, y, z } = gridCoord(cubieIndex);
+  const r = Math.abs(x) + Math.abs(y) + Math.abs(z);
+  if (r === 0 || step === 7) return "light";
+  return r % 2 === 0 ? "dark" : "light";
+}
+
+export function moduleToneAmbient(index: number): ModuleTone {
+  const { x, y, z } = gridCoord(index);
+  if (y === -1) {
+    if (x === 0 && z === 0) return "light";
+    if (Math.abs(x) + Math.abs(z) === 1) return "accent";
+    return "dark";
+  }
+  if (y === 0 && x === 1 && z === 0) return "light";
+  if (y === 1 && x === -1 && z === 1) return "accent";
+  if (Math.abs(x) + Math.abs(y) + Math.abs(z) === 3 && x === 1) return "accent";
+  return "dark";
 }

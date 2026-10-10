@@ -4,17 +4,26 @@ export function MotionFab() {
   const { reducedMotion, userPreferReduce, toggleReduceMotion } =
     useMotionPreference();
 
+  const on = !(userPreferReduce || reducedMotion);
+
   return (
     <button
       type="button"
-      className="motion-fab"
+      className="motion-pill motion-pill--vertical interaction-halo"
       onClick={toggleReduceMotion}
-      aria-pressed={userPreferReduce || reducedMotion}
-      title={reducedMotion ? "Activar animaciones" : "Desactivar animaciones"}
+      aria-pressed={!on}
+      title={on ? "Desactivar animaciones" : "Activar animaciones"}
     >
-      <span className="motion-fab__dot" aria-hidden="true" />
-      Animaciones
-      <span className="motion-fab__state">{reducedMotion ? "Off" : "On"}</span>
+      <span className="motion-pill__text" aria-hidden="true">
+        Animaciones {on ? "ON" : "OFF"}
+      </span>
+      <span
+        className={`motion-pill__dot${on ? " is-on" : ""}`}
+        aria-hidden="true"
+      />
+      <span className="sr-only">
+        Animaciones {on ? "activadas" : "desactivadas"}
+      </span>
     </button>
   );
 }

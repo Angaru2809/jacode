@@ -7,7 +7,10 @@ import {
 } from "react";
 import type { StoryState } from "@domain/models/types";
 import {
+  ambientPose,
   assembleOrder,
+  conceptFocusPose,
+  conceptIndexForCubie,
   poseForStage,
   poseForStory,
   poseToTransform,
@@ -18,6 +21,11 @@ export interface UseCubeEngineOptions {
   autoRotate?: boolean;
   interactive?: boolean;
   playIntroStory?: boolean;
+  /** Soft assembled pulse for contact/CTA — not the hero story loop. */
+  playAmbientPulse?: boolean;
+  /** Enfoque 02 — cubo armado; resalta capa según concepto activo. */
+  playConceptFocus?: boolean;
+  conceptIndex?: number;
   reducedMotion?: boolean;
   stageIndex?: number;
 }
@@ -49,25 +57,40 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     autoRotate = true,
     interactive = true,
     playIntroStory = false,
+    playAmbientPulse = false,
+    playConceptFocus = false,
+    conceptIndex = 0,
     reducedMotion = false,
     stageIndex,
   } = options;
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [storyState, setStoryState] = useState<StoryState>(
-    reducedMotion || !playIntroStory ? "ordered" : "scrambled"
+    reducedMotion || !playIntroStory || playAmbientPulse || playConceptFocus
+      ? "ordered"
+      : "scrambled"
   );
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
-  const rot = useRef({ x: -22, y: 32, tx: -22, ty: 32 });
+  const rot = useRef(
+    playAmbientPulse
+      ? { x: -14, y: -38, tx: -14, ty: -38 }
+      : playConceptFocus
+        ? { x: -20, y: 28, tx: -20, ty: 28 }
+        : { x: -22, y: 32, tx: -22, ty: 32 }
+  );
   const drag = useRef({ active: false, lastX: 0, lastY: 0, moved: false });
   const raf = useRef<number>(0);
   const moduleEls = useRef<HTMLElement[]>([]);
   const timers = useRef<number[]>([]);
   const looping = useRef(false);
   const storyPhase = useRef<StoryState>(
-    reducedMotion || !playIntroStory ? "ordered" : "scrambled"
+    reducedMotion || !playIntroStory || playAmbientPulse || playConceptFocus
+      ? "ordered"
+      : "scrambled"
   );
+  const conceptFocusRef = useRef(conceptIndex);
+  conceptFocusRef.current = conceptIndex;
   const spinBoost = useRef(0);
 
   const clearTimers = useCallback(() => {
@@ -185,6 +208,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
   }, [playIntroStory, playStoryOnce, reducedMotion, schedule, setStory]);
 
   const reorganize = useCallback(() => {
+    if (playAmbientPulse || playConceptFocus) return;
     clearTimers();
     looping.current = false;
     if (reducedMotion) {
@@ -202,6 +226,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     }, 480);
   }, [
     clearTimers,
+    playAmbientPulse,
     playIntroStory,
     playStoryOnce,
     reducedMotion,
@@ -225,12 +250,90 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     moduleEls.current = Array.from(
       root.querySelectorAll<HTMLElement>(".cube-module")
     );
-    applyPoses(storyPhase.current, true);
-  }, [size, applyPoses]);
+    if (!playAmbientPulse && !playConceptFocus) {
+      applyPoses(storyPhase.current, true);
+    }
+  }, [size, applyPoses, playAmbientPulse, playConceptFocus]);
+
+  // Concept focus (section 02)
+  useEffect(() => {
+    if (!playConceptFocus) return;
+
+    const root = rootRef.current;
+    if (!root) return;
+    root.dataset.story = "solution";
+    setStoryState("solution");
+
+    const applyConcept = (timeSec: number) => {
+      const idx = conceptFocusRef.current;
+      moduleEls.current.forEach((el, i) => {
+        const step = conceptIndexForCubie(i);
+        const built = step <= idx;
+        const snapping = step === idx;
+        el.classList.toggle("is-concept-scaffold", !built);
+        el.classList.toggle("is-concept-built", built && !snapping);
+        el.classList.toggle("is-concept-active", snapping);
+        el.classList.toggle("is-concept-idle", false);
+        el.style.transform = poseToTransform(
+          conceptFocusPose(i, size, idx, timeSec)
+        );
+      });
+    };
+
+    if (reducedMotion) {
+      applyConcept(0);
+      return;
+    }
+
+    let raf = 0;
+    const start = performance.now();
+    const tick = () => {
+      applyConcept((performance.now() - start) / 1000);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [playConceptFocus, reducedMotion, size]);
+
+  // Ambient pulse (CTA) — no scramble / story labels
+  useEffect(() => {
+    if (!playAmbientPulse) return;
+
+    const root = rootRef.current;
+    if (!root) return;
+    root.dataset.story = "solution";
+    setStoryState("solution");
+
+    const applyAmbient = (timeSec: number) => {
+      moduleEls.current.forEach((el, i) => {
+        el.style.transform = poseToTransform(ambientPose(i, size, timeSec));
+      });
+    };
+
+    if (reducedMotion) {
+      applyAmbient(0);
+      return;
+    }
+
+    let raf = 0;
+    const start = performance.now();
+
+    const tick = () => {
+      applyAmbient((performance.now() - start) / 1000);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(raf);
+  }, [playAmbientPulse, reducedMotion, size]);
 
   // Intro story + continuous loop (hero only)
   useEffect(() => {
     clearTimers();
+    if (playAmbientPulse || playConceptFocus) {
+      looping.current = false;
+      return;
+    }
     if (!playIntroStory || reducedMotion) {
       looping.current = false;
       setStory("ordered", true);
@@ -271,7 +374,13 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
 
     const tick = () => {
       if (!reducedMotion && autoRotate && !drag.current.active) {
-        const boost = playIntroStory ? spinBoost.current : 0.08;
+        const boost = playAmbientPulse
+          ? 0.028
+          : playConceptFocus
+            ? 0.022
+            : playIntroStory
+              ? spinBoost.current
+              : 0.08;
         rot.current.ty += boost;
       }
       rot.current.x += (rot.current.tx - rot.current.x) * 0.07;
@@ -311,8 +420,8 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
       const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
       // Subtle parallax — does not overpower the story animation
-      const baseY = 32;
-      const baseX = -22;
+      const baseY = playAmbientPulse ? -38 : playConceptFocus ? 28 : 32;
+      const baseX = playAmbientPulse ? -14 : playConceptFocus ? -20 : -22;
       rot.current.ty = baseY + nx * 8;
       rot.current.tx = baseX - ny * 5;
     };
@@ -344,7 +453,15 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       window.removeEventListener("pointerup", onUp);
       stage.removeEventListener("keydown", onKey);
     };
-  }, [autoRotate, interactive, playIntroStory, reducedMotion, reorganize]);
+  }, [
+    autoRotate,
+    interactive,
+    playAmbientPulse,
+    playConceptFocus,
+    playIntroStory,
+    reducedMotion,
+    reorganize,
+  ]);
 
   return {
     rootRef,

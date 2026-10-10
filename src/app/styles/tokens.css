@@ -11,8 +11,9 @@
   --gray-600: #5c5c66;
   --gray-800: #2a2a2e;
 
-  --font-display: "Quicksand", system-ui, sans-serif;
-  --font-body: "Quicksand", system-ui, sans-serif;
+  --font-display: "Syne", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-hero: "Sora", sans-serif;
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
