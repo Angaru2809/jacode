@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -26,13 +27,19 @@ export function MotionProvider({ children }: { children: ReactNode }) {
     setUserPreferReduce((v) => !v);
   }, []);
 
+  const reducedMotion = osPrefer || userPreferReduce;
+
+  useEffect(() => {
+    document.documentElement.dataset.motion = reducedMotion ? "off" : "on";
+  }, [reducedMotion]);
+
   const value = useMemo(
     () => ({
-      reducedMotion: osPrefer || userPreferReduce,
+      reducedMotion,
       userPreferReduce,
       toggleReduceMotion,
     }),
-    [osPrefer, userPreferReduce, toggleReduceMotion]
+    [reducedMotion, userPreferReduce, toggleReduceMotion]
   );
 
   return (

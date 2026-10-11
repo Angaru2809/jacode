@@ -1,7 +1,9 @@
 :root {
   --magenta: #ff006e;
+  --magenta-electric: #ff006e;
   --magenta-dim: rgba(255, 0, 110, 0.12);
   --magenta-mid: rgba(255, 0, 110, 0.35);
+  --magenta-glow: rgba(255, 0, 110, 0.42);
   --pitch: #080808;
   --white: #ffffff;
   --gray-50: #f7f7f8;
@@ -23,6 +25,8 @@
   --space-2xl: 7rem;
 
   --radius: 2px;
+  --page-width: 1360px;
+  --page-gutter: clamp(0.875rem, 2.25vw, 1.125rem);
   --header-h: 72px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

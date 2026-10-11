@@ -226,7 +226,7 @@ export function QuotePage() {
 
         <footer className="quote-footer">
           <p>
-            {brand.name} — {brand.headline.join(" ")}
+            {brand.name} — {brand.headlineIntro.join(" ")} {brand.headlineAccent}
           </p>
           <p className="tiny">Documento confidencial · Uso exclusivo del destinatario</p>
         </footer>

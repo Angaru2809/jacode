@@ -9,8 +9,8 @@ import {
   moduleToneAmbient,
   moduleToneConcept,
 } from "@domain/cube/geometry";
-import { storyLabels } from "@domain/content/brand";
 import { useMotionPreference } from "@app/providers/MotionProvider";
+import type { StoryState } from "@domain/models/types";
 
 const FACES = ["front", "back", "right", "left", "top", "bottom"] as const;
 
@@ -20,13 +20,17 @@ interface JacodeCubeProps extends UseCubeEngineOptions {
   variant?: JacodeCubeVariant;
   conceptIndex?: number;
   showHint?: boolean;
-  showStoryStatus?: boolean;
   hint?: string;
   onPieceClick?: (index: number) => void;
-  onReady?: (api: { reorganize: () => void; highlight: (i: number | null) => void }) => void;
+  onReady?: (api: {
+    reorganize: () => void;
+    highlight: (i: number | null) => void;
+    setStory: (state: StoryState) => void;
+  }) => void;
   highlightIndex?: number | null;
   className?: string;
   labelledBy?: string;
+  tapToReorganize?: boolean;
 }
 
 export function JacodeCube({
@@ -37,7 +41,6 @@ export function JacodeCube({
   variant = "default",
   stageIndex,
   showHint = false,
-  showStoryStatus = false,
   hint = "Arrastra para rotar · Flechas o Enter para reorganizar",
   onPieceClick,
   onReady,
@@ -45,6 +48,7 @@ export function JacodeCube({
   conceptIndex = 0,
   className = "",
   labelledBy,
+  tapToReorganize = false,
 }: JacodeCubeProps) {
   const { reducedMotion } = useMotionPreference();
   const isAmbient = variant === "ambient";
@@ -59,6 +63,7 @@ export function JacodeCube({
     conceptIndex,
     reducedMotion,
     stageIndex,
+    tapToReorganize,
   });
   const toneFor = (i: number) => {
     if (isConcept) return moduleToneConcept(i, conceptIndex);
@@ -67,8 +72,12 @@ export function JacodeCube({
   };
 
   useEffect(() => {
-    onReady?.({ reorganize: engine.reorganize, highlight: engine.highlight });
-  }, [onReady, engine.reorganize, engine.highlight]);
+    onReady?.({
+      reorganize: engine.reorganize,
+      highlight: engine.highlight,
+      setStory: engine.setStory,
+    });
+  }, [onReady, engine.reorganize, engine.highlight, engine.setStory]);
 
   useEffect(() => {
     if (isConcept) return;
@@ -84,7 +93,9 @@ export function JacodeCube({
       aria-labelledby={labelledBy}
       aria-label={
         interactive
-          ? "Cubo JACODE. Usa flechas para rotar, Enter para reorganizar, o arrastra con el ratón."
+          ? tapToReorganize
+            ? "Cubo JACODE. Animación automática; clic para reorganizar; arrastra para rotar."
+            : "Cubo JACODE. Arrastra para rotar o usa las flechas del teclado."
           : "Cubo JACODE"
       }
     >
@@ -101,6 +112,7 @@ export function JacodeCube({
               data-index={i}
               onClick={() => {
                 if (!interactive) return;
+                if (tapToReorganize && !onPieceClick) return;
                 engine.highlight(i);
                 onPieceClick?.(i);
               }}
@@ -122,34 +134,6 @@ export function JacodeCube({
           ))}
         </div>
       </div>
-
-      {showStoryStatus ? (
-        <div className="story-phases" aria-live="polite">
-          {(["scrambled", "intervening", "solution"] as const).map((phase, i) => {
-            const active =
-              engine.storyState === phase ||
-              (phase === "intervening" && engine.storyState === "ordered");
-            const label =
-              phase === "intervening"
-                ? storyLabels.intervening
-                : storyLabels[phase];
-            return (
-              <span key={phase} className="story-phases__item">
-                {i > 0 ? (
-                  <span className="story-phases__sep" aria-hidden="true">
-                    →
-                  </span>
-                ) : null}
-                <span
-                  className={`story-phases__label${active ? " is-active" : ""}`}
-                >
-                  {label}
-                </span>
-              </span>
-            );
-          })}
-        </div>
-      ) : null}
 
       {showHint ? (
         <p className="cube-hint" id={labelledBy}>

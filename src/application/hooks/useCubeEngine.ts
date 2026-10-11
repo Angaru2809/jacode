@@ -28,6 +28,10 @@ export interface UseCubeEngineOptions {
   conceptIndex?: number;
   reducedMotion?: boolean;
   stageIndex?: number;
+  /** Pausa el loop de historia (control manual del hero). */
+  manualControl?: boolean;
+  /** Clic sin arrastre dispara reorganize (hero). */
+  tapToReorganize?: boolean;
 }
 
 export interface CubeEngineApi {
@@ -62,6 +66,8 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     conceptIndex = 0,
     reducedMotion = false,
     stageIndex,
+    manualControl = false,
+    tapToReorganize = false,
   } = options;
 
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -327,6 +333,16 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     return () => cancelAnimationFrame(raf);
   }, [playAmbientPulse, reducedMotion, size]);
 
+  const jumpToStory = useCallback(
+    (state: StoryState) => {
+      clearTimers();
+      looping.current = false;
+      const delayMode = state === "scrambled" ? "disassemble" : "assemble";
+      setStory(state, false, delayMode);
+    },
+    [clearTimers, setStory]
+  );
+
   // Intro story + continuous loop (hero only)
   useEffect(() => {
     clearTimers();
@@ -334,9 +350,13 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       looping.current = false;
       return;
     }
-    if (!playIntroStory || reducedMotion) {
+    if (reducedMotion) {
       looping.current = false;
-      setStory("ordered", true);
+      setStory("solution", true);
+      return;
+    }
+    if (manualControl || !playIntroStory) {
+      looping.current = false;
       return;
     }
 
@@ -354,7 +374,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       looping.current = false;
       clearTimers();
     };
-  }, [playIntroStory, reducedMotion]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [playIntroStory, reducedMotion, manualControl]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Stage config updates (journey cubes)
   useEffect(() => {
@@ -427,6 +447,15 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     };
 
     const onUp = () => {
+      if (
+        tapToReorganize &&
+        drag.current.active &&
+        !drag.current.moved &&
+        !playAmbientPulse &&
+        !playConceptFocus
+      ) {
+        reorganize();
+      }
       drag.current.active = false;
     };
 
@@ -461,6 +490,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     playIntroStory,
     reducedMotion,
     reorganize,
+    tapToReorganize,
   ]);
 
   return {
@@ -469,7 +499,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     highlighted,
     reorganize,
     highlight,
-    setStory,
+    setStory: jumpToStory,
   };
 }
 

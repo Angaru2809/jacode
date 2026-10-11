@@ -8,8 +8,10 @@ export interface ServiceItem {
   id: string;
   number: string;
   title: string;
+  shortLabel: string;
   description: string;
   pieceClass: string;
+  coverImage: string;
 }
 
 export interface ConceptItem {

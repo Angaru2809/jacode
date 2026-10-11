@@ -3,7 +3,8 @@ import type { NavLink } from "@domain/models/types";
 export const brand = {
   name: "JACODE",
   tagline: "Tecnología · Innovación · Desarrollo",
-  headline: ["Lo que imaginas puede evolucionar.", "Lo hacemos realidad."],
+  headlineIntro: ["Lo que imaginas", "puede evolucionar."],
+  headlineAccent: "Lo hacemos realidad.",
   heroBadge: "Soluciones digitales",
   lead:
     "Desarrollamos soluciones digitales que convierten ideas, procesos y problemas reales en tecnología funcional.",
