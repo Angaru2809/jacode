@@ -21,7 +21,7 @@ export function HeroSection({ onExplore, cubeApiRef }: HeroSectionProps) {
       <div className="hero__inner">
         <div className="hero-stage">
           <JacodeCube
-            size={360}
+            size={440}
             playIntroStory={!reducedMotion}
             autoRotate={!reducedMotion}
             interactive={!reducedMotion}

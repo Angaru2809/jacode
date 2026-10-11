@@ -45,13 +45,9 @@ export interface CubeEngineApi {
 
 const STORY_TIMING = {
   holdScrambled: 1500,
-  toOrganizing: 0,
-  holdOrganizing: 1600,
-  toOrdered: 0,
-  holdOrdered: 1100,
-  toSolution: 0,
+  holdAligning: 900,
+  holdOrganizing: 2200,
   holdSolution: 3000,
-  toScramble: 0,
   holdBeforeLoop: 450,
 } as const;
 
@@ -181,18 +177,18 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
         return;
       }
 
-      setStory("intervening", false, "assemble");
+      setStory("aligning", false, "none");
       schedule(() => {
-        setStory("ordered", false, "assemble");
-      }, STORY_TIMING.holdOrganizing);
+        setStory("intervening", false, "none");
+      }, STORY_TIMING.holdAligning);
 
       schedule(() => {
         setStory("solution", false, "none");
-      }, STORY_TIMING.holdOrganizing + STORY_TIMING.holdOrdered);
+      }, STORY_TIMING.holdAligning + STORY_TIMING.holdOrganizing);
 
       schedule(() => {
         onDone?.();
-      }, STORY_TIMING.holdOrganizing + STORY_TIMING.holdOrdered + STORY_TIMING.holdSolution);
+      }, STORY_TIMING.holdAligning + STORY_TIMING.holdOrganizing + STORY_TIMING.holdSolution);
     },
     [reducedMotion, schedule, setStory]
   );
@@ -218,7 +214,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     clearTimers();
     looping.current = false;
     if (reducedMotion) {
-      setStory("ordered", true);
+      setStory("solution", true);
       return;
     }
     setStory("scrambled", false, "disassemble");
@@ -361,7 +357,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     }
 
     looping.current = true;
-    setStory("scrambled", true);
+    setStory("scrambled", false, "disassemble");
     schedule(() => {
       if (!looping.current) return;
       playStoryOnce(() => {

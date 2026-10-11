@@ -11,7 +11,8 @@ function phaseLabel(phase: StoryPhase): string {
 function isPhaseActive(storyState: StoryState, phase: StoryPhase): boolean {
   return (
     storyState === phase ||
-    (phase === "intervening" && storyState === "ordered")
+    (phase === "intervening" &&
+      (storyState === "ordered" || storyState === "aligning"))
   );
 }
 

@@ -1,7 +1,37 @@
 import type { CubePose, StoryState } from "@domain/models/types";
 
-/** Spacing between cubie centers when the 3×3×3 is fully assembled (px @ size 180). */
-export const CUBIE_STEP = 58;
+/**
+ * ——— Historia del cubo (3 pasos) ———
+ * 1. Complejidad (`scrambled`) — disperso, piezas giradas.
+ * 2. Organización (`aligning` → `intervening`) — cuadrar rejilla abierta; sin acercar al armado.
+ * 3. Solución (`solution`) — ahí sí se acercan (LATTICE_SOLUTION, hueco corto, ≥ LATTICE_MIN).
+ *
+ * Ajustes: `size` en HeroSection · `CUBIE_BASE_PX` · `LATTICE_ORGANIZED` · `LATTICE_SOLUTION` · `LATTICE_MIN`.
+ */
+export const CUBE_REF_SIZE = 180;
+export const CUBIE_BASE_PX = 30;
+/** @deprecated use CUBIE_BASE_PX */
+export const CUBIE_RENDER = CUBIE_BASE_PX;
+
+/** Nunca por debajo: evita cubo “cerrado” (caras pegadas). */
+export const LATTICE_MIN = 1.08;
+
+/** Paso 2 — cuadrando el cubo (rejilla visible, aún algo abierta). */
+export const LATTICE_ORGANIZED = 1.3;
+
+/** Paso 3 — cubo armado (más junto que organización, siempre ≥ LATTICE_MIN). */
+export const LATTICE_SOLUTION = 1.16;
+
+/** @deprecated use LATTICE_ORGANIZED */
+export const LATTICE_OPEN = LATTICE_ORGANIZED;
+/** @deprecated use LATTICE_SOLUTION */
+export const LATTICE_CLOSED = LATTICE_SOLUTION;
+
+export const CUBIE_STEP = CUBIE_BASE_PX;
+
+export function cubiePixelSize(size: number): number {
+  return CUBIE_BASE_PX * (size / CUBE_REF_SIZE);
+}
 
 const AXIS = [-1, 0, 1] as const;
 
@@ -37,13 +67,58 @@ function jitter(index: number, salt: number): number {
   return (n - Math.floor(n)) * 2 - 1;
 }
 
-export function scaledOrdered(index: number, size: number): CubePose {
-  const scale = size / 180;
-  const base = ORDERED_POSES[index];
+function clampSpacing(factor: number): number {
+  return Math.max(LATTICE_MIN, factor);
+}
+
+/** 3×3×3 lattice; spacingFactor × cubie size (nunca < LATTICE_MIN). */
+export function latticePose(
+  index: number,
+  spacingFactor: number,
+  size: number = CUBE_REF_SIZE
+): CubePose {
+  const { x, y, z } = gridCoord(index);
+  const step = cubiePixelSize(size) * clampSpacing(spacingFactor);
   return {
-    x: base.x * scale,
-    y: base.y * scale,
-    z: base.z * scale,
+    x: x * step,
+    y: y * step,
+    z: z * step,
+    rx: 0,
+    ry: 0,
+    rz: 0,
+  };
+}
+
+export function scaledOrdered(index: number, size: number): CubePose {
+  return latticePose(index, LATTICE_SOLUTION, size);
+}
+
+/**
+ * Complejidad — same 27 cubies, exploded off their home slots.
+ * Still reads as one disassembled Rubik, not a random cloud.
+ */
+export function scramblePose(index: number, size: number = CUBE_REF_SIZE): CubePose {
+  const home = latticePose(index, LATTICE_ORGANIZED, size);
+  const { x: gx, y: gy, z: gz } = gridCoord(index);
+  const radial = 0.55 + Math.abs(jitter(index, 1)) * 0.35;
+  const k = cubiePixelSize(size) / CUBIE_BASE_PX;
+  return {
+    x: home.x * (1 + radial * 0.55) + jitter(index, 3) * 8 * k + gx * 6 * k,
+    y: home.y * (1 + radial * 0.5) + jitter(index, 4) * 7 * k + gy * 5 * k,
+    z: home.z * (1 + radial * 0.52) + jitter(index, 2) * 14 * k + gz * 6 * k,
+    rx: jitter(index, 5) * 32,
+    ry: jitter(index, 6) * 38,
+    rz: jitter(index, 7) * 24,
+  };
+}
+
+/** Organización (a) — misma dispersión, solo enderezar piezas. */
+export function aligningPose(index: number, size: number = CUBE_REF_SIZE): CubePose {
+  const scramble = scramblePose(index, size);
+  return {
+    x: scramble.x,
+    y: scramble.y,
+    z: scramble.z,
     rx: 0,
     ry: 0,
     rz: 0,
@@ -51,49 +126,41 @@ export function scaledOrdered(index: number, size: number): CubePose {
 }
 
 /**
- * Complejidad — same 27 cubies, exploded off their home slots.
- * Still reads as one disassembled Rubik, not a random cloud.
+ * Organización (b) — cuadrar en rejilla abierta (sin acercar al factor de solución).
  */
-export function scramblePose(index: number, scale = 1): CubePose {
-  const base = ORDERED_POSES[index];
-  const { x: gx, y: gy, z: gz } = gridCoord(index);
-  const radial = 0.72 + Math.abs(jitter(index, 1)) * 0.45;
-  return {
-    x: base.x * scale * (1 + radial * 0.7) + jitter(index, 3) * 10 * scale + gx * 6 * scale,
-    y: base.y * scale * (1 + radial * 0.6) + jitter(index, 4) * 9 * scale + gy * 5 * scale,
-    z: base.z * scale * (1 + radial * 0.65) + jitter(index, 2) * 28 * scale + gz * 6 * scale,
-    rx: jitter(index, 5) * 32,
-    ry: jitter(index, 6) * 38,
-    rz: jitter(index, 7) * 24,
-  };
-}
-
-/**
- * Organización — 27 cubies on an expanded 3×3×3 lattice (visible rows/cols/layers).
- */
-export function organizingPose(index: number, size: number, progress = 0.55): CubePose {
-  const scale = size / 180;
-  const base = ORDERED_POSES[index];
-  const scramble = scramblePose(index, scale);
-  const expand = 1.62;
-  const structured: CubePose = {
-    x: base.x * scale * expand + jitter(index, 8) * 3 * scale,
-    y: base.y * scale * expand + jitter(index, 9) * 3 * scale,
-    z: base.z * scale * expand + jitter(index, 10) * 4 * scale,
-    rx: jitter(index, 11) * 10,
-    ry: jitter(index, 12) * 12,
-    rz: jitter(index, 13) * 8,
-  };
+export function organizingPose(index: number, size: number, progress = 1): CubePose {
+  const from = aligningPose(index, size);
+  const structured = latticePose(index, LATTICE_ORGANIZED, size);
 
   const t = Math.min(1, Math.max(0, progress));
   const ease = t * t * (3 - 2 * t);
   return {
-    x: scramble.x + (structured.x - scramble.x) * ease,
-    y: scramble.y + (structured.y - scramble.y) * ease,
-    z: scramble.z + (structured.z - scramble.z) * ease,
-    rx: (scramble.rx ?? 0) + ((structured.rx ?? 0) - (scramble.rx ?? 0)) * ease,
-    ry: (scramble.ry ?? 0) + ((structured.ry ?? 0) - (scramble.ry ?? 0)) * ease,
-    rz: (scramble.rz ?? 0) + ((structured.rz ?? 0) - (scramble.rz ?? 0)) * ease,
+    x: from.x + (structured.x - from.x) * ease,
+    y: from.y + (structured.y - from.y) * ease,
+    z: from.z + (structured.z - from.z) * ease,
+    rx: 0,
+    ry: 0,
+    rz: 0,
+  };
+}
+
+/** Paso 3 — de rejilla organizada a armado (solo separación, sin rotación). */
+export function assembleSolutionPose(
+  index: number,
+  size: number,
+  progress = 1
+): CubePose {
+  const from = latticePose(index, LATTICE_ORGANIZED, size);
+  const to = latticePose(index, LATTICE_SOLUTION, size);
+  const t = Math.min(1, Math.max(0, progress));
+  const ease = t * t * (3 - 2 * t);
+  return {
+    x: from.x + (to.x - from.x) * ease,
+    y: from.y + (to.y - from.y) * ease,
+    z: from.z + (to.z - from.z) * ease,
+    rx: 0,
+    ry: 0,
+    rz: 0,
   };
 }
 
@@ -102,10 +169,11 @@ export function poseForStory(
   index: number,
   size: number
 ): CubePose {
-  const scale = size / 180;
-  if (state === "scrambled") return scramblePose(index, scale);
-  if (state === "intervening") return organizingPose(index, size, 0.72);
-  return scaledOrdered(index, size);
+  if (state === "scrambled") return scramblePose(index, size);
+  if (state === "aligning") return aligningPose(index, size);
+  if (state === "intervening") return latticePose(index, LATTICE_ORGANIZED, size);
+  if (state === "ordered") return latticePose(index, LATTICE_ORGANIZED, size);
+  return assembleSolutionPose(index, size, 1);
 }
 
 export function poseForStage(
@@ -179,7 +247,7 @@ export function poseToTransform(pose: CubePose): string {
 /** CTA / contact — assembled cube with a soft breathing offset (no story loop). */
 export function ambientPose(index: number, size: number, timeSec: number): CubePose {
   const base = scaledOrdered(index, size);
-  const k = size / 180;
+  const k = size / CUBE_REF_SIZE;
   const phase = index * 0.38 + gridCoord(index).x * 0.2;
   const breathe = Math.sin(timeSec * 1.05 + phase) * 3.5 * k;
   const drift = Math.cos(timeSec * 0.72 + phase * 1.1) * 2 * k;
@@ -216,15 +284,15 @@ export const CONCEPT_CUBIE_GROUPS: number[][] = (() => {
 })();
 
 function scaffoldPose(cubieIndex: number, size: number, timeSec: number): CubePose {
-  const scale = size / 180;
-  const base = ORDERED_POSES[cubieIndex];
+  const base = latticePose(cubieIndex, LATTICE_SOLUTION, size);
   const { x: gx, y: gy, z: gz } = gridCoord(cubieIndex);
-  const wobble = Math.sin(timeSec * 0.85 + cubieIndex * 0.31) * 2.5 * scale;
+  const k = cubiePixelSize(size) / CUBIE_BASE_PX;
+  const wobble = Math.sin(timeSec * 0.85 + cubieIndex * 0.31) * 2.5 * k;
   const shell = 1.85;
   return {
-    x: base.x * scale * shell + gx * 14 * scale + wobble,
-    y: base.y * scale * shell + gy * 12 * scale - wobble * 0.6,
-    z: base.z * scale * shell + gz * 16 * scale,
+    x: base.x * shell + gx * 14 * k + wobble,
+    y: base.y * shell + gy * 12 * k - wobble * 0.6,
+    z: base.z * shell + gz * 16 * k,
     rx: jitter(cubieIndex, 11) * 18,
     ry: jitter(cubieIndex, 12) * 22,
     rz: jitter(cubieIndex, 13) * 14,
@@ -238,7 +306,7 @@ export function conceptFocusPose(
   timeSec: number
 ): CubePose {
   const step = conceptIndexForCubie(cubieIndex);
-  const k = size / 180;
+  const k = size / CUBE_REF_SIZE;
 
   if (step > activeConceptIndex) {
     return scaffoldPose(cubieIndex, size, timeSec);

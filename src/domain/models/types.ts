@@ -1,6 +1,11 @@
 /** Domain models — pure types, no UI or framework deps */
 
-export type StoryState = "scrambled" | "intervening" | "ordered" | "solution";
+export type StoryState =
+  | "scrambled"
+  | "aligning"
+  | "intervening"
+  | "ordered"
+  | "solution";
 
 export type WorkModeId = "proyecto" | "evolutivo" | "fases";
 

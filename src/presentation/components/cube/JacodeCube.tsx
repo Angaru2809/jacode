@@ -5,6 +5,7 @@ import {
   type UseCubeEngineOptions,
 } from "@application/index";
 import {
+  cubiePixelSize,
   moduleTone,
   moduleToneAmbient,
   moduleToneConcept,
@@ -84,9 +85,18 @@ export function JacodeCube({
     engine.highlight(highlightIndex);
   }, [highlightIndex, engine, isConcept]);
 
+  const cubie = cubiePixelSize(size);
+  const cubieHalf = cubie / 2;
+
   return (
     <div
       className={`cube-stage${isAmbient ? " cube-stage--ambient" : ""}${isConcept ? " cube-stage--concept" : ""} ${className}`.trim()}
+      style={
+        {
+          "--cubie": `${cubie}px`,
+          "--cubie-half": `${cubieHalf}px`,
+        } as React.CSSProperties
+      }
       tabIndex={interactive ? 0 : undefined}
       role={interactive ? "application" : undefined}
       aria-roledescription={interactive ? "Cubo interactivo 3D" : undefined}
