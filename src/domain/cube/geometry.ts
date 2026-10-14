@@ -2,11 +2,11 @@ import type { CubePose, JourneyStepId, StoryState } from "@domain/models/types";
 
 /**
  * ——— Historia del cubo (3 pasos) ———
- * 1. Complejidad (`scrambled`) — disperso + inclinación fuerte.
- * 2. Organización (`aligning` → `intervening`) — rejilla abierta + inclinación suave (ORGANIZATION_TILT_SCALE).
- * 3. Solución (`solution`) — armado (LATTICE_SOLUTION) + piezas derechas (rotación 0).
+ * 1. Complejidad (`scrambled`) — disperso + inclinación fuerte (COMPLEXITY_ROT_*).
+ * 2. Organización (`aligning` → `intervening`) — primero enderezar (rotación 0), luego cuadrar en rejilla abierta.
+ * 3. Solución (`solution`) — juntar piezas (LATTICE_SOLUTION), ya derechas.
  *
- * Ajustes: `size` · `CUBIE_BASE_PX` · `LATTICE_*` · `ORGANIZATION_TILT_SCALE` · `COMPLEXITY_ROT_*`.
+ * Ajustes: `size` · `CUBIE_BASE_PX` · `LATTICE_ORGANIZED` · `LATTICE_SOLUTION` · `COMPLEXITY_ROT_*`.
  */
 export const CUBE_REF_SIZE = 180;
 export const CUBIE_BASE_PX = 30;
@@ -26,9 +26,6 @@ export const LATTICE_SOLUTION = 1.16;
 export const COMPLEXITY_ROT_RX = 32;
 export const COMPLEXITY_ROT_RY = 38;
 export const COMPLEXITY_ROT_RZ = 24;
-
-/** Organización: fracción de la inclinación de complejidad (solución → 0). */
-export const ORGANIZATION_TILT_SCALE = 0.24;
 
 /** @deprecated use LATTICE_ORGANIZED */
 export const LATTICE_OPEN = LATTICE_ORGANIZED;
@@ -109,23 +106,6 @@ export function complexityRotation(index: number): Pick<CubePose, "rx" | "ry" | 
   };
 }
 
-/** Inclinación suave en organización (misma pieza, menos grados que complejidad). */
-export function organizationTilt(index: number): Pick<CubePose, "rx" | "ry" | "rz"> {
-  const s = ORGANIZATION_TILT_SCALE;
-  return {
-    rx: jitter(index, 5) * COMPLEXITY_ROT_RX * s,
-    ry: jitter(index, 6) * COMPLEXITY_ROT_RY * s,
-    rz: jitter(index, 7) * COMPLEXITY_ROT_RZ * s,
-  };
-}
-
-export function organizedLatticePose(
-  index: number,
-  size: number = CUBE_REF_SIZE
-): CubePose {
-  return { ...latticePose(index, LATTICE_ORGANIZED, size), ...organizationTilt(index) };
-}
-
 /**
  * Complejidad — same 27 cubies, exploded off their home slots.
  * Still reads as one disassembled Rubik, not a random cloud.
@@ -143,14 +123,16 @@ export function scramblePose(index: number, size: number = CUBE_REF_SIZE): CubeP
   };
 }
 
-/** Organización (a) — misma dispersión; inclinación baja (≠ complejidad, ≠ solución). */
+/** Organización (a) — misma dispersión; enderezar piezas (rotación → 0). */
 export function aligningPose(index: number, size: number = CUBE_REF_SIZE): CubePose {
   const scramble = scramblePose(index, size);
   return {
     x: scramble.x,
     y: scramble.y,
     z: scramble.z,
-    ...organizationTilt(index),
+    rx: 0,
+    ry: 0,
+    rz: 0,
   };
 }
 
@@ -159,39 +141,37 @@ export function aligningPose(index: number, size: number = CUBE_REF_SIZE): CubeP
  */
 export function organizingPose(index: number, size: number, progress = 1): CubePose {
   const from = aligningPose(index, size);
-  const structured = organizedLatticePose(index, size);
+  const structured = latticePose(index, LATTICE_ORGANIZED, size);
 
   const t = Math.min(1, Math.max(0, progress));
   const ease = t * t * (3 - 2 * t);
-  const tilt = organizationTilt(index);
   return {
     x: from.x + (structured.x - from.x) * ease,
     y: from.y + (structured.y - from.y) * ease,
     z: from.z + (structured.z - from.z) * ease,
-    rx: tilt.rx,
-    ry: tilt.ry,
-    rz: tilt.rz,
+    rx: 0,
+    ry: 0,
+    rz: 0,
   };
 }
 
-/** Paso 3 — armado: acercar rejilla y enderezar (rot → 0). */
+/** Paso 3 — armado: acercar rejilla abierta → cubo junto (posición; rot ya es 0). */
 export function assembleSolutionPose(
   index: number,
   size: number,
   progress = 1
 ): CubePose {
-  const from = organizedLatticePose(index, size);
+  const from = latticePose(index, LATTICE_ORGANIZED, size);
   const to = latticePose(index, LATTICE_SOLUTION, size);
   const t = Math.min(1, Math.max(0, progress));
   const ease = t * t * (3 - 2 * t);
-  const { rx = 0, ry = 0, rz = 0 } = organizationTilt(index);
   return {
     x: from.x + (to.x - from.x) * ease,
     y: from.y + (to.y - from.y) * ease,
     z: from.z + (to.z - from.z) * ease,
-    rx: rx * (1 - ease),
-    ry: ry * (1 - ease),
-    rz: rz * (1 - ease),
+    rx: 0,
+    ry: 0,
+    rz: 0,
   };
 }
 
@@ -202,8 +182,8 @@ export function poseForStory(
 ): CubePose {
   if (state === "scrambled") return scramblePose(index, size);
   if (state === "aligning") return aligningPose(index, size);
-  if (state === "intervening") return organizedLatticePose(index, size);
-  if (state === "ordered") return organizedLatticePose(index, size);
+  if (state === "intervening") return latticePose(index, LATTICE_ORGANIZED, size);
+  if (state === "ordered") return latticePose(index, LATTICE_ORGANIZED, size);
   return assembleSolutionPose(index, size, 1);
 }
 
