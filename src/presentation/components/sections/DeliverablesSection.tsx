@@ -15,7 +15,7 @@ export function DeliverablesSection() {
       labelledBy="deliverables-title"
     >
       <SectionHead
-        index="04"
+        index="05"
         title="Cada entregable es una pieza."
         lead="Juntas forman la solución completa."
         titleId="deliverables-title"

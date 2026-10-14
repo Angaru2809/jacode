@@ -50,6 +50,8 @@ export function JacodeCube({
   className = "",
   labelledBy,
   tapToReorganize = false,
+  retroSpinActive = false,
+  journeyStageId,
 }: JacodeCubeProps) {
   const { reducedMotion } = useMotionPreference();
   const isAmbient = variant === "ambient";
@@ -65,6 +67,8 @@ export function JacodeCube({
     reducedMotion,
     stageIndex,
     tapToReorganize,
+    retroSpinActive,
+    journeyStageId,
   });
   const toneFor = (i: number) => {
     if (isConcept) return moduleToneConcept(i, conceptIndex);
@@ -90,7 +94,9 @@ export function JacodeCube({
 
   return (
     <div
-      className={`cube-stage${isAmbient ? " cube-stage--ambient" : ""}${isConcept ? " cube-stage--concept" : ""} ${className}`.trim()}
+      className={`cube-stage${isAmbient ? " cube-stage--ambient" : ""}${isConcept ? " cube-stage--concept" : ""}${journeyStageId ? " cube-stage--journey" : ""} ${className}`.trim()}
+      data-journey={journeyStageId}
+      data-story={engine.storyState}
       style={
         {
           "--cubie": `${cubie}px`,

@@ -72,8 +72,8 @@ export function HomePage() {
           onHoverService={(i) => cubeApiRef.current?.highlight(i)}
         />
         <StackSection />
-        <ApproachSection />
         <IncludeSection />
+        <ApproachSection />
         <DeliverablesSection />
         <ModesSection />
         <JourneySection />

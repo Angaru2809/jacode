@@ -10,7 +10,7 @@ export function ApproachSection() {
     <Section id="enfoque" className="section-approach" labelledBy="approach-title">
       <header className="approach-head reveal">
         <span className="section-index" aria-hidden="true">
-          03
+          04
         </span>
         <div className="approach-head__lines">
           <p className="approach-head__line" id="approach-title">

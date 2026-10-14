@@ -1,4 +1,4 @@
-import type { CubePose, StoryState } from "@domain/models/types";
+import type { CubePose, JourneyStepId, StoryState } from "@domain/models/types";
 
 /**
  * ——— Historia del cubo (3 pasos) ———
@@ -176,22 +176,284 @@ export function poseForStory(
   return assembleSolutionPose(index, size, 1);
 }
 
+function lerpPose(from: CubePose, to: CubePose, t: number): CubePose {
+  const ease = t * t * (3 - 2 * t);
+  return {
+    x: from.x + (to.x - from.x) * ease,
+    y: from.y + (to.y - from.y) * ease,
+    z: from.z + (to.z - from.z) * ease,
+    rx: (from.rx ?? 0) + ((to.rx ?? 0) - (from.rx ?? 0)) * ease,
+    ry: (from.ry ?? 0) + ((to.ry ?? 0) - (from.ry ?? 0)) * ease,
+    rz: (from.rz ?? 0) + ((to.rz ?? 0) - (from.rz ?? 0)) * ease,
+  };
+}
+
+/** Journey / recorrido — de dispersión a cubo armado según etapa (0 … stageCount-1). */
 export function poseForStage(
   index: number,
   size: number,
   stageIndex: number
 ): CubePose {
-  const base = scaledOrdered(index, size);
-  const offset = (stageIndex % 6) * 6;
-  const twist = ((index + stageIndex) % 3) - 1;
-  return {
-    x: base.x + twist * offset * 0.25,
-    y: base.y - twist * offset * 0.18,
-    z: base.z + ((index + stageIndex) % 2) * offset * 0.12,
-    rx: twist * 3,
-    ry: stageIndex * 2,
-    rz: 0,
+  const ids: JourneyStepId[] = [
+    "discover",
+    "design",
+    "build",
+    "test",
+    "ship",
+    "evolve",
+  ];
+  const step = ids[Math.min(stageIndex, ids.length - 1)] ?? "discover";
+  return poseForJourneyStage(index, size, step);
+}
+
+/** Sección 07 — una pose narrativa por etapa del proceso. */
+export function poseForJourneyStage(
+  index: number,
+  size: number,
+  step: JourneyStepId
+): CubePose {
+  switch (step) {
+    case "discover":
+      return scramblePose(index, size);
+    case "design": {
+      const scattered = scramblePose(index, size);
+      const aligned = aligningPose(index, size);
+      return lerpPose(scattered, aligned, 0.92);
+    }
+    case "build":
+      return organizingPose(index, size, 0.88);
+    case "test": {
+      const locked = assembleSolutionPose(index, size, 1);
+      const k = cubiePixelSize(size) * 0.05;
+      return {
+        ...locked,
+        x: locked.x + jitter(index, 11) * k,
+        y: locked.y + jitter(index, 12) * k * 0.6,
+        z: locked.z + jitter(index, 13) * k,
+      };
+    }
+    case "ship":
+      return assembleSolutionPose(index, size, 1);
+    case "evolve": {
+      const tight = assembleSolutionPose(index, size, 1);
+      const room = latticePose(index, LATTICE_ORGANIZED, size);
+      return lerpPose(tight, room, 0.2);
+    }
+    default:
+      return scramblePose(index, size);
+  }
+}
+
+export function cubieIndexAt(x: number, y: number, z: number): number {
+  const xi = AXIS.indexOf(x as (typeof AXIS)[number]);
+  const yi = AXIS.indexOf(y as (typeof AXIS)[number]);
+  const zi = AXIS.indexOf(z as (typeof AXIS)[number]);
+  return xi + yi * 3 + zi * 9;
+}
+
+/** Letras J-A-C-O-D-E en la cara frontal (z = 1). */
+const FRONT_LETTERS: Record<string, Array<[number, number]>> = {
+  J: [
+    [1, 1],
+    [1, 0],
+    [1, -1],
+    [0, -1],
+    [-1, -1],
+  ],
+  A: [
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    [-1, 0],
+    [0, 0],
+    [1, 0],
+    [-1, -1],
+    [1, -1],
+  ],
+  C: [
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    [-1, 0],
+    [-1, -1],
+    [0, -1],
+  ],
+  O: [
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    [-1, 0],
+    [1, 0],
+    [-1, -1],
+    [0, -1],
+    [1, -1],
+  ],
+  D: [
+    [-1, 1],
+    [-1, 0],
+    [-1, -1],
+    [0, 1],
+    [1, 0],
+    [0, -1],
+  ],
+  E: [
+    [-1, 1],
+    [-1, 0],
+    [-1, -1],
+    [0, 1],
+    [0, 0],
+    [0, -1],
+  ],
+};
+
+export function journeyBrandCubies(step: JourneyStepId): number[] {
+  const letterByStep: Record<JourneyStepId, string | null> = {
+    discover: null,
+    design: "J",
+    build: "A",
+    test: "C",
+    ship: "O",
+    evolve: "E",
   };
+  const letter = letterByStep[step];
+  if (!letter) return [];
+  const cells = FRONT_LETTERS[letter] ?? [];
+  const depthLayers = [1, 0, -1] as const;
+  const indices: number[] = [];
+  for (const [x, y] of cells) {
+    for (const z of depthLayers) {
+      indices.push(cubieIndexAt(x, y, z));
+    }
+  }
+  return indices;
+}
+
+/** Relief 3D: voxels de marca hacia cámara; resto ligeramente hundido. */
+function applyJourneyLetterDepth(
+  base: CubePose,
+  index: number,
+  size: number,
+  step: JourneyStepId,
+  timeSec: number
+): CubePose {
+  if (step === "discover") return base;
+
+  const k = cubiePixelSize(size) / CUBIE_BASE_PX;
+  const letterSet = new Set(journeyBrandCubies(step));
+  const { z: gz } = gridCoord(index);
+  const phase = index * 0.13;
+
+  if (letterSet.has(index)) {
+    const layerBoost = gz === 1 ? 14 : gz === 0 ? 8 : 4;
+    const wobble = Math.sin(timeSec * 1.5 + phase) * k * 0.45;
+    return {
+      ...base,
+      z: base.z + layerBoost * k + wobble,
+      rx: (base.rx ?? 0) * 0.35,
+      ry: (base.ry ?? 0) * 0.35,
+      rz: (base.rz ?? 0) * 0.35,
+    };
+  }
+
+  const sink = step === "test" ? 7 : 5;
+  return {
+    ...base,
+    z: base.z - sink * k,
+    x: base.x * 0.96,
+    y: base.y * 0.96,
+  };
+}
+
+/** Animación continua del cubo en sección 07. */
+export function journeyDynamicPose(
+  index: number,
+  size: number,
+  step: JourneyStepId,
+  timeSec: number
+): CubePose {
+  const k = cubiePixelSize(size) / CUBIE_BASE_PX;
+  const phase = index * 0.17 + gridCoord(index).x * 0.11;
+
+  switch (step) {
+    case "discover": {
+      const s = scramblePose(index, size);
+      const drift = Math.sin(timeSec * 1.15 + phase) * 5 * k;
+      const lift = Math.cos(timeSec * 0.9 + phase) * 4 * k;
+      return {
+        ...s,
+        x: s.x + drift,
+        y: s.y + lift,
+        z: s.z + Math.sin(timeSec * 0.7 + phase) * 3 * k,
+        ry: (s.ry ?? 0) + Math.sin(timeSec + phase) * 6,
+      };
+    }
+    case "design": {
+      const target = poseForJourneyStage(index, size, "design");
+      const from = scramblePose(index, size);
+      const settle = Math.min(1, timeSec / 1.35);
+      const eased = settle * settle * (3 - 2 * settle);
+      const base = lerpPose(from, target, eased);
+      return applyJourneyLetterDepth(base, index, size, step, timeSec);
+    }
+    case "build": {
+      const order = assembleOrder(index);
+      const reveal = Math.min(1, Math.max(0, (timeSec - order * 0.07) / 0.55));
+      const open = latticePose(index, LATTICE_ORGANIZED, size);
+      const closed = assembleSolutionPose(index, size, 1);
+      const base = lerpPose(open, closed, reveal * reveal * (3 - 2 * reveal));
+      return applyJourneyLetterDepth(base, index, size, step, timeSec);
+    }
+    case "test": {
+      const base = poseForJourneyStage(index, size, "test");
+      const letterHit = journeyBrandCubies(step).includes(index);
+      const shake =
+        Math.sin(timeSec * 14 + phase) * (letterHit ? 1.2 : 0.6) * k * 0.35;
+      const shaken = {
+        ...base,
+        x: base.x + shake,
+        y: base.y + Math.cos(timeSec * 16 + phase) * k * 0.25,
+      };
+      return applyJourneyLetterDepth(shaken, index, size, step, timeSec);
+    }
+    case "ship": {
+      const base = assembleSolutionPose(index, size, 1);
+      const lock = Math.min(1, timeSec / 0.9);
+      const from = organizingPose(index, size, 0.5);
+      const merged = lerpPose(from, base, lock);
+      return applyJourneyLetterDepth(merged, index, size, step, timeSec);
+    }
+    case "evolve": {
+      const base = poseForJourneyStage(index, size, "evolve");
+      const breathe = Math.sin(timeSec * 1.1 + phase) * 3.5 * k;
+      const airy = {
+        ...base,
+        x: base.x + breathe * 0.25,
+        y: base.y + breathe * 0.35,
+        z: base.z + breathe * 0.35,
+      };
+      return applyJourneyLetterDepth(airy, index, size, step, timeSec);
+    }
+    default:
+      return poseForJourneyStage(index, size, step);
+  }
+}
+
+export function journeyStoryForStep(step: JourneyStepId): StoryState {
+  switch (step) {
+    case "discover":
+      return "scrambled";
+    case "design":
+      return "aligning";
+    case "build":
+      return "intervening";
+    case "test":
+    case "ship":
+      return "solution";
+    case "evolve":
+      return "ordered";
+    default:
+      return "scrambled";
+  }
 }
 
 /** Assemble from core outward (center → edges → corners). */

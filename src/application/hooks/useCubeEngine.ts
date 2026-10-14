@@ -11,10 +11,15 @@ import {
   assembleOrder,
   conceptFocusPose,
   conceptIndexForCubie,
+  journeyBrandCubies,
+  journeyDynamicPose,
+  journeyStoryForStep,
+  poseForJourneyStage,
   poseForStage,
   poseForStory,
   poseToTransform,
 } from "@domain/cube/geometry";
+import type { JourneyStepId } from "@domain/models/types";
 
 export interface UseCubeEngineOptions {
   size?: number;
@@ -28,10 +33,14 @@ export interface UseCubeEngineOptions {
   conceptIndex?: number;
   reducedMotion?: boolean;
   stageIndex?: number;
+  /** Sección 07 — animación del cubo ligada a la etapa del proceso */
+  journeyStageId?: JourneyStepId;
   /** Pausa el loop de historia (control manual del hero). */
   manualControl?: boolean;
   /** Clic sin arrastre dispara reorganize (hero). */
   tapToReorganize?: boolean;
+  /** CTA hover — giro y pulso retro más vivos. */
+  retroSpinActive?: boolean;
 }
 
 export interface CubeEngineApi {
@@ -64,9 +73,21 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     stageIndex,
     manualControl = false,
     tapToReorganize = false,
+    retroSpinActive = false,
+    journeyStageId,
   } = options;
 
+  const journeyStepRef = useRef(journeyStageId);
+  journeyStepRef.current = journeyStageId;
+
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const retroSpinRef = useRef(retroSpinActive);
+  const ambientTimeScaleRef = useRef(1);
+
+  useEffect(() => {
+    retroSpinRef.current = retroSpinActive;
+    ambientTimeScaleRef.current = retroSpinActive ? 2.35 : 1;
+  }, [retroSpinActive]);
   const [storyState, setStoryState] = useState<StoryState>(
     reducedMotion || !playIntroStory || playAmbientPulse || playConceptFocus
       ? "ordered"
@@ -139,9 +160,10 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
         } else if (!el.style.transition) {
           el.style.transition = "";
         }
-        const pose =
-          stageIndex !== undefined &&
-          (state === "ordered" || state === "solution")
+        const pose = journeyStageId
+          ? poseForJourneyStage(i, size, journeyStageId)
+          : stageIndex !== undefined &&
+              (state === "ordered" || state === "solution")
             ? poseForStage(i, size, stageIndex)
             : poseForStory(state, i, size);
         el.style.transform = poseToTransform(pose);
@@ -152,7 +174,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       });
       root.dataset.story = state;
     },
-    [size, stageIndex]
+    [size, stageIndex, journeyStageId]
   );
 
   const setStory = useCallback(
@@ -252,10 +274,10 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     moduleEls.current = Array.from(
       root.querySelectorAll<HTMLElement>(".cube-module")
     );
-    if (!playAmbientPulse && !playConceptFocus) {
+    if (!playAmbientPulse && !playConceptFocus && !journeyStageId) {
       applyPoses(storyPhase.current, true);
     }
-  }, [size, applyPoses, playAmbientPulse, playConceptFocus]);
+  }, [size, applyPoses, playAmbientPulse, playConceptFocus, journeyStageId]);
 
   // Concept focus (section 02)
   useEffect(() => {
@@ -321,7 +343,9 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     const start = performance.now();
 
     const tick = () => {
-      applyAmbient((performance.now() - start) / 1000);
+      const t =
+        ((performance.now() - start) / 1000) * ambientTimeScaleRef.current;
+      applyAmbient(t);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -351,7 +375,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       setStory("solution", true);
       return;
     }
-    if (manualControl || !playIntroStory) {
+    if (manualControl || !playIntroStory || journeyStageId) {
       looping.current = false;
       return;
     }
@@ -372,13 +396,97 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     };
   }, [playIntroStory, reducedMotion, manualControl]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Stage config updates (journey cubes)
+  // Journey (sección 07) — animación 3D por etapa + letras JACODE
   useEffect(() => {
-    if (stageIndex === undefined) return;
+    if (!journeyStageId || playConceptFocus || playAmbientPulse) return;
+
+    const root = rootRef.current;
+    if (!root) return;
+
+    const story = journeyStoryForStep(journeyStageId);
+    storyPhase.current = story;
+    setStoryState(story);
+    root.dataset.story = story;
+
+    if (!reducedMotion) {
+      if (journeyStageId === "discover") {
+        setModuleDelays("disassemble");
+        setStory("scrambled", false, "disassemble");
+      } else if (journeyStageId === "build" || journeyStageId === "ship") {
+        setModuleDelays("assemble");
+      } else {
+        setModuleDelays("none");
+      }
+    }
+
+    const spinByStep: Record<JourneyStepId, number> = {
+      discover: 0.024,
+      design: 0.04,
+      build: 0.056,
+      test: 0.03,
+      ship: 0.068,
+      evolve: 0.046,
+    };
+    spinBoost.current = spinByStep[journeyStageId];
+
+    const tiltByStep: Record<JourneyStepId, { tx: number; ty: number }> = {
+      discover: { tx: -28, ty: 16 },
+      design: { tx: -18, ty: 38 },
+      build: { tx: -22, ty: 50 },
+      test: { tx: -14, ty: 42 },
+      ship: { tx: -20, ty: 54 },
+      evolve: { tx: -24, ty: 46 },
+    };
+    const tilt = tiltByStep[journeyStageId];
+    rot.current.tx = tilt.tx;
+    rot.current.ty = tilt.ty;
+
+    const paint = (timeSec: number) => {
+      const step = journeyStepRef.current ?? journeyStageId;
+      const letters = new Set(journeyBrandCubies(step));
+      moduleEls.current.forEach((el, i) => {
+        const isLetter = letters.has(i);
+        el.classList.toggle("is-journey-letter", isLetter);
+        el.classList.toggle("is-journey-dim", !isLetter && step !== "discover");
+        el.style.transform = poseToTransform(
+          journeyDynamicPose(i, size, step, timeSec)
+        );
+      });
+    };
+
+    if (reducedMotion) {
+      paint(0);
+      return;
+    }
+
+    let raf = 0;
+    const t0 = performance.now();
+    const tick = () => {
+      paint((performance.now() - t0) / 1000);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [
+    journeyStageId,
+    playConceptFocus,
+    playAmbientPulse,
+    reducedMotion,
+    setModuleDelays,
+    setStory,
+    size,
+  ]);
+
+  // Otros cubos con stageIndex numérico (legacy)
+  useEffect(() => {
+    if (journeyStageId || stageIndex === undefined) return;
+    setModuleDelays("assemble");
     applyPoses("ordered");
-    rot.current.ty = 32 + stageIndex * 12;
-    rot.current.tx = -22 + (stageIndex % 2) * 6;
-  }, [stageIndex, applyPoses]);
+    storyPhase.current = "ordered";
+    setStoryState("ordered");
+    rot.current.ty = 24 + stageIndex * 10;
+    rot.current.tx = -20 + (stageIndex % 2) * 5;
+  }, [stageIndex, journeyStageId, applyPoses, setModuleDelays]);
 
   // Animation loop + subtle interaction
   useEffect(() => {
@@ -390,13 +498,16 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
 
     const tick = () => {
       if (!reducedMotion && autoRotate && !drag.current.active) {
+        const ambientBoost = retroSpinRef.current ? 0.092 : 0.028;
         const boost = playAmbientPulse
-          ? 0.028
+          ? ambientBoost
           : playConceptFocus
             ? 0.022
             : playIntroStory
               ? spinBoost.current
-              : 0.08;
+              : journeyStepRef.current
+                ? spinBoost.current
+                : 0.08;
         rot.current.ty += boost;
       }
       rot.current.x += (rot.current.tx - rot.current.x) * 0.07;
@@ -487,6 +598,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     reducedMotion,
     reorganize,
     tapToReorganize,
+    retroSpinActive,
   ]);
 
   return {

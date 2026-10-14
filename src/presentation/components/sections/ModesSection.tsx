@@ -1,63 +1,33 @@
-import { useWorkMode } from "@application/hooks/useWorkMode";
-import type { WorkModeId } from "@domain/models/types";
+import { workModes } from "@domain/content/process";
 import { Section, SectionHead } from "@presentation/components/ui/Section";
+import { FolderTabCard } from "@presentation/components/sections/FolderTabCard";
 
 export function ModesSection() {
-  const { activeId, active, modes, select } = useWorkMode();
-
   return (
     <Section id="modalidades" className="section-modes" labelledBy="modes-title">
       <SectionHead
-        index="05"
+        index="06"
         title="Nos adaptamos a tu proyecto."
+        lead="Elige la modalidad que mejor encaja con tu ritmo y tu alcance."
         titleId="modes-title"
       />
 
-      <div className="mode-selector" role="tablist" aria-label="Formas de trabajo">
-        {modes.map((mode) => (
-          <button
+      <div className="mode-folder-grid">
+        {workModes.map((mode, index) => (
+          <FolderTabCard
             key={mode.id}
-            type="button"
-            role="tab"
-            id={`tab-${mode.id}`}
-            className={`mode-tab${activeId === mode.id ? " is-active" : ""}`}
-            aria-selected={activeId === mode.id}
-            aria-controls={`panel-${mode.id}`}
-            tabIndex={activeId === mode.id ? 0 : -1}
-            onClick={() => select(mode.id as WorkModeId)}
-            onKeyDown={(e) => {
-              const idx = modes.findIndex((m) => m.id === activeId);
-              if (e.key === "ArrowRight") {
-                e.preventDefault();
-                select(modes[(idx + 1) % modes.length].id);
-              }
-              if (e.key === "ArrowLeft") {
-                e.preventDefault();
-                select(modes[(idx - 1 + modes.length) % modes.length].id);
-              }
-            }}
-          >
-            {mode.title}
-          </button>
+            index={index}
+            title={mode.title}
+            description={mode.description}
+            footer={
+              <ul className="folder-card__flow" aria-label={`Flujo: ${mode.flow.join(", ")}`}>
+                {mode.flow.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ul>
+            }
+          />
         ))}
-      </div>
-
-      <div
-        className="mode-panel is-active"
-        role="tabpanel"
-        id={`panel-${active.id}`}
-        aria-labelledby={`tab-${active.id}`}
-      >
-        <h3>{active.title}</h3>
-        <p>{active.description}</p>
-        <div className="mode-flow" aria-label={`Flujo: ${active.flow.join(", ")}`}>
-          {active.flow.map((step, i) => (
-            <span key={step} className="mode-flow-item">
-              {i > 0 ? <i aria-hidden="true" /> : null}
-              <span className="mode-flow-step">{step}</span>
-            </span>
-          ))}
-        </div>
       </div>
     </Section>
   );

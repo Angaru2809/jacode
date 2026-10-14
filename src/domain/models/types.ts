@@ -25,15 +25,27 @@ export interface ConceptItem {
   text: string;
 }
 
+export type ProcessPhaseId = "discover" | "plan" | "build" | "ship";
+
+export interface ProcessPhase {
+  id: ProcessPhaseId;
+  label: string;
+  summary: string;
+}
+
 export interface ProcessStep {
+  id: string;
   number: string;
   title: string;
   description: string;
+  phase: ProcessPhaseId;
 }
 
 export interface DeliverableItem {
   id: string;
   label: string;
+  /** Ruta / chip retro en la tarjeta */
+  slug: string;
 }
 
 export interface WorkMode {
@@ -43,16 +55,31 @@ export interface WorkMode {
   flow: string[];
 }
 
+export type JourneyStepId =
+  | "discover"
+  | "design"
+  | "build"
+  | "test"
+  | "ship"
+  | "evolve";
+
 export interface JourneyStage {
-  id: string;
+  id: JourneyStepId;
   number: string;
   label: string;
+  description: string;
+  /** Breve metáfora del movimiento del cubo en esta etapa */
+  motionHint: string;
+  /** Letra de JACODE que se enciende en el cubo */
+  brandLetter: string | null;
 }
 
 export interface WhyItem {
   id: string;
   title: string;
   description: string;
+  tag: string;
+  accent: string;
 }
 
 export interface NavLink {

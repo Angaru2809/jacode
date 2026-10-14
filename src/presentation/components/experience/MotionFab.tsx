@@ -1,15 +1,17 @@
+import { useMotionPillOnDark } from "@application/hooks/useMotionPillOnDark";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 
 export function MotionFab() {
   const { reducedMotion, userPreferReduce, toggleReduceMotion } =
     useMotionPreference();
+  const onDarkBg = useMotionPillOnDark();
 
   const on = !(userPreferReduce || reducedMotion);
 
   return (
     <button
       type="button"
-      className="motion-pill motion-pill--vertical interaction-halo"
+      className={`motion-pill motion-pill--vertical interaction-halo${on ? " motion-pill--glass" : ""}${on && onDarkBg ? " motion-pill--on-dark" : ""}`}
       onClick={toggleReduceMotion}
       aria-pressed={!on}
       title={on ? "Desactivar animaciones" : "Activar animaciones"}

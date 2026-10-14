@@ -11,10 +11,12 @@ export const brand = {
   secondaryLine: "De la idea al código. Del código a la solución.",
   definition:
     "JACODE es una empresa de innovación tecnológica que transforma ideas en soluciones digitales mediante software, desarrollo e inteligencia artificial.",
-  contactEmail: "hola@jacode.co",
+  contactEmail: "info@jacode.com",
   /** Número en formato internacional sin + (ej. 573001234567) */
   whatsappPhone: "573001234567",
   instagramUrl: "https://instagram.com/jacode",
+  linkedinUrl: "https://linkedin.com/company/jacode",
+  tiktokUrl: "https://tiktok.com/@jacode",
   whatsappMessage:
     "Hola JACODE, quiero convertir una idea en una solución digital.",
   logoSrc: "/assets/logo-jacode.png",
@@ -37,5 +39,5 @@ export const navLinks: NavLink[] = [
   { href: "#enfoque", label: "Enfoque" },
   { href: "#proceso", label: "Proceso" },
   { href: "#modalidades", label: "Modalidades" },
-  { href: "#contacto", label: "Hablar con JACODE", cta: true },
+  { href: "#contacto", label: "Panel cliente", cta: true },
 ];
