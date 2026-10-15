@@ -9,7 +9,7 @@ export function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/cotizacion" element={<QuotePage />} />
+          <Route path="/cotizacionn" element={<QuotePage />} />
         </Routes>
       </BrowserRouter>
     </MotionProvider>
