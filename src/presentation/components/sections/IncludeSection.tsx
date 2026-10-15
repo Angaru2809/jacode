@@ -1,4 +1,4 @@
-import { processPhases, processSteps } from "@domain/content/process";
+import { processSteps } from "@domain/content/process";
 import type { ProcessPhaseId } from "@domain/models/types";
 import { useInView } from "@application/hooks/useInView";
 import { Section, SectionHead } from "@presentation/components/ui/Section";
@@ -67,28 +67,7 @@ export function IncludeSection() {
         titleId="process-title"
       />
 
-      <div className="process-overview reveal" aria-label="Macro fases del proceso">
-        <ol className="process-phase-track">
-          {processPhases.map((phase, index) => (
-            <li key={phase.id} className="process-phase-track__item">
-              <span className="process-phase-track__index">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="process-phase-track__label">{phase.label}</span>
-              <span className="process-phase-track__summary">{phase.summary}</span>
-            </li>
-          ))}
-        </ol>
-        <p className="process-overview__meta">
-          <span>7 pasos secuenciales</span>
-          <span aria-hidden="true">·</span>
-          <span>Visibilidad en cada etapa</span>
-          <span aria-hidden="true">·</span>
-          <span>Entrega con documentación</span>
-        </p>
-      </div>
-
-      <div className="process-layout">
+      <div className="process-flow reveal">
         <ol className="process-timeline">
           {processSteps.map((step) => {
             const showPhase = step.phase !== lastPhase;
@@ -98,20 +77,6 @@ export function IncludeSection() {
             );
           })}
         </ol>
-
-        <aside className="process-aside reveal" aria-labelledby="process-aside-title">
-          <p className="process-aside__eyebrow">Por qué importa el orden</p>
-          <h3 id="process-aside-title">Menos sorpresas, más control</h3>
-          <p>
-            Cada fase tiene un objetivo claro antes de pasar a la siguiente: alineamos
-            expectativas, reducimos retrabajo y mantienes visibilidad del avance.
-          </p>
-          <ul className="process-aside__list" role="list">
-            <li>Decisiones documentadas en planeación y diseño</li>
-            <li>Pruebas antes de salir a producción</li>
-            <li>Handoff con accesos y conocimiento transferido</li>
-          </ul>
-        </aside>
       </div>
     </Section>
   );
