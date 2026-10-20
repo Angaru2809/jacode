@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
+import { useScrollReveal } from "@application/hooks/useScrollReveal";
 import { Header } from "@presentation/components/layout/Header";
 import { Footer } from "@presentation/components/layout/Footer";
 import { SkipLink } from "@presentation/components/a11y/SkipLink";
@@ -24,27 +25,7 @@ type CubeApi = {
 export function HomePage() {
   const cubeApiRef = useRef<CubeApi | null>(null);
   const { reducedMotion } = useMotionPreference();
-
-  useEffect(() => {
-    if (reducedMotion) {
-      document.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in"));
-      return;
-    }
-    const nodes = document.querySelectorAll(".reveal");
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-in");
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    nodes.forEach((n) => io.observe(n));
-    return () => io.disconnect();
-  }, [reducedMotion]);
+  useScrollReveal(reducedMotion);
 
   const onExplore = useCallback(() => {
     cubeApiRef.current?.reorganize();

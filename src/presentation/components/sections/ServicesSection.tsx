@@ -1,5 +1,6 @@
 import { brand } from "@domain/content/brand";
 import { ServiceBlades } from "@presentation/components/sections/ServiceBlades";
+import { TechMarquee } from "@presentation/components/sections/TechMarquee";
 
 interface ServicesSectionProps {
   onHoverService?: (index: number | null) => void;
@@ -12,8 +13,8 @@ export function ServicesSection({ onHoverService }: ServicesSectionProps) {
       className="section-services"
       aria-labelledby="services-title"
     >
-      <header className="services-intro reveal">
-        <div className="services-intro__head">
+      <header className="services-intro reveal reveal-stagger">
+        <div className="services-intro__head reveal-stagger__item">
           <span className="section-index" aria-hidden="true">
             01
           </span>
@@ -22,11 +23,18 @@ export function ServicesSection({ onHoverService }: ServicesSectionProps) {
             <span className="services-intro__title-accent"> en tecnología.</span>
           </h2>
         </div>
-        <p className="services-intro__lead">{brand.lead}</p>
+        <p className="services-intro__lead reveal-stagger__item">
+          {brand.servicesLeadLines.map((line) => (
+            <span key={line} className="services-intro__lead-line">
+              {line}
+            </span>
+          ))}
+        </p>
       </header>
 
       <p className="services-hint reveal">Selecciona un servicio para ver el detalle.</p>
       <ServiceBlades onActiveChange={onHoverService} />
+      <TechMarquee />
     </section>
   );
 }
