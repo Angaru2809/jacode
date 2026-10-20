@@ -1,7 +1,6 @@
 import { workModes } from "@domain/content/process";
 import { Section, SectionHead } from "@presentation/components/ui/Section";
 import { FolderTabCard } from "@presentation/components/sections/FolderTabCard";
-
 export function ModesSection() {
   return (
     <Section id="modalidades" className="section-modes" labelledBy="modes-title">

@@ -1,7 +1,5 @@
-import type { StackValueItem } from "@domain/content/stack";
-
 type IconProps = { className?: string; title?: string };
-type StackIconKind = StackValueItem["icon"];
+import type { StackIconKind } from "@domain/content/stack";
 
 export function InstagramIcon({ className, title = "Instagram" }: IconProps) {
   return (
