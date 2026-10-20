@@ -9,14 +9,6 @@ export type StoryState =
 
 export type WorkModeId = "proyecto" | "evolutivo" | "fases";
 
-export type ServiceIconKind =
-  | "terminal"
-  | "browser"
-  | "mobile"
-  | "ai"
-  | "automation"
-  | "integration";
-
 export interface ServiceItem {
   id: string;
   number: string;
@@ -25,7 +17,6 @@ export interface ServiceItem {
   description: string;
   pieceClass: string;
   coverImage: string;
-  icon: ServiceIconKind;
 }
 
 export interface ConceptItem {

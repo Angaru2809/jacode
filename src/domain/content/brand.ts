@@ -8,11 +8,6 @@ export const brand = {
   heroBadge: "Soluciones digitales",
   lead:
     "Desarrollamos soluciones digitales que convierten ideas, procesos y problemas reales en tecnología funcional.",
-  /** Sección servicios — dos líneas en desktop */
-  servicesLeadLines: [
-    "Desarrollamos soluciones digitales que convierten ideas, procesos",
-    "y problemas reales en tecnología funcional.",
-  ],
   secondaryLine: "De la idea al código. Del código a la solución.",
   definition:
     "JACODE es una empresa de innovación tecnológica que transforma ideas en soluciones digitales mediante software, desarrollo e inteligencia artificial.",

@@ -8,11 +8,11 @@ export function ApproachSection() {
 
   return (
     <Section id="enfoque" className="section-approach" labelledBy="approach-title">
-      <header className="approach-head reveal reveal-stagger">
-        <span className="section-index reveal-stagger__item" aria-hidden="true">
+      <header className="approach-head reveal">
+        <span className="section-index" aria-hidden="true">
           04
         </span>
-        <div className="approach-head__lines reveal-stagger__item">
+        <div className="approach-head__lines">
           <p className="approach-head__line" id="approach-title">
             Cada problema tiene piezas.
           </p>

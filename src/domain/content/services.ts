@@ -9,7 +9,6 @@ export const services: ServiceItem[] = [
     description: "Sistemas y plataformas diseñadas para necesidades específicas.",
     pieceClass: "piece-01",
     coverImage: "/assets/services/dev-software.jpg",
-    icon: "terminal",
   },
   {
     id: "web",
@@ -19,7 +18,6 @@ export const services: ServiceItem[] = [
     description: "Páginas corporativas, plataformas web y e-commerce.",
     pieceClass: "piece-02",
     coverImage: "/assets/services/dev-web.jpg",
-    icon: "browser",
   },
   {
     id: "mobile",
@@ -29,7 +27,6 @@ export const services: ServiceItem[] = [
     description: "Aplicaciones modernas para Android y iOS.",
     pieceClass: "piece-03",
     coverImage: "/assets/services/movil.jpg",
-    icon: "mobile",
   },
   {
     id: "ai",
@@ -40,7 +37,6 @@ export const services: ServiceItem[] = [
       "Asistentes, automatización, análisis inteligente y soluciones con IA.",
     pieceClass: "piece-04",
     coverImage: "/assets/services/ia.jpg",
-    icon: "ai",
   },
   {
     id: "automation",
@@ -50,7 +46,6 @@ export const services: ServiceItem[] = [
     description: "Digitalización y optimización de procesos empresariales.",
     pieceClass: "piece-05",
     coverImage: "/assets/services/automatizaciones.jpg",
-    icon: "automation",
   },
   {
     id: "integration",
@@ -60,6 +55,5 @@ export const services: ServiceItem[] = [
     description: "APIs, ERP, CRM, bases de datos y conexión entre plataformas.",
     pieceClass: "piece-06",
     coverImage: "/assets/services/api.jpg",
-    icon: "integration",
   },
 ];

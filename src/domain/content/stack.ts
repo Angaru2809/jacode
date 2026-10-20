@@ -1,51 +1,54 @@
-export type StackLayerId = "frontend" | "backend" | "integrations" | "cms";
-
-export type StackIconKind = "react" | "java" | "node" | "wordpress";
-
-export interface StackLayer {
-  id: StackLayerId;
-  label: string;
+export interface StackValueItem {
+  id: string;
   title: string;
+  category: string;
   description: string;
-  items: readonly string[];
-  icon: StackIconKind;
+  tags: string[];
+  icon: "react" | "java" | "node" | "wordpress";
+  previewClass: string;
+  featured?: boolean;
 }
 
-export const stackLayers: StackLayer[] = [
+export const stackValues: StackValueItem[] = [
   {
-    id: "frontend",
-    label: "Frontend",
+    id: "react",
     title: "Interfaces que convierten",
+    category: "Frontend",
+    previewClass: "stack-preview--react",
     description:
-      "Experiencias rápidas, accesibles y consistentes, listas para crecer con tu producto.",
-    items: ["React", "TypeScript", "Vite"],
+      "Frontends rápidos, accesibles y listos para escalar con componentes reutilizables y diseño consistente.",
+    tags: ["React", "TypeScript", "Vite"],
     icon: "react",
   },
   {
-    id: "backend",
-    label: "Backend",
+    id: "java",
     title: "Backend con criterio",
+    category: "Backend",
+    previewClass: "stack-preview--java",
     description:
-      "Lógica de negocio e integraciones que sostienen operaciones reales con estabilidad.",
-    items: ["Java", "Spring", "PostgreSQL"],
+      "Lógica de negocio, integraciones y sistemas que sostienen operaciones reales con estabilidad.",
+    tags: ["Java", "Spring", "APIs REST"],
     icon: "java",
+    featured: true,
   },
   {
-    id: "integrations",
-    label: "Integraciones",
-    title: "Servicios conectados",
+    id: "node",
+    title: "Servicios en tiempo real",
+    category: "Integraciones",
+    previewClass: "stack-preview--node",
     description:
-      "APIs, automatizaciones y flujos cuando necesitas velocidad de entrega y flexibilidad.",
-    items: ["Node.js", "GraphQL", "Docker"],
+      "APIs, automatizaciones y flujos conectados cuando necesitas velocidad de entrega y flexibilidad.",
+    tags: ["Node.js", "Express", "Integraciones"],
     icon: "node",
   },
   {
-    id: "cms",
-    label: "CMS",
+    id: "wordpress",
     title: "Sitios que venden",
+    category: "CMS",
+    previewClass: "stack-preview--wordpress",
     description:
-      "Landings y tiendas con WordPress cuando el negocio pide contenido y conversión.",
-    items: ["WordPress", "PHP", "SEO técnico"],
+      "Landings, corporativos y tiendas con WordPress cuando el negocio pide contenido y conversión.",
+    tags: ["WordPress", "WooCommerce", "SEO técnico"],
     icon: "wordpress",
   },
 ];
