@@ -1,72 +1,98 @@
-import { useMemo } from "react";
+import { useCallback, useMemo, useState, type CSSProperties } from "react";
+import { journeyStages } from "@domain/content/process";
 import { useInView } from "@application/hooks/useInView";
-import { useJourneyStage } from "@application/hooks/useJourneyStage";
+import { useScrollProgress } from "@application/hooks/useScrollProgress";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 import { JacodeCube } from "@presentation/components/cube/JacodeCube";
-import { Section, SectionHead } from "@presentation/components/ui/Section";
-import { JourneyStageCard } from "@presentation/components/sections/JourneyStageCard";
+import { Section } from "@presentation/components/ui/Section";
+import { LateSectionHead } from "@presentation/components/ui/LateSectionHead";
 
 export function JourneySection() {
-  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.28 });
   const { reducedMotion } = useMotionPreference();
-  const { index, stages, select, stage } = useJourneyStage(
-    inView && !reducedMotion,
-    3800
-  );
+  const [picked, setPicked] = useState<number | null>(null);
+  const [trackRef, inView] = useInView<HTMLDivElement>({ threshold: 0.2 });
+  const scrollProgress = useScrollProgress(trackRef, inView && !reducedMotion);
 
-  const leftStages = useMemo(() => stages.slice(0, 3), [stages]);
-  const rightStages = useMemo(() => stages.slice(3, 6), [stages]);
+  const scrollIndex = Math.min(
+    journeyStages.length - 1,
+    Math.max(0, Math.floor(scrollProgress * journeyStages.length))
+  );
+  const activeIndex = picked ?? scrollIndex;
+  const stage = journeyStages[activeIndex];
+
+  const tabCenterPct = useMemo(() => {
+    const slot = 100 / journeyStages.length;
+    return slot * activeIndex + slot / 2;
+  }, [activeIndex]);
+
+  const select = useCallback((index: number) => {
+    setPicked((prev) => (prev === index ? null : index));
+  }, []);
 
   return (
-    <Section id="recorrido" className="section-journey" labelledBy="journey-title">
-      <SectionHead
+    <Section
+      id="recorrido"
+      className="section-journey jacode-late"
+      labelledBy="journey-title"
+    >
+      <LateSectionHead
         index="07"
-        title="El proceso en movimiento"
-        lead="Como un cubo que se reordena hasta encontrar la solución."
+        plain="El proceso en movimiento."
+        accent=" Evolución continua."
+        lead="Narrativa del ciclo de vida del producto — distinta a las fases formales de trabajo."
         titleId="journey-title"
       />
-      <div className="journey-stage reveal" ref={ref}>
-        <div className="journey-stage__col journey-stage__col--left" aria-label="Etapas 1 a 3">
-          {leftStages.map((stage, i) => (
-            <JourneyStageCard
-              key={stage.id}
-              stage={stage}
-              active={index === i}
-              side="left"
-              onSelect={() => select(i)}
-            />
-          ))}
+
+      <div
+        ref={trackRef}
+        className="journey-puzzle reveal"
+        style={
+          {
+            "--journey-progress": scrollProgress,
+            "--puzzle-tab": `${tabCenterPct}%`,
+          } as CSSProperties
+        }
+      >
+        <div className="journey-puzzle__progress" aria-hidden="true">
+          <span className="journey-puzzle__progress-fill" />
         </div>
 
-        <div
-          className="journey-stage__cube"
-          data-journey-active={stage.id}
-        >
-          <div className="journey-stage__cube-glow" aria-hidden="true" />
-          <JacodeCube
-            size={240}
-            interactive={false}
-            autoRotate={!reducedMotion}
-            journeyStageId={stage.id}
-            className="journey-cube"
-          />
-          <p className="journey-stage__caption" aria-live="polite">
-            <span className="journey-stage__caption-num">{stage.number}</span>
-            {stage.label}
-          </p>
-          <p className="journey-stage__motion-hint">{stage.motionHint}</p>
-        </div>
-
-        <div className="journey-stage__col journey-stage__col--right" aria-label="Etapas 4 a 6">
-          {rightStages.map((stage, i) => (
-            <JourneyStageCard
-              key={stage.id}
-              stage={stage}
-              active={index === i + 3}
-              side="right"
-              onSelect={() => select(i + 3)}
-            />
+        <ol className="journey-puzzle__tabs">
+          {journeyStages.map((s, i) => (
+            <li key={s.id}>
+              <button
+                type="button"
+                className={`journey-puzzle__tab${i === activeIndex ? " is-active" : ""}${
+                  i < activeIndex ? " is-past" : ""
+                }`}
+                onClick={() => select(i)}
+              >
+                <span className="journey-puzzle__tab-num">{s.number}</span>
+                <span className="journey-puzzle__tab-label">{s.label}</span>
+                <span className="journey-puzzle__tab-notch" aria-hidden="true" />
+              </button>
+            </li>
           ))}
+        </ol>
+
+        <div className="journey-puzzle__panel">
+          <div className="journey-puzzle__panel-socket" aria-hidden="true" />
+          <div className="journey-puzzle__stage">
+            <div className="journey-puzzle__cube" data-journey-active={stage.id}>
+              <JacodeCube
+                size={210}
+                interactive={false}
+                autoRotate={false}
+                journeyStageId={stage.id}
+                className="journey-cube journey-cube--calm"
+              />
+            </div>
+            <article className="journey-puzzle__copy" aria-live="polite">
+              <p className="journey-puzzle__hint">{stage.motionHint}</p>
+              <h3>{stage.label}</h3>
+              <p>{stage.description}</p>
+            </article>
+          </div>
         </div>
       </div>
     </Section>

@@ -2179,7 +2179,7 @@ button.story-phases__label:not(.is-active):hover {
 }
 
 /* ========== APPROACH ========== */
-.section-approach {
+.section-approach:not(.jacode-late) {
   max-width: 1280px;
 }
 
