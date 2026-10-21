@@ -1,4 +1,4 @@
-import { techMarqueeItems } from "@domain/content/techMarquee";
+import { techMarqueeFeatured, techMarqueeItems } from "@domain/content/techMarquee";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 
 export interface TechMarqueeProps {
@@ -9,11 +9,13 @@ export interface TechMarqueeProps {
 
 export function TechMarquee({
   eyebrow = "Tecnologías que usamos",
-  items = techMarqueeItems,
+  items,
   className = "",
 }: TechMarqueeProps) {
+  const isServices = className.includes("tech-marquee--services");
+  const list = items ?? (isServices ? techMarqueeFeatured : techMarqueeItems);
   const { reducedMotion } = useMotionPreference();
-  const loop = [...items, ...items];
+  const loop = [...list, ...list];
 
   const rootClass = [
     "tech-marquee",
@@ -30,7 +32,7 @@ export function TechMarquee({
       <div className="tech-marquee__viewport">
         {reducedMotion ? (
           <ul className="tech-marquee__static-list">
-            {items.map((name) => (
+            {list.map((name) => (
               <li key={name}>{name}</li>
             ))}
           </ul>

@@ -20,7 +20,7 @@ export function ServiceBlades({ onActiveChange }: ServiceBladesProps) {
   );
 
   return (
-    <div className="service-blades reveal" role="tablist" aria-label="Servicios">
+    <div className="service-blades" role="tablist" aria-label="Servicios">
       {services.map((service, i) => {
         const expanded = i === active;
         return (

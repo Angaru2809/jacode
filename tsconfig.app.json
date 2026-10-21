@@ -17,13 +17,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": ".",
     "paths": {
-      "@app/*": ["src/app/*"],
-      "@domain/*": ["src/domain/*"],
-      "@application/*": ["src/application/*"],
-      "@presentation/*": ["src/presentation/*"],
-      "@infrastructure/*": ["src/infrastructure/*"]
+      "@app/*": ["./src/app/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@application/*": ["./src/application/*"],
+      "@presentation/*": ["./src/presentation/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"]
     }
   },
   "include": ["src"]

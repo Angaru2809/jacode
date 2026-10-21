@@ -43,7 +43,6 @@ export function HomePage() {
     <>
       <SkipLink />
       <div className="noise" aria-hidden="true" />
-      <div className="grid-bg" aria-hidden="true" />
       <MotionFab />
       <WhatsAppFab />
       <Header />

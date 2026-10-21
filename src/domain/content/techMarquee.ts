@@ -20,3 +20,21 @@ export const techMarqueeItems = [
   "Terraform",
   "Git",
 ] as const;
+
+/** Cinta bajo servicios: lista más corta y legible */
+export const techMarqueeFeatured: readonly string[] = [
+  "Python",
+  "Java",
+  "TypeScript",
+  "React",
+  "Node.js",
+  "Spring",
+  "PostgreSQL",
+  "Docker",
+  "AWS",
+  "Kotlin",
+  "Flutter",
+  "GraphQL",
+  "Terraform",
+  "Git",
+];

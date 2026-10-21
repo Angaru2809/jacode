@@ -27,7 +27,8 @@
   --radius: 2px;
   --page-width: 1360px;
   --page-gutter: clamp(0.875rem, 2.25vw, 1.125rem);
-  --header-h: 72px;
+  --header-h: 68px;
+  --header-float-pad: 0.75rem;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 

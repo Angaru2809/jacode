@@ -14,15 +14,19 @@ export function ServicesSection({ onHoverService }: ServicesSectionProps) {
       aria-labelledby="services-title"
     >
       <header className="services-intro reveal reveal-stagger">
-        <div className="services-intro__head reveal-stagger__item">
-          <span className="section-index" aria-hidden="true">
-            01
+        <span
+          className="section-index services-intro__index reveal-stagger__item"
+          aria-hidden="true"
+        >
+          01
+        </span>
+        <h2 id="services-title" className="services-intro__title reveal-stagger__item">
+          <span className="services-intro__title-line">Convertimos ideas</span>
+          <span className="services-intro__title-line services-intro__title-line--second">
+            en{" "}
+            <span className="services-intro__title-accent">tecnología.</span>
           </span>
-          <h2 id="services-title" className="services-intro__title">
-            <span className="services-intro__title-line">Convertimos ideas</span>
-            <span className="services-intro__title-accent"> en tecnología.</span>
-          </h2>
-        </div>
+        </h2>
         <p className="services-intro__lead reveal-stagger__item">
           {brand.servicesLeadLines.map((line) => (
             <span key={line} className="services-intro__lead-line">
@@ -33,8 +37,10 @@ export function ServicesSection({ onHoverService }: ServicesSectionProps) {
       </header>
 
       <p className="services-hint reveal">Selecciona un servicio para ver el detalle.</p>
-      <ServiceBlades onActiveChange={onHoverService} />
-      <TechMarquee />
+      <div className="services-showcase reveal">
+        <ServiceBlades onActiveChange={onHoverService} />
+        <TechMarquee className="tech-marquee--services" eyebrow="Stack que usamos" />
+      </div>
     </section>
   );
 }
