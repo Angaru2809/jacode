@@ -5,23 +5,26 @@ import { JacodeCube } from "@presentation/components/cube/JacodeCube";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 
 interface HeroSectionProps {
-  onExplore: () => void;
   cubeApiRef: React.MutableRefObject<{
     reorganize: () => void;
     highlight: (i: number | null) => void;
   } | null>;
 }
 
-export function HeroSection({ onExplore, cubeApiRef }: HeroSectionProps) {
+export function HeroSection({ cubeApiRef }: HeroSectionProps) {
   const { reducedMotion } = useMotionPreference();
   const statusId = useRef(`cube-status-${Math.random().toString(36).slice(2)}`);
 
   return (
     <section className="hero" id="hero" aria-labelledby="hero-title">
+      <div className="hero-ambient" aria-hidden="true">
+        <span className="hero-ambient__orb hero-ambient__orb--primary" />
+        <span className="hero-ambient__orb hero-ambient__orb--secondary" />
+      </div>
       <div className="hero__inner">
         <div className="hero-stage">
           <JacodeCube
-            size={440}
+            size={480}
             playIntroStory={!reducedMotion}
             autoRotate={!reducedMotion}
             interactive={!reducedMotion}
@@ -49,6 +52,15 @@ export function HeroSection({ onExplore, cubeApiRef }: HeroSectionProps) {
               </span>
               <span className="hero-headline__accent">{brand.headlineAccent}</span>
             </h1>
+
+            <p className="hero-audience">{brand.heroAudience}</p>
+
+            <ul className="hero-offers" aria-label="Servicios principales">
+              {brand.heroOffers.map((offer) => (
+                <li key={offer}>{offer}</li>
+              ))}
+            </ul>
+
             <span id={statusId.current} className="sr-only">
               Cubo en animación automática. Haz clic en el cubo para reorganizarlo.
             </span>
@@ -58,14 +70,10 @@ export function HeroSection({ onExplore, cubeApiRef }: HeroSectionProps) {
                 variant="primary"
                 size="lg"
                 className="hero-cta interaction-halo"
-                href="#que-hacemos"
+                href="#contacto"
                 showArrow
-                onClick={(e) => {
-                  e.preventDefault();
-                  onExplore();
-                }}
               >
-                Descubre cómo lo hacemos
+                {brand.heroCtaLabel}
               </Button>
             </div>
           </div>

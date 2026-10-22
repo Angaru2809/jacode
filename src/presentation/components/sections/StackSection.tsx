@@ -13,7 +13,7 @@ export function StackSection() {
       <div className="stack-section__band stack-band">
         <div className="stack-section__inner">
           <SectionHead
-            index="02"
+            index="03"
             title="Herramientas con criterio."
             lead="Elegimos por operación, equipo y mantenimiento a largo plazo — no por moda."
             titleId="stack-title"

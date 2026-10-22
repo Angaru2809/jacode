@@ -151,7 +151,11 @@ export function ProcessSection() {
       <div className="process-method reveal">
         <header className="process-method__head">
           <span className="section-index" aria-hidden="true">
+<<<<<<< HEAD
             02
+=======
+            05
+>>>>>>> 9189bf2eda5722fcbc51f384992109c7512e286a
           </span>
           <ScrollSplitTitle
             id="method-title"

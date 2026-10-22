@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { App } from "@app/App";
 import "@app/styles/tokens.css";
 import "@app/styles/global.css";
+import "@app/styles/situations-section.css";
 import "@app/styles/stack-section.css";
 import "@app/styles/sections-enfoque-contacto.css";
 import "@app/styles/process-experience.css";

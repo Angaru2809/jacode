@@ -1,9 +1,10 @@
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import { useScrollReveal } from "@application/hooks/useScrollReveal";
 import { Header } from "@presentation/components/layout/Header";
 import { Footer } from "@presentation/components/layout/Footer";
 import { SkipLink } from "@presentation/components/a11y/SkipLink";
 import { HeroSection } from "@presentation/components/sections/HeroSection";
+import { SituationsSection } from "@presentation/components/sections/SituationsSection";
 import { ServicesSection } from "@presentation/components/sections/ServicesSection";
 import { StackSection } from "@presentation/components/sections/StackSection";
 import { ProblemsSection } from "@presentation/components/sections/ProblemsSection";
@@ -26,18 +27,6 @@ export function HomePage() {
   const { reducedMotion } = useMotionPreference();
   useScrollReveal(reducedMotion);
 
-  const onExplore = useCallback(() => {
-    cubeApiRef.current?.reorganize();
-    window.setTimeout(
-      () => {
-        document
-          .getElementById("que-hacemos")
-          ?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
-      },
-      reducedMotion ? 0 : 900
-    );
-  }, [reducedMotion]);
-
   return (
     <>
       <SkipLink />
@@ -46,7 +35,8 @@ export function HomePage() {
       <WhatsAppFab />
       <Header />
       <main id="contenido">
-        <HeroSection onExplore={onExplore} cubeApiRef={cubeApiRef} />
+        <HeroSection cubeApiRef={cubeApiRef} />
+        <SituationsSection />
         <ServicesSection
           onHoverService={(i) => cubeApiRef.current?.highlight(i)}
         />
