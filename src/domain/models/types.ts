@@ -60,8 +60,12 @@ export interface DeliverableItem {
 export interface WorkMode {
   id: WorkModeId;
   title: string;
+  /** Línea bajo el título (ej. alcance, ritmo) */
+  subtitle: string;
   description: string;
   flow: string[];
+  /** Tarjeta central destacada */
+  featured?: boolean;
 }
 
 export type JourneyStepId =
@@ -91,6 +95,20 @@ export interface WhyItem {
   description: string;
   tag: string;
   accent: string;
+}
+
+export interface ClientNeedSignal {
+  id: string;
+  label: string;
+}
+
+export interface ClientNeed {
+  id: string;
+  title: string;
+  hint: string;
+  help: string;
+  signals: ClientNeedSignal[];
+  watermark: string;
 }
 
 export interface NavLink {

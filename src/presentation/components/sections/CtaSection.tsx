@@ -30,7 +30,7 @@ export function CtaSection() {
   const retroOn = retroHover && !reducedMotion;
 
   return (
-    <section className="section section-cta" id="contacto" aria-labelledby="cta-title">
+    <section className="section section-cta" id="cierre" aria-labelledby="cta-title">
       <div className="cta-inner">
         <div
           className={`cta-cube-shell${retroOn ? " is-retro" : ""}`}

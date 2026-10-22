@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 /** Superficies oscuras bajo el header → logo blanco + barra oscura */
 const DARK_SURFACE_SELECTOR =
-  ".stack-band, .cta-inner, .section-cta, #metodologia.jacode-late .process-studio__card";
+  ".stack-band, .cta-inner, .section-cta, #proceso.jacode-late .process-studio__card";
 
 function isDarkAtPoint(x: number, y: number): boolean {
   const stack = document.elementsFromPoint(x, y);

@@ -1,156 +1,102 @@
-/* —— #entregables — vault (bloque 05), sin fondo de sección —— */
+/* —— #necesidades — bloque 05 (problemas / necesidades) —— */
 
-#entregables.jacode-late .deliverables-bento-shell {
+#necesidades.jacode-late .deliverables-bento-shell {
   position: relative;
   z-index: 1;
   padding: 0;
 }
 
-#entregables.jacode-late .deliverables-vault {
-  display: grid;
-  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
-  gap: clamp(0.85rem, 2vw, 1.25rem);
-  margin-top: clamp(1rem, 2vw, 1.5rem);
-  padding: 0;
-  border: none;
-  background: transparent;
-  box-shadow: none;
-}
-
-#entregables.jacode-late .deliverables-vault__rail {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.5rem;
-  border-radius: 14px;
-  background: var(--white);
-  border: 1px solid rgba(20, 20, 24, 0.08);
-  box-shadow: 0 8px 28px rgba(20, 20, 24, 0.04);
-}
-
-#entregables.jacode-late .deliverables-vault__rail-label {
-  margin: 0.15rem 0.5rem 0.35rem;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gray-600);
-}
-
-#entregables.jacode-late .deliverables-vault__rail-btn {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.15rem;
-  width: 100%;
-  padding: 0.65rem 0.7rem;
-  border: none;
-  border-radius: 10px;
-  background: transparent;
-  color: var(--gray-600);
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
-  transition:
-    background 0.3s var(--ease),
-    color 0.3s var(--ease),
-    transform 0.3s var(--ease);
-}
-
-#entregables.jacode-late .deliverables-vault__rail-btn:hover {
-  color: var(--pitch);
-  transform: translateX(3px);
-}
-
-#entregables.jacode-late .deliverables-vault__rail-btn.is-active {
-  background: rgba(230, 0, 122, 0.1);
-  color: var(--pitch);
-  box-shadow: inset 0 0 0 1px rgba(230, 0, 122, 0.22);
-}
-
-#entregables.jacode-late .deliverables-vault__rail-num {
-  font-family: var(--font-display);
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--jacode-magenta);
-}
-
-#entregables.jacode-late .deliverables-vault__rail-title {
-  font-size: 0.78rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-#entregables.jacode-late .deliverables-vault__stage {
-  min-width: 0;
-}
-
-#entregables.jacode-late .deliverables-bento__head--vault {
+#necesidades.jacode-late .deliverables-bento__head--vault {
   text-align: center;
   margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
 }
 
-#entregables.jacode-late .deliverables-bento__head--vault .section-index {
+#necesidades.jacode-late .deliverables-bento__head--vault .section-index {
   color: var(--jacode-magenta);
 }
 
-#entregables.jacode-late .deliverables-bento__head--vault .jacode-scroll-title {
+#necesidades.jacode-late .deliverables-bento__head--vault .jacode-scroll-title {
   margin-inline: auto;
   max-width: 14em;
   font-size: clamp(1.75rem, 3.2vw, 2.45rem);
 }
 
-#entregables.jacode-late .deliverables-bento__head--vault .jacode-scroll-title__plain {
+#necesidades.jacode-late .deliverables-bento__head--vault .jacode-scroll-title__plain {
   color: #45454f;
 }
 
-#entregables.jacode-late .deliverables-bento__head--vault .jacode-scroll-title__accent {
+#necesidades.jacode-late .deliverables-bento__head--vault .jacode-scroll-title__accent {
   display: block;
   margin-top: 0.12em;
 }
 
-#entregables.jacode-late .deliverables-bento__lead--vault {
+#necesidades.jacode-late .deliverables-bento__lead--vault {
   margin: 0.85rem auto 0;
   text-align: center;
   max-width: 48ch;
   color: var(--gray-600);
 }
 
-#entregables.jacode-late .deliverables-bento {
-  margin-top: 0;
+#necesidades.jacode-late .problems-bento {
+  margin-top: clamp(0.75rem, 2vw, 1.5rem);
+  grid-auto-flow: dense;
 }
 
-#entregables.jacode-late .deliverables-bento__card {
+#necesidades.jacode-late .problems-bento .deliverables-bento__card {
   transition:
-    opacity 0.65s var(--ease),
+    opacity 0.5s var(--ease),
     transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    min-height 0.55s var(--ease),
-    grid-column 0.55s var(--ease),
+    min-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    grid-column 0.55s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.45s var(--ease),
     filter 0.45s var(--ease);
 }
 
-#entregables.jacode-late .deliverables-bento__card.is-in:hover:not(.is-expanded) {
-  transform: translate3d(0, -4px, 0) scale(1.01);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+#necesidades.jacode-late .problems-bento .deliverables-bento__help {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding-top: 0;
+  border-top: none;
+  overflow: hidden;
+  transition:
+    max-height 0.55s var(--ease),
+    opacity 0.45s var(--ease),
+    margin 0.45s var(--ease),
+    padding 0.45s var(--ease);
 }
 
-@media (max-width: 960px) {
-  #entregables.jacode-late .deliverables-vault {
-    grid-template-columns: 1fr;
+@media (min-width: 961px) {
+  #necesidades.jacode-late .problems-bento .deliverables-bento__card.is-expanded {
+    grid-column: 1 / -1;
   }
 
-  #entregables.jacode-late .deliverables-vault__rail {
-    flex-direction: row;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
+  #necesidades.jacode-late .problems-bento .deliverables-bento__card.is-expanded .deliverables-bento__tiles {
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
   }
+}
 
-  #entregables.jacode-late .deliverables-vault__rail-btn {
-    flex: 0 0 auto;
-    min-width: 9.5rem;
-    scroll-snap-align: start;
+#necesidades.jacode-late .problems-bento .deliverables-bento__card.is-expanded .deliverables-bento__help {
+  max-height: 6rem;
+  opacity: 1;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(20, 20, 24, 0.1);
+}
+
+#necesidades.jacode-late
+  .problems-bento
+  .deliverables-bento__card--dark.is-expanded
+  .deliverables-bento__help,
+#necesidades.jacode-late
+  .problems-bento
+  .deliverables-bento__card--accent.is-expanded
+  .deliverables-bento__help {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #necesidades.jacode-late .problems-bento .deliverables-bento__card {
+    transition: min-height 0.35s var(--ease), box-shadow 0.35s var(--ease);
   }
 }

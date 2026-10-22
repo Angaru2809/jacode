@@ -18,7 +18,7 @@ export const stackLayers: StackLayer[] = [
     title: "Interfaces que convierten",
     description:
       "Experiencias rápidas, accesibles y consistentes, listas para crecer con tu producto.",
-    items: ["React", "TypeScript", "Vite"],
+    items: ["HTML", "JavaScript", "Angular", "React"],
     icon: "react",
   },
   {
@@ -27,7 +27,7 @@ export const stackLayers: StackLayer[] = [
     title: "Backend con criterio",
     description:
       "Lógica de negocio e integraciones que sostienen operaciones reales con estabilidad.",
-    items: ["Java", "Spring", "PostgreSQL"],
+    items: ["PHP", "Laravel", "Java", "Node.js"],
     icon: "java",
   },
   {
@@ -36,7 +36,7 @@ export const stackLayers: StackLayer[] = [
     title: "Servicios conectados",
     description:
       "APIs, automatizaciones y flujos cuando necesitas velocidad de entrega y flexibilidad.",
-    items: ["Node.js", "GraphQL", "Docker"],
+    items: ["Power Automate", "APIs", "Docker", "GraphQL"],
     icon: "node",
   },
   {
@@ -45,7 +45,20 @@ export const stackLayers: StackLayer[] = [
     title: "Sitios que venden",
     description:
       "Landings y tiendas con WordPress cuando el negocio pide contenido y conversión.",
-    items: ["WordPress", "PHP", "SEO técnico"],
+    items: ["WordPress", "CMS", "PHP", "SEO técnico"],
     icon: "wordpress",
   },
 ];
+
+/** Complemento en una sola franja — evita saturar las tarjetas */
+export const stackEcosystemTools = [
+  "CSS",
+  "TypeScript",
+  "Bootstrap",
+  "Vite",
+  "Spring",
+  "PostgreSQL",
+  "IA aplicada",
+  "AWS",
+  "Git",
+] as const;

@@ -1,57 +1,33 @@
 import { useCallback, useState, type CSSProperties } from "react";
-import { Link } from "react-router-dom";
-import { brand } from "@domain/content/brand";
 import { faqIntro, faqItems } from "@domain/content/faq";
 import { Section } from "@presentation/components/ui/Section";
-import { ScrollSplitTitle } from "@presentation/components/ui/ScrollSplitTitle";
+import { ContactLeadForm } from "@presentation/components/sections/ContactLeadForm";
 
 export function FaqSection() {
-  const [openId, setOpenId] = useState<string | null>(faqItems[0]?.id ?? null);
+  const [openId, setOpenId] = useState<string | null>(faqItems[1]?.id ?? null);
 
   const toggle = useCallback((id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
   }, []);
 
   return (
-    <Section
-      id="cuenta-idea"
-      className="section-faq jacode-late"
-      labelledBy="faq-title"
-    >
+    <Section id="faq" className="section-faq" labelledBy="faq-title">
       <div className="faq-studio reveal">
         <header className="faq-studio__head">
           <span className="section-index" aria-hidden="true">
-            05
+            07
           </span>
-          <ScrollSplitTitle
-            id="faq-title"
-            plain={faqIntro.title}
-            accent={faqIntro.accent}
-            className="faq-studio__title"
-          />
+          <p className="faq-studio__kicker">{faqIntro.kicker}</p>
+          <h2 id="faq-title" className="faq-studio__title">
+            {faqIntro.title}
+          </h2>
           <p className="faq-studio__lead">{faqIntro.lead}</p>
         </header>
 
         <div className="faq-studio__layout">
-          <aside className="faq-studio__cta-panel">
-            <p className="faq-studio__cta-kicker">Primer paso</p>
-            <h3 className="faq-studio__cta-title">Conversemos tu reto</h3>
-            <p className="faq-studio__cta-text">
-              Cuanto más claro el problema, mejor la solución. Escríbenos o agenda una
-              cotización con la plantilla del sitio.
-            </p>
-            <div className="faq-studio__cta-actions">
-              <a className="faq-studio__btn faq-studio__btn--primary" href="#contacto">
-                Ir al contacto
-              </a>
-              <Link className="faq-studio__btn faq-studio__btn--ghost" to="/cotizacion">
-                Plantilla de cotización
-              </Link>
-            </div>
-            <p className="faq-studio__cta-mail">
-              <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>
-            </p>
-          </aside>
+          <div id="contacto" className="faq-studio__form-panel scroll-target">
+            <ContactLeadForm />
+          </div>
 
           <div className="faq-studio__list" role="region" aria-label="Preguntas frecuentes">
             {faqItems.map((item, i) => {

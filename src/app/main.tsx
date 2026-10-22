@@ -7,6 +7,10 @@ import "@app/styles/stack-section.css";
 import "@app/styles/sections-enfoque-contacto.css";
 import "@app/styles/process-experience.css";
 import "@app/styles/deliverables-vault.css";
+import "@app/styles/problems-section.css";
+import "@app/styles/why-blades.css";
+import "@app/styles/modes-folders.css";
+import "@app/styles/faq-section.css";
 import "@app/styles/not-found.css";
 
 const root = document.getElementById("root");

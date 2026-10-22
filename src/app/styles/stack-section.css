@@ -169,6 +169,54 @@
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+.stack-section__ecosystem {
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+  padding-top: clamp(1.25rem, 2.5vw, 1.65rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.stack-section__ecosystem-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.stack-section__ecosystem-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 0.5rem;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.stack-section__ecosystem-list li {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.28rem 0.5rem;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    background 0.25s var(--ease);
+}
+
+.stack-section__ecosystem-list li:hover {
+  color: rgba(255, 255, 255, 0.82);
+  border-color: rgba(255, 0, 110, 0.28);
+  background: rgba(255, 0, 110, 0.08);
+}
+
 @media (min-width: 1280px) {
   .stack-section__grid {
     gap: 2rem;

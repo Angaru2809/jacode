@@ -6,11 +6,11 @@ import { SkipLink } from "@presentation/components/a11y/SkipLink";
 import { HeroSection } from "@presentation/components/sections/HeroSection";
 import { ServicesSection } from "@presentation/components/sections/ServicesSection";
 import { StackSection } from "@presentation/components/sections/StackSection";
-import { IncludeSection } from "@presentation/components/sections/IncludeSection";
-import { DeliverablesSection } from "@presentation/components/sections/DeliverablesSection";
+import { ProblemsSection } from "@presentation/components/sections/ProblemsSection";
 import { ModesSection } from "@presentation/components/sections/ModesSection";
 import { ProcessSection } from "@presentation/components/sections/ProcessSection";
 import { WhySection } from "@presentation/components/sections/WhySection";
+import { FaqSection } from "@presentation/components/sections/FaqSection";
 import { CtaSection } from "@presentation/components/sections/CtaSection";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 import { MotionFab } from "@presentation/components/experience/MotionFab";
@@ -50,12 +50,12 @@ export function HomePage() {
         <ServicesSection
           onHoverService={(i) => cubeApiRef.current?.highlight(i)}
         />
-        <StackSection />
-        <IncludeSection />
         <ProcessSection />
-        <DeliverablesSection />
+        <ProblemsSection />
+        <StackSection />
         <ModesSection />
         <WhySection />
+        <FaqSection />
         <CtaSection />
       </main>
       <Footer />

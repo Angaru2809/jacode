@@ -1,0 +1,355 @@
+/* —— §05 Modalidades — tarjetas tipo plan (referencia pricing) —— */
+
+.section-modes {
+  background: var(--gray-50);
+  border-block: 1px solid var(--gray-200);
+}
+
+.section-modes .section-modes__title-accent {
+  color: var(--magenta);
+}
+
+.section-modes .mode-plan[data-mode="proyecto"] .mode-plan__eyebrow {
+  color: var(--magenta);
+}
+
+.section-modes .mode-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  align-items: end;
+  margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
+  padding-top: 0.35rem;
+}
+
+.section-modes .mode-pricing-grid.is-awake .mode-plan {
+  animation: mode-plan-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--plan-i, 0) * 0.1s);
+}
+
+@keyframes mode-plan-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-modes .mode-plan {
+  position: relative;
+  min-height: 100%;
+  color: var(--pitch);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section-modes .mode-plan:hover {
+  transform: translateY(-4px);
+}
+
+.section-modes .mode-plan--featured {
+  transform: scale(1.03);
+  z-index: 1;
+}
+
+.section-modes .mode-plan--featured:hover {
+  transform: scale(1.03) translateY(-4px);
+}
+
+.section-modes .mode-plan__shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  filter: drop-shadow(0 14px 28px rgba(8, 8, 8, 0.07));
+  transition: filter 0.4s ease;
+}
+
+.section-modes .mode-plan:hover .mode-plan__shell {
+  filter: drop-shadow(0 20px 40px rgba(8, 8, 8, 0.11));
+}
+
+.section-modes .mode-plan--featured .mode-plan__shell {
+  filter: drop-shadow(0 22px 48px rgba(8, 8, 8, 0.22));
+}
+
+.section-modes .mode-plan--featured:hover .mode-plan__shell {
+  filter: drop-shadow(0 26px 52px rgba(255, 0, 110, 0.16));
+}
+
+/* Pestaña de carpeta */
+.section-modes .mode-plan__tab {
+  position: relative;
+  z-index: 2;
+  align-self: flex-start;
+  width: min(52%, 11.25rem);
+  margin-left: clamp(0.65rem, 2vw, 0.85rem);
+  margin-bottom: -1px;
+  padding: 0.45rem 0.85rem 0.5rem;
+  border: 1px solid var(--gray-200);
+  border-bottom: none;
+  border-radius: 12px 14px 0 0;
+  background: var(--white);
+  box-shadow: 0 -2px 8px rgba(8, 8, 8, 0.04);
+}
+
+.section-modes .mode-plan__tab-text {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.section-modes .mode-plan[data-mode="proyecto"] .mode-plan__tab-text {
+  color: var(--magenta);
+}
+
+.section-modes .mode-plan--featured .mode-plan__tab {
+  background: var(--pitch);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.section-modes .mode-plan--featured .mode-plan__tab-text {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Cuerpo / hoja de la carpeta */
+.section-modes .mode-plan__body {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 100%;
+  padding: clamp(1.35rem, 2.4vw, 1.75rem);
+  border: 1px solid var(--gray-200);
+  border-radius: 0 16px 16px 16px;
+  background: var(--white);
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.4s ease;
+}
+
+.section-modes .mode-plan__body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 0 0 0 16px;
+  background: linear-gradient(180deg, var(--gray-200), transparent 85%);
+  pointer-events: none;
+}
+
+.section-modes .mode-plan:hover .mode-plan__body {
+  border-color: rgba(255, 0, 110, 0.2);
+}
+
+.section-modes .mode-plan--featured .mode-plan__body {
+  background: var(--pitch);
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 1px rgba(255, 0, 110, 0.1);
+}
+
+.section-modes .mode-plan--featured .mode-plan__body::before {
+  background: linear-gradient(180deg, rgba(255, 0, 110, 0.35), transparent 80%);
+}
+
+.section-modes .mode-plan--featured:hover .mode-plan__body {
+  border-color: rgba(255, 0, 110, 0.35);
+}
+
+.section-modes .mode-plan__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  padding: 0.28rem 0.55rem;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--magenta);
+}
+
+.section-modes .mode-plan__eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+
+.section-modes .mode-plan--featured .mode-plan__eyebrow {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.section-modes .mode-plan__number {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-hero);
+  font-size: clamp(2.35rem, 4.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--pitch);
+}
+
+.section-modes .mode-plan--featured .mode-plan__number {
+  color: var(--white);
+}
+
+.section-modes .mode-plan__subtitle {
+  margin: 0 0 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--pitch);
+}
+
+.section-modes .mode-plan--featured .mode-plan__subtitle {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.section-modes .mode-plan__desc {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--gray-600);
+}
+
+.section-modes .mode-plan--featured .mode-plan__desc {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.section-modes .mode-plan__divider {
+  height: 1px;
+  margin: 1.15rem 0 1rem;
+  background: var(--gray-200);
+}
+
+.section-modes .mode-plan--featured .mode-plan__divider {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.section-modes .mode-plan__features {
+  flex: 1;
+  margin: 0 0 1.35rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.section-modes .mode-plan__features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--gray-600);
+}
+
+.section-modes .mode-plan--featured .mode-plan__features li {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.section-modes .mode-plan__check {
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+  color: var(--magenta);
+}
+
+.section-modes .mode-plan--featured .mode-plan__check {
+  color: var(--magenta);
+}
+
+.section-modes .mode-plan__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: auto;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  color: var(--pitch);
+  transition:
+    background 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    color 0.25s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.section-modes .mode-plan__cta:hover {
+  border-color: var(--pitch);
+  transform: translateY(-1px);
+}
+
+.section-modes .mode-plan__cta:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.section-modes .mode-plan--featured .mode-plan__cta {
+  border-color: var(--magenta);
+  background: var(--magenta);
+  color: var(--white);
+}
+
+.section-modes .mode-plan--featured .mode-plan__cta:hover {
+  filter: brightness(1.06);
+  border-color: var(--magenta);
+}
+
+@media (max-width: 960px) {
+  .section-modes .mode-pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 22rem;
+    margin-inline: auto;
+  }
+
+  .section-modes .mode-plan--featured {
+    transform: none;
+    order: -1;
+  }
+
+  .section-modes .mode-plan--featured:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-modes .mode-pricing-grid.is-awake .mode-plan,
+  .section-modes .mode-plan,
+  .section-modes .mode-plan__cta {
+    animation: none;
+    transition: none;
+  }
+
+  .section-modes .mode-plan:hover,
+  .section-modes .mode-plan--featured:hover {
+    transform: none;
+  }
+}

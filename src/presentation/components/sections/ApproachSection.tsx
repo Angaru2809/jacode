@@ -39,7 +39,7 @@ export function ApproachSection() {
         <div className="enfoque-split">
           <div className="enfoque-split__copy">
             <LateSectionHead
-              index="04"
+              index="06"
               plain="Cada problema tiene piezas."
               accent="Nosotros construimos la solución."
               lead="Estrategia y tecnología conectadas en el recorrido de la idea hasta el resultado."

@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { stackLayers } from "@domain/content/stack";
+import { stackEcosystemTools, stackLayers } from "@domain/content/stack";
 import { SectionHead } from "@presentation/components/ui/Section";
 import { StackValueIcon } from "@presentation/components/ui/SocialIcons";
 
@@ -43,6 +43,20 @@ export function StackSection() {
                 </ul>
               </article>
             ))}
+          </div>
+
+          <div className="stack-section__ecosystem reveal">
+            <p className="stack-section__ecosystem-label">
+              También en nuestro ecosistema
+            </p>
+            <ul
+              className="stack-section__ecosystem-list"
+              aria-label="Otras herramientas y tecnologías"
+            >
+              {stackEcosystemTools.map((tool) => (
+                <li key={tool}>{tool}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

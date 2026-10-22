@@ -1,33 +1,24 @@
-import { workModes } from "@domain/content/process";
-import { Section, SectionHead } from "@presentation/components/ui/Section";
-import { FolderTabCard } from "@presentation/components/sections/FolderTabCard";
+import { Section } from "@presentation/components/ui/Section";
+import { ModePricingGrid } from "@presentation/components/sections/ModeFolderGrid";
+
 export function ModesSection() {
   return (
     <Section id="modalidades" className="section-modes" labelledBy="modes-title">
-      <SectionHead
-        index="06"
-        title="Nos adaptamos a tu proyecto."
-        lead="Elige la modalidad que mejor encaja con tu ritmo y tu alcance."
-        titleId="modes-title"
-      />
+      <header className="section-head reveal reveal-stagger">
+        <span className="section-index reveal-stagger__item" aria-hidden="true">
+          05
+        </span>
+        <h2 id="modes-title" className="reveal-stagger__item">
+          Nos adaptamos a tu{" "}
+          <span className="section-modes__title-accent">proyecto.</span>
+        </h2>
+        <p className="section-lead reveal-stagger__item">
+          Soluciones flexibles para empresas y equipos que necesitan crear, conectar y hacer
+          evolucionar su tecnología.
+        </p>
+      </header>
 
-      <div className="mode-folder-grid">
-        {workModes.map((mode, index) => (
-          <FolderTabCard
-            key={mode.id}
-            index={index}
-            title={mode.title}
-            description={mode.description}
-            footer={
-              <ul className="folder-card__flow" aria-label={`Flujo: ${mode.flow.join(", ")}`}>
-                {mode.flow.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ul>
-            }
-          />
-        ))}
-      </div>
+      <ModePricingGrid />
     </Section>
   );
 }

@@ -30,6 +30,7 @@ export interface FolderTabCardProps {
   description: string;
   variant?: FolderTabVariant;
   footer?: ReactNode;
+  interactive?: boolean;
 }
 
 export function FolderTabCard({
@@ -38,20 +39,34 @@ export function FolderTabCard({
   description,
   variant,
   footer,
+  interactive = false,
 }: FolderTabCardProps) {
   const number = String(index + 1).padStart(2, "0");
   const tone = variant ?? VARIANTS[index % VARIANTS.length];
 
   return (
     <article
-      className={`folder-card folder-card--${tone} reveal`}
+      className={[
+        "folder-card",
+        `folder-card--${tone}`,
+        interactive ? "folder-card--interactive" : "",
+        "reveal",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={{ "--folder-stagger": index } as CSSProperties}
     >
       <div className="folder-card__visual" aria-hidden="true">
+        <span className="folder-card__shine" />
         <span className="folder-card__watermark">{number}</span>
       </div>
+
       <div className="folder-card__sheet">
-        <div className="folder-card__tab" aria-hidden="true" />
+        <div className="folder-card__tab" aria-hidden="true">
+          <span className="folder-card__tab-text">{title}</span>
+        </div>
+        <div className="folder-card__lip" aria-hidden="true" />
+
         <div className="folder-card__content">
           <div className="folder-card__meta">
             <span className="folder-card__index">{number}</span>

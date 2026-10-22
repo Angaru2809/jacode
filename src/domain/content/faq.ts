@@ -5,41 +5,41 @@ export interface FaqItem {
 }
 
 export const faqIntro = {
-  title: "¿Qué problema quieres convertir en una solución?",
-  accent: "Cuéntanos tu idea.",
+  kicker: "Claridad & respuestas",
+  title: "Preguntas frecuentes sobre alcance, tiempos y presupuestos",
   lead:
-    "Antes de hablar de stack o plazos, alineamos el reto. Estas respuestas suelen aclarar cómo trabajamos contigo.",
+    "Todo lo que necesitas saber antes de iniciar un proyecto de desarrollo con JACODE.",
 } as const;
 
 export const faqItems: FaqItem[] = [
   {
-    id: "start",
-    question: "¿Necesito tener todo definido antes de contactarlos?",
+    id: "ip",
+    question: "¿Quién es dueño del código fuente y la propiedad intelectual?",
     answer:
-      "No. Basta con una necesidad clara o una hipótesis de producto. En descubrimiento ayudamos a convertir la idea en alcance, prioridades y entregables medibles.",
+      "El cliente es dueño del producto acordado en contrato. Entregamos repositorios, documentación y accesos según el alcance. Componentes de terceros y licencias se declaran en la propuesta.",
   },
   {
-    id: "scope",
-    question: "¿Qué tipo de proyectos desarrollan?",
+    id: "budget",
+    question: "¿Cómo se calculan tiempos y presupuestos?",
     answer:
-      "Software a medida, plataformas web, apps móviles, integraciones, automatización e IA aplicada. El stack y la modalidad se eligen según el problema, no al revés.",
+      "Partimos de una sesión de diagnóstico: entendemos el problema, priorizamos entregables y definimos modalidad (proyecto, evolutivo o por fases). La cotización incluye alcance, hitos, tiempos orientativos y supuestos explícitos.",
   },
   {
-    id: "time",
-    question: "¿Cuánto tarda un proyecto?",
+    id: "changes",
+    question: "¿Qué pasa si los requerimientos cambian durante el proyecto?",
     answer:
-      "Depende del alcance acordado. Trabajamos por fases con hitos visibles: prototipo, MVP o solución completa. En la cotización verás tiempos orientativos por entrega.",
-  },
-  {
-    id: "deliver",
-    question: "¿Qué recibo al final?",
-    answer:
-      "Código, documentación, despliegue y capacitación según el paquete. En la sección de entregables puedes ver las piezas típicas; el alcance final se define contigo.",
+      "Los cambios son normales. Gestionamos ajustes mediante backlog priorizado: evaluamos impacto en tiempo y costo, acordamos contigo y documentamos antes de desarrollar.",
   },
   {
     id: "support",
-    question: "¿Pueden evolucionar el producto después del lanzamiento?",
+    question: "¿Cómo garantizan estabilidad y soporte tras el lanzamiento?",
     answer:
-      "Sí. Muchos clientes continúan en modalidad evolutiva: mejoras, nuevas funciones, integraciones y optimización con datos reales.",
+      "Incluimos pruebas, despliegue controlado y ventana de soporte inicial según el paquete. Después puedes continuar en modalidad evolutiva para mejoras, monitoreo e integraciones.",
+  },
+  {
+    id: "integrate",
+    question: "¿Pueden integrarse con nuestros sistemas actuales?",
+    answer:
+      "Sí. Trabajamos con APIs, bases de datos, ERPs, CRMs y herramientas internas. También construimos desde cero cuando conviene; la arquitectura se elige según tu contexto, no al revés.",
   },
 ];

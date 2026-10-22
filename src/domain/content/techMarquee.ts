@@ -23,18 +23,16 @@ export const techMarqueeItems = [
 
 /** Cinta bajo servicios: lista más corta y legible */
 export const techMarqueeFeatured: readonly string[] = [
-  "Python",
-  "Java",
-  "TypeScript",
+  "JavaScript",
+  "Angular",
   "React",
+  "Laravel",
+  "PHP",
+  "Power Automate",
+  "IA aplicada",
+  "WordPress",
   "Node.js",
-  "Spring",
   "PostgreSQL",
   "Docker",
-  "AWS",
-  "Kotlin",
-  "Flutter",
-  "GraphQL",
-  "Terraform",
   "Git",
 ];

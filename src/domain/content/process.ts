@@ -36,49 +36,56 @@ export const processSteps: ProcessStep[] = [
     number: "01",
     phase: "discover",
     title: "Descubrimiento",
-    description: "Entendemos la necesidad y definimos el problema.",
+    description:
+      "Escuchamos tu contexto, aclaramos la necesidad y acordamos qué éxito significa para el negocio.",
   },
   {
     id: "planning",
     number: "02",
     phase: "plan",
     title: "Planeación",
-    description: "Definimos alcance, funcionalidades, arquitectura y prioridades.",
+    description:
+      "Priorizamos alcance, hitos y riesgos para que sepas qué se construye primero y por qué.",
   },
   {
     id: "design",
     number: "03",
     phase: "plan",
     title: "Diseño",
-    description: "Diseñamos la experiencia y la interfaz del producto.",
+    description:
+      "Prototipamos flujos e interfaz contigo antes de comprometer desarrollo costoso.",
   },
   {
     id: "development",
     number: "04",
     phase: "build",
     title: "Desarrollo",
-    description: "Construimos la solución utilizando las tecnologías adecuadas.",
+    description:
+      "Implementamos con arquitectura clara, revisiones frecuentes y código listo para evolucionar.",
   },
   {
     id: "testing",
     number: "05",
     phase: "build",
     title: "Pruebas",
-    description: "Validamos funcionamiento, experiencia y calidad.",
+    description:
+      "Comprobamos casos reales, datos y experiencia de uso antes de abrir a producción.",
   },
   {
     id: "implementation",
     number: "06",
     phase: "ship",
     title: "Implementación",
-    description: "Ponemos la solución en funcionamiento.",
+    description:
+      "Desplegamos, conectamos entornos y dejamos la solución operando con monitoreo básico.",
   },
   {
     id: "delivery",
     number: "07",
     phase: "ship",
     title: "Entrega",
-    description: "Entregamos documentación, accesos y conocimiento necesario.",
+    description:
+      "Transferimos accesos, documentación y conocimiento para que tu equipo pueda operar y crecer.",
   },
 ];
 
@@ -101,19 +108,26 @@ export const workModes: WorkMode[] = [
   {
     id: "proyecto",
     title: "Proyecto",
-    description: "Para soluciones con alcance y entregables definidos.",
+    subtitle: "Alcance cerrado · entregables acordados",
+    description:
+      "Para empresas que necesitan una solución definida, con objetivos claros desde el inicio.",
     flow: ["Alcance", "Desarrollo", "Pruebas", "Entrega"],
   },
   {
     id: "evolutivo",
     title: "Evolutivo",
-    description: "Para productos que necesitan crecer continuamente.",
+    subtitle: "Producto vivo · mejora continua",
+    description:
+      "Para equipos que incorporan funcionalidades y avanzan con datos reales después del lanzamiento.",
     flow: ["Idea", "MVP", "Mejoras", "Nuevas funcionalidades"],
+    featured: true,
   },
   {
     id: "fases",
     title: "Por fases",
-    description: "Para proyectos grandes que necesitan construirse progresivamente.",
+    subtitle: "Grandes builds · entregas progresivas",
+    description:
+      "Para organizaciones que construyen de forma progresiva, controlando prioridades y hitos.",
     flow: ["Fase 01", "Fase 02", "Fase 03", "Fase 04"],
   },
 ];
@@ -124,20 +138,20 @@ export const journeyStages: JourneyStage[] = [
     number: "01",
     label: "Descubrimos",
     description:
-      "Entendemos la necesidad real, el contexto del negocio y el resultado que debe medirse.",
-    motionHint: "Complejidad visible: mapeamos piezas antes de construir.",
-    brandLetter: null,
-    pillars: ["Diagnóstico", "Alcance"],
+      "Workshops y preguntas concretas para ver el panorama completo antes de comprometer alcance.",
+    motionHint: "Mapeo de contexto y prioridades.",
+    brandLetter: "J",
+    pillars: ["Contexto", "Prioridades"],
   },
   {
     id: "design",
     number: "02",
     label: "Diseñamos",
     description:
-      "Prototipamos flujos e interfaz alineados al producto — sin saltar directo al código.",
-    motionHint: "La J toma forma: experiencia antes de implementación.",
-    brandLetter: "J",
-    pillars: ["UX", "UI"],
+      "Flujos clicables y pantallas que validas con tu equipo; el producto se siente antes de programarlo.",
+    motionHint: "Prototipo y validación con usuarios.",
+    brandLetter: "A",
+    pillars: ["Prototipo", "Validación"],
   },
   {
     id: "build",
@@ -145,8 +159,8 @@ export const journeyStages: JourneyStage[] = [
     label: "Desarrollamos",
     description:
       "Elegimos stack, arquitectura y ritmo de entrega. Código modular listo para crecer.",
-    motionHint: "La A en código: ingeniería con criterio.",
-    brandLetter: "A",
+    motionHint: "Iteración continua con calidad.",
+    brandLetter: "C",
     pillars: ["Stack", "Código"],
   },
   {
@@ -154,30 +168,30 @@ export const journeyStages: JourneyStage[] = [
     number: "04",
     label: "Probamos",
     description:
-      "Validamos funcionalidad, datos y experiencia en escenarios reales antes del go-live.",
-    motionHint: "La C de control: cada encaje cuenta.",
-    brandLetter: "C",
-    pillars: ["QA", "Datos"],
+      "Escenarios reales, permisos y datos de prueba — nada sale a producción sin pasar por aquí.",
+    motionHint: "Control de calidad y datos.",
+    brandLetter: "O",
+    pillars: ["QA", "Seguridad"],
   },
   {
     id: "ship",
     number: "05",
     label: "Implementamos",
     description:
-      "Desplegamos, conectamos APIs y dejamos la solución operando con trazabilidad.",
-    motionHint: "La O operativa: producción estable.",
-    brandLetter: "O",
-    pillars: ["Integración", "Deploy"],
+      "Go-live acompañado: despliegue, conexiones y handoff para que operaciones no queden a ciegas.",
+    motionHint: "Deploy estable y trazabilidad.",
+    brandLetter: "D",
+    pillars: ["Deploy", "Handoff"],
   },
   {
     id: "evolve",
     number: "06",
-    label: "Evolucionamos",
+    label: "Entregamos",
     description:
-      "Medimos impacto, iteramos y sumamos automatización o IA donde aportan valor.",
-    motionHint: "La E de evolución: el producto sigue vivo.",
+      "Transferimos accesos, documentación y operación en producción; la evolución se planifica como etapas futuras.",
+    motionHint: "Handoff claro y evolución futura.",
     brandLetter: "E",
-    pillars: ["Escala", "IA"],
+    pillars: ["Entrega", "Evolución"],
   },
 ];
 

@@ -82,7 +82,7 @@ export function IncludeSection() {
   return (
     <Section id="proceso" className="section-process" labelledBy="process-title">
       <SectionHead
-        index="03"
+        index="04"
         title="No solo entregamos código."
         lead="Un proceso completo para convertir complejidad en una solución clara."
         titleId="process-title"
