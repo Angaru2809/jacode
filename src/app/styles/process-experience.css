@@ -1,0 +1,470 @@
+/* —— #metodologia — bloque 04: estudio interactivo (≠ timeline §03) —— */
+
+#metodologia.jacode-late.section-process-method {
+  max-width: none;
+  width: 100%;
+  margin-inline: 0;
+  padding: clamp(3rem, 7vw, 4.75rem) var(--page-gutter);
+  scroll-margin-top: var(--header-h);
+  background:
+    linear-gradient(180deg, var(--white) 0%, #f4f4f7 100%),
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(230, 0, 122, 0.07), transparent 60%);
+  border-block: 1px solid var(--gray-200);
+}
+
+#metodologia.jacode-late .process-method {
+  max-width: 1120px;
+  margin-inline: auto;
+}
+
+#metodologia.jacode-late .process-method__head {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 2.85rem);
+}
+
+#metodologia.jacode-late .process-method__head .section-index {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+}
+
+#metodologia.jacode-late .process-method__title {
+  margin-inline: auto;
+  max-width: 16em;
+  font-size: clamp(1.85rem, 3.4vw, 2.65rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+#metodologia.jacode-late .process-method__title .jacode-scroll-title__accent {
+  display: block;
+  margin-top: 0.2em;
+}
+
+#metodologia.jacode-late .process-method__lead {
+  margin: 1rem auto 0;
+  max-width: 48ch;
+  font-size: clamp(0.98rem, 1.25vw, 1.08rem);
+  line-height: 1.65;
+  color: var(--gray-600);
+}
+
+/* Consola segmentada (referencia pill / segmented control) */
+#metodologia.jacode-late .process-studio {
+  --studio-slot: calc(100% / var(--studio-count, 6));
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#metodologia.jacode-late .process-studio__console {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.35rem;
+  padding: 0.4rem;
+  border-radius: 999px;
+  background: rgba(8, 8, 11, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 22px 50px rgba(8, 8, 8, 0.22);
+}
+
+#metodologia.jacode-late .process-studio__glide {
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  left: 0.4rem;
+  width: calc((100% - 0.8rem) / var(--studio-count, 6));
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--studio-tone, #e6007a) 88%, #fff 12%) 0%,
+    color-mix(in srgb, var(--studio-tone, #e6007a) 65%, #080808 35%) 100%
+  );
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--studio-tone, #e6007a) 45%, transparent),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+  transform: translateX(calc(var(--studio-active, 0) * 100%));
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+#metodologia.jacode-late .process-studio__tab {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 4.25rem;
+  padding: 0.45rem 0.35rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  font: inherit;
+  overflow: hidden;
+  transition: color 0.3s var(--ease);
+}
+
+#metodologia.jacode-late .process-studio__tab:hover {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+#metodologia.jacode-late .process-studio__tab.is-active {
+  color: #fff;
+}
+
+#metodologia.jacode-late .process-studio__tab-icon {
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#metodologia.jacode-late .process-studio__tab-icon svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+#metodologia.jacode-late .process-studio__tab:hover .process-studio__tab-icon {
+  transform: translateY(-2px) scale(1.06);
+}
+
+#metodologia.jacode-late .process-studio__tab-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#metodologia.jacode-late .process-studio__tab:hover .process-studio__tab-copy {
+  transform: translateX(3px);
+}
+
+#metodologia.jacode-late .process-studio__tab.is-active .process-studio__tab-copy {
+  transform: translateX(0);
+}
+
+#metodologia.jacode-late .process-studio__tab-num {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.75;
+}
+
+#metodologia.jacode-late .process-studio__tab-label {
+  font-size: clamp(0.68rem, 0.95vw, 0.78rem);
+  font-weight: 600;
+  line-height: 1.15;
+  text-align: center;
+  max-width: 9em;
+}
+
+/* Tarjeta escenario */
+#metodologia.jacode-late .process-studio__viewport {
+  position: relative;
+  min-height: 15.5rem;
+}
+
+#metodologia.jacode-late .process-studio__card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.35rem, 2.8vw, 2rem);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(155deg, #121218 0%, #08080b 55%, #0e0e14 100%);
+  color: #fff;
+  box-shadow: 0 28px 70px rgba(8, 8, 8, 0.35);
+}
+
+#metodologia.jacode-late .process-studio__card.is-enter-forward {
+  animation: process-card-forward 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+#metodologia.jacode-late .process-studio__card.is-enter-back {
+  animation: process-card-back 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes process-card-forward {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.98);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes process-card-back {
+  from {
+    opacity: 0;
+    transform: translateX(-28px) scale(0.98);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+#metodologia.jacode-late .process-studio__card-glow {
+  position: absolute;
+  width: 55%;
+  height: 70%;
+  top: -20%;
+  right: -10%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in srgb, var(--studio-tone, #e6007a) 35%, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: process-glow-pulse 4s ease-in-out infinite;
+}
+
+@keyframes process-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+#metodologia.jacode-late .process-studio__card-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 85% 75% at 30% 40%, #000 10%, transparent 75%);
+  pointer-events: none;
+}
+
+#metodologia.jacode-late .process-studio__terminal {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 1.1rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.35);
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", monospace;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+#metodologia.jacode-late .process-studio__terminal-prompt {
+  color: var(--studio-tone, #e6007a);
+}
+
+#metodologia.jacode-late .process-studio__terminal-cmd {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+#metodologia.jacode-late .process-studio__terminal-cursor {
+  width: 0.45rem;
+  height: 0.85rem;
+  background: var(--studio-tone, #e6007a);
+  animation: process-cursor-blink 1s step-end infinite;
+}
+
+@keyframes process-cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+#metodologia.jacode-late .process-studio__card-body {
+  position: relative;
+  z-index: 1;
+}
+
+#metodologia.jacode-late .process-studio__card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.55rem;
+}
+
+#metodologia.jacode-late .process-studio__letter {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #fff;
+  background: color-mix(in srgb, var(--studio-tone, #e6007a) 75%, #080808 25%);
+  border: 1px solid color-mix(in srgb, var(--studio-tone, #e6007a) 50%, transparent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--studio-tone, #e6007a) 35%, transparent);
+}
+
+#metodologia.jacode-late .process-studio__letter--ghost {
+  opacity: 0.35;
+}
+
+#metodologia.jacode-late .process-studio__hint {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+#metodologia.jacode-late .process-studio__card-title {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-hero);
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  letter-spacing: -0.02em;
+}
+
+#metodologia.jacode-late .process-studio__card-text {
+  margin: 0;
+  max-width: 54ch;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+#metodologia.jacode-late .process-studio__pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+#metodologia.jacode-late .process-studio__pillars li {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.38rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.88);
+  animation: process-pill-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--pill-i, 0) * 0.06s + 0.12s);
+}
+
+@keyframes process-pill-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 960px) {
+  #metodologia.jacode-late .process-studio__console {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-radius: 18px;
+    padding: 0.45rem;
+  }
+
+  #metodologia.jacode-late .process-studio__glide {
+    display: none;
+  }
+
+  #metodologia.jacode-late .process-studio__tab.is-active {
+    background: color-mix(in srgb, var(--studio-tone, #e6007a) 38%, rgba(255, 255, 255, 0.06));
+    box-shadow: 0 0 20px color-mix(in srgb, var(--studio-tone, #e6007a) 25%, transparent);
+  }
+
+  #metodologia.jacode-late .process-studio__tab {
+    min-height: 3.85rem;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  #metodologia.jacode-late .process-studio__console {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    border-radius: 16px;
+    gap: 0.35rem;
+    scrollbar-width: none;
+  }
+
+  #metodologia.jacode-late .process-studio__console::-webkit-scrollbar {
+    display: none;
+  }
+
+  #metodologia.jacode-late .process-studio__glide {
+    display: none;
+  }
+
+  #metodologia.jacode-late .process-studio__tab {
+    flex: 0 0 42%;
+    scroll-snap-align: center;
+    min-height: 4rem;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  #metodologia.jacode-late .process-studio__tab.is-active {
+    background: color-mix(in srgb, var(--studio-tone, #e6007a) 35%, rgba(255, 255, 255, 0.06));
+  }
+
+  #metodologia.jacode-late .process-method__title .jacode-scroll-title__accent {
+    display: inline;
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #metodologia.jacode-late .process-studio__glide,
+  #metodologia.jacode-late .process-studio__tab-icon,
+  #metodologia.jacode-late .process-studio__tab-copy {
+    transition: none;
+  }
+
+  #metodologia.jacode-late .process-studio__card.is-enter-forward,
+  #metodologia.jacode-late .process-studio__card.is-enter-back,
+  #metodologia.jacode-late .process-studio__card-glow,
+  #metodologia.jacode-late .process-studio__terminal-cursor,
+  #metodologia.jacode-late .process-studio__pillars li {
+    animation: none;
+  }
+}
+
+html[data-motion="off"] #metodologia.jacode-late .process-studio__card.is-enter-forward,
+html[data-motion="off"] #metodologia.jacode-late .process-studio__card.is-enter-back,
+html[data-motion="off"] #metodologia.jacode-late .process-studio__card-glow,
+html[data-motion="off"] #metodologia.jacode-late .process-studio__terminal-cursor,
+html[data-motion="off"] #metodologia.jacode-late .process-studio__pillars li {
+  animation: none;
+}

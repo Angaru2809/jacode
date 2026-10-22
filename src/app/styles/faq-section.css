@@ -1,0 +1,269 @@
+/* —— #cuenta-idea — FAQ + CTA idea (bloque 05) —— */
+
+#cuenta-idea.jacode-late.section-faq {
+  max-width: none;
+  width: 100%;
+  margin-inline: 0;
+  padding: clamp(3rem, 7vw, 4.5rem) var(--page-gutter);
+  scroll-margin-top: var(--header-h);
+  background: var(--white);
+  border-block: 1px solid var(--gray-200);
+}
+
+#cuenta-idea.jacode-late .faq-studio {
+  max-width: 1120px;
+  margin-inline: auto;
+}
+
+#cuenta-idea.jacode-late .faq-studio__head {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 2.75rem);
+}
+
+#cuenta-idea.jacode-late .faq-studio__head .section-index {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+}
+
+#cuenta-idea.jacode-late .faq-studio__title {
+  margin-inline: auto;
+  max-width: 15em;
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  line-height: 1.12;
+}
+
+#cuenta-idea.jacode-late .faq-studio__title .jacode-scroll-title__accent {
+  display: block;
+  margin-top: 0.15em;
+}
+
+#cuenta-idea.jacode-late .faq-studio__lead {
+  margin: 1rem auto 0;
+  max-width: 46ch;
+  font-size: clamp(0.98rem, 1.2vw, 1.06rem);
+  line-height: 1.65;
+  color: var(--gray-600);
+}
+
+#cuenta-idea.jacode-late .faq-studio__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
+}
+
+#cuenta-idea.jacode-late .faq-studio__cta-panel {
+  position: sticky;
+  top: calc(var(--header-h) + 1rem);
+  padding: clamp(1.35rem, 2.5vw, 1.85rem);
+  border-radius: 18px;
+  border: 1px solid var(--gray-200);
+  background:
+    linear-gradient(160deg, #fafafa 0%, #fff 55%),
+    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(230, 0, 122, 0.08), transparent 60%);
+  box-shadow: 0 20px 50px rgba(8, 8, 8, 0.06);
+}
+
+#cuenta-idea.jacode-late .faq-studio__cta-kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--magenta);
+}
+
+#cuenta-idea.jacode-late .faq-studio__cta-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-hero);
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  letter-spacing: -0.02em;
+}
+
+#cuenta-idea.jacode-late .faq-studio__cta-text {
+  margin: 0 0 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--gray-600);
+}
+
+#cuenta-idea.jacode-late .faq-studio__cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+#cuenta-idea.jacode-late .faq-studio__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 0.25s var(--ease),
+    background 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+
+#cuenta-idea.jacode-late .faq-studio__btn--primary {
+  background: var(--magenta);
+  color: #fff;
+  border: 1px solid var(--magenta);
+}
+
+#cuenta-idea.jacode-late .faq-studio__btn--primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+#cuenta-idea.jacode-late .faq-studio__btn--ghost {
+  background: transparent;
+  color: var(--pitch);
+  border: 1px solid var(--gray-200);
+}
+
+#cuenta-idea.jacode-late .faq-studio__btn--ghost:hover {
+  border-color: var(--magenta);
+  color: var(--magenta);
+}
+
+#cuenta-idea.jacode-late .faq-studio__cta-mail {
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+#cuenta-idea.jacode-late .faq-studio__cta-mail a {
+  color: var(--gray-600);
+  text-decoration: none;
+}
+
+#cuenta-idea.jacode-late .faq-studio__cta-mail a:hover {
+  color: var(--magenta);
+}
+
+#cuenta-idea.jacode-late .faq-studio__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+#cuenta-idea.jacode-late .faq-item {
+  border-radius: 14px;
+  border: 1px solid var(--gray-200);
+  background: var(--gray-50);
+  overflow: hidden;
+  transition:
+    border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    background 0.3s var(--ease);
+  animation: faq-item-in 0.5s var(--ease) both;
+  animation-delay: calc(var(--faq-i, 0) * 0.05s);
+}
+
+@keyframes faq-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#cuenta-idea.jacode-late .faq-item.is-open {
+  background: #fff;
+  border-color: rgba(230, 0, 122, 0.28);
+  box-shadow: 0 14px 36px rgba(8, 8, 8, 0.06);
+}
+
+#cuenta-idea.jacode-late .faq-item__heading {
+  margin: 0;
+}
+
+#cuenta-idea.jacode-late .faq-item__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  color: var(--pitch);
+}
+
+#cuenta-idea.jacode-late .faq-item__q {
+  font-weight: 600;
+  font-size: clamp(0.92rem, 1.15vw, 1rem);
+  line-height: 1.4;
+  transition: transform 0.3s var(--ease);
+}
+
+#cuenta-idea.jacode-late .faq-item__trigger:hover .faq-item__q {
+  transform: translateX(4px);
+}
+
+#cuenta-idea.jacode-late .faq-item__icon {
+  flex-shrink: 0;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-right: 2px solid var(--gray-400);
+  border-bottom: 2px solid var(--gray-400);
+  transform: rotate(45deg);
+  transition: transform 0.35s var(--ease), border-color 0.3s var(--ease);
+}
+
+#cuenta-idea.jacode-late .faq-item.is-open .faq-item__icon {
+  transform: rotate(-135deg);
+  border-color: var(--magenta);
+}
+
+#cuenta-idea.jacode-late .faq-item__panel-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease);
+}
+
+#cuenta-idea.jacode-late .faq-item.is-open .faq-item__panel-wrap {
+  grid-template-rows: 1fr;
+}
+
+#cuenta-idea.jacode-late .faq-item__panel {
+  overflow: hidden;
+  min-height: 0;
+}
+
+#cuenta-idea.jacode-late .faq-item__panel p {
+  margin: 0;
+  padding: 0 1.1rem 1.05rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--gray-600);
+}
+
+@media (max-width: 900px) {
+  #cuenta-idea.jacode-late .faq-studio__layout {
+    grid-template-columns: 1fr;
+  }
+
+  #cuenta-idea.jacode-late .faq-studio__cta-panel {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #cuenta-idea.jacode-late .faq-item,
+  #cuenta-idea.jacode-late .faq-item__panel-wrap,
+  #cuenta-idea.jacode-late .faq-item__q {
+    animation: none;
+    transition: none;
+  }
+}

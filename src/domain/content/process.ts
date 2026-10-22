@@ -123,49 +123,61 @@ export const journeyStages: JourneyStage[] = [
     id: "discover",
     number: "01",
     label: "Descubrimos",
-    description: "Alineamos problema, contexto y objetivos del negocio.",
-    motionHint: "Piezas dispersas: exploramos la complejidad.",
+    description:
+      "Entendemos la necesidad real, el contexto del negocio y el resultado que debe medirse.",
+    motionHint: "Complejidad visible: mapeamos piezas antes de construir.",
     brandLetter: null,
+    pillars: ["Diagnóstico", "Alcance"],
   },
   {
     id: "design",
     number: "02",
     label: "Diseñamos",
-    description: "Definimos experiencia, flujos e interfaz antes de codear.",
-    motionHint: "La J de JACODE toma forma en el cubo.",
+    description:
+      "Prototipamos flujos e interfaz alineados al producto — sin saltar directo al código.",
+    motionHint: "La J toma forma: experiencia antes de implementación.",
     brandLetter: "J",
+    pillars: ["UX", "UI"],
   },
   {
     id: "build",
     number: "03",
     label: "Desarrollamos",
-    description: "Construimos con el stack adecuado y entregables claros.",
-    motionHint: "Encendemos la A: arquitectura en código.",
+    description:
+      "Elegimos stack, arquitectura y ritmo de entrega. Código modular listo para crecer.",
+    motionHint: "La A en código: ingeniería con criterio.",
     brandLetter: "A",
+    pillars: ["Stack", "Código"],
   },
   {
     id: "test",
     number: "04",
     label: "Probamos",
-    description: "Validamos calidad, rendimiento y experiencia real.",
-    motionHint: "La C de control: probamos cada encaje.",
+    description:
+      "Validamos funcionalidad, datos y experiencia en escenarios reales antes del go-live.",
+    motionHint: "La C de control: cada encaje cuenta.",
     brandLetter: "C",
+    pillars: ["QA", "Datos"],
   },
   {
     id: "ship",
     number: "05",
     label: "Implementamos",
-    description: "Desplegamos en producción con control y trazabilidad.",
-    motionHint: "La O operativa: solución en producción.",
+    description:
+      "Desplegamos, conectamos APIs y dejamos la solución operando con trazabilidad.",
+    motionHint: "La O operativa: producción estable.",
     brandLetter: "O",
+    pillars: ["Integración", "Deploy"],
   },
   {
     id: "evolve",
     number: "06",
     label: "Evolucionamos",
-    description: "Medimos, mejoramos y escalamos la solución en el tiempo.",
-    motionHint: "La E de evolución: el cubo abre espacio.",
+    description:
+      "Medimos impacto, iteramos y sumamos automatización o IA donde aportan valor.",
+    motionHint: "La E de evolución: el producto sigue vivo.",
     brandLetter: "E",
+    pillars: ["Escala", "IA"],
   },
 ];
 

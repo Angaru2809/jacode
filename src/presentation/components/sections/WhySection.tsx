@@ -5,7 +5,7 @@ import { WhyFeatureCard } from "@presentation/components/sections/WhyFeatureCard
 export function WhySection() {
   return (
     <Section id="por-que" className="section-why" labelledBy="why-title">
-      <SectionHead index="08" title="¿Por qué JACODE?" titleId="why-title" />
+      <SectionHead index="07" title="¿Por qué JACODE?" titleId="why-title" />
       <div className="why-feature-grid">
         {whyItems.map((item, index) => (
           <WhyFeatureCard key={item.id} item={item} index={index} />

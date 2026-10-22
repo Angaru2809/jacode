@@ -81,6 +81,8 @@ export interface JourneyStage {
   motionHint: string;
   /** Letra de JACODE que se enciende en el cubo */
   brandLetter: string | null;
+  /** Capas de trabajo en esta estación (sin repetir otras secciones) */
+  pillars: string[];
 }
 
 export interface WhyItem {

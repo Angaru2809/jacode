@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { useMotionPreference } from "@app/providers/MotionProvider";
-import mascotImg from "../../../404.png";
+import { brand } from "@domain/content/brand";
 
 function BackArrow() {
   return (
@@ -84,7 +84,7 @@ export function NotFoundPage() {
           <div className="jacode-404__mascot-stage">
             <img
               className="jacode-404__mascot"
-              src={mascotImg}
+              src={brand.notFoundMascotSrc}
               alt=""
               width={340}
               height={340}

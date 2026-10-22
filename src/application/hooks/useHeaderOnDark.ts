@@ -1,6 +1,22 @@
 import { useEffect, useState } from "react";
 
-const DARK_SURFACE_SELECTOR = ".stack-band, .cta-inner, .section-cta";
+/** Superficies oscuras bajo el header → logo blanco + barra oscura */
+const DARK_SURFACE_SELECTOR =
+  ".stack-band, .cta-inner, .section-cta, #metodologia.jacode-late .process-studio__card";
+
+function isDarkAtPoint(x: number, y: number): boolean {
+  const stack = document.elementsFromPoint(x, y);
+
+  for (const el of stack) {
+    if (el.closest(".site-header")) continue;
+    if (el.closest(DARK_SURFACE_SELECTOR)) return true;
+
+    const region = el.closest("section, footer, main");
+    if (region) return false;
+  }
+
+  return false;
+}
 
 function probeHeaderOnDark(): boolean {
   const bar = document.querySelector(".header-bar");
@@ -8,25 +24,18 @@ function probeHeaderOnDark(): boolean {
 
   const rect = bar.getBoundingClientRect();
   const y = rect.top + rect.height * 0.55;
-  const xs = [
-    rect.left + rect.width * 0.12,
-    rect.left + rect.width * 0.5,
-    rect.left + rect.width * 0.88,
-  ];
+  const ratios = [0.14, 0.5, 0.86];
+  let darkVotes = 0;
 
-  for (const x of xs) {
-    const stack = document.elementsFromPoint(x, y);
-    for (const el of stack) {
-      if (el.closest(".site-header")) continue;
-      if (el.closest(DARK_SURFACE_SELECTOR)) return true;
-      if (el.closest("main, footer")) return false;
-    }
+  for (const ratio of ratios) {
+    const x = rect.left + rect.width * ratio;
+    if (isDarkAtPoint(x, y)) darkVotes += 1;
   }
 
-  return false;
+  return darkVotes >= 2;
 }
 
-/** Header sobre franjas oscuras (stack, CTA). */
+/** Header sobre franjas oscuras (stack, CTA, panel enfoque, recorrido). */
 export function useHeaderOnDark(): boolean {
   const [onDark, setOnDark] = useState(false);
 

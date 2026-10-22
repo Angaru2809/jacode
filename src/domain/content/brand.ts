@@ -24,7 +24,11 @@ export const brand = {
   tiktokUrl: "https://tiktok.com/@jacode",
   whatsappMessage:
     "Hola JACODE, quiero convertir una idea en una solución digital.",
-  logoSrc: "/assets/logo-jacode.png",
+  /** Logotipo negro — usar sobre fondos claros */
+  logoSrc: "/assets/brand/logo-jacode-black.png",
+  /** Logotipo blanco — usar sobre fondos oscuros */
+  logoSrcOnDark: "/assets/brand/logo-jacode-white.png",
+  notFoundMascotSrc: "/assets/errors/404-mascot.png",
   colors: {
     magenta: "#FF006E",
     pitch: "#080808",
@@ -41,7 +45,6 @@ export const storyLabels: Record<string, string> = {
 
 export const navLinks: NavLink[] = [
   { href: "#que-hacemos", label: "Qué hacemos" },
-  { href: "#enfoque", label: "Enfoque" },
   { href: "#proceso", label: "Proceso" },
   { href: "#modalidades", label: "Modalidades" },
   { href: "#contacto", label: "Panel cliente", cta: true },

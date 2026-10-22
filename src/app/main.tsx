@@ -5,6 +5,8 @@ import "@app/styles/tokens.css";
 import "@app/styles/global.css";
 import "@app/styles/stack-section.css";
 import "@app/styles/sections-enfoque-contacto.css";
+import "@app/styles/process-experience.css";
+import "@app/styles/deliverables-vault.css";
 import "@app/styles/not-found.css";
 
 const root = document.getElementById("root");

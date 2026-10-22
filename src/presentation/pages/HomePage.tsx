@@ -6,11 +6,10 @@ import { SkipLink } from "@presentation/components/a11y/SkipLink";
 import { HeroSection } from "@presentation/components/sections/HeroSection";
 import { ServicesSection } from "@presentation/components/sections/ServicesSection";
 import { StackSection } from "@presentation/components/sections/StackSection";
-import { ApproachSection } from "@presentation/components/sections/ApproachSection";
 import { IncludeSection } from "@presentation/components/sections/IncludeSection";
 import { DeliverablesSection } from "@presentation/components/sections/DeliverablesSection";
 import { ModesSection } from "@presentation/components/sections/ModesSection";
-import { JourneySection } from "@presentation/components/sections/JourneySection";
+import { ProcessSection } from "@presentation/components/sections/ProcessSection";
 import { WhySection } from "@presentation/components/sections/WhySection";
 import { CtaSection } from "@presentation/components/sections/CtaSection";
 import { useMotionPreference } from "@app/providers/MotionProvider";
@@ -53,10 +52,9 @@ export function HomePage() {
         />
         <StackSection />
         <IncludeSection />
-        <ApproachSection />
+        <ProcessSection />
         <DeliverablesSection />
         <ModesSection />
-        <JourneySection />
         <WhySection />
         <CtaSection />
       </main>

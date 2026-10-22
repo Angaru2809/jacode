@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useMemo, useState, type CSSProperties } from "react";
 import { deliverables } from "@domain/content/process";
 import { deliverablesByGroup } from "@domain/content/deliverableGroups";
 import type { DeliverableItem } from "@domain/models/types";
@@ -6,12 +6,13 @@ import { useInView } from "@application/hooks/useInView";
 import { useScrollProgress } from "@application/hooks/useScrollProgress";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 import { Section } from "@presentation/components/ui/Section";
+import { ScrollSplitTitle } from "@presentation/components/ui/ScrollSplitTitle";
 
 const groups = deliverablesByGroup();
 
 /** Grupos que se abren juntos al enfocar una tarjeta (solo clic, sin hover). */
 const EXPAND_BUNDLES: Record<string, string[]> = {
-  experience: ["experience", "product", "quality"],
+  experience: ["experience"],
   product: ["product", "complete"],
   quality: ["experience", "product", "quality"],
   complete: ["product", "complete"],
@@ -28,11 +29,9 @@ type BentoCard = {
 };
 
 export function DeliverablesSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const [gridRef, gridInView] = useInView<HTMLDivElement>({ threshold: 0.08, rootMargin: "0px 0px -4% 0px" });
   const { reducedMotion } = useMotionPreference();
   const motionEnabled = !reducedMotion;
-  const sectionEnter = useScrollProgress(sectionRef, motionEnabled);
   const gridScroll = useScrollProgress(gridRef, motionEnabled);
   const [focusId, setFocusId] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set());
@@ -90,44 +89,57 @@ export function DeliverablesSection() {
       className="section-deliverables jacode-late"
       labelledBy="deliverables-title"
     >
-      <div
-        ref={sectionRef}
-        className="deliverables-bento-shell"
-        style={
-          {
-            "--section-enter": reducedMotion ? 1 : sectionEnter,
-          } as CSSProperties
-        }
-      >
-        <header className="deliverables-bento__head">
-          <span className="deliverables-bento__index" aria-hidden="true">
+      <div className="deliverables-bento-shell">
+        <header className="deliverables-bento__head deliverables-bento__head--vault reveal">
+          <span className="section-index" aria-hidden="true">
             05
           </span>
-          <div className="deliverables-bento__title-row">
-            <h2 id="deliverables-title" className="deliverables-bento__title-left">
-              Cada entregable es una pieza.
-            </h2>
-            <p className="deliverables-bento__title-right">
-              Juntas forman la solución completa.
-            </p>
-          </div>
-          <p className="deliverables-bento__lead">
-            Experiencia, producto y operación — el alcance final se acuerda contigo.
+          <ScrollSplitTitle
+            id="deliverables-title"
+            plain="Cada entregable es una pieza."
+            accent="Juntas forman la solución."
+            className="deliverables-bento__title-vault"
+          />
+          <p className="deliverables-bento__lead deliverables-bento__lead--vault">
+            Explora el vault: experiencia, producto, calidad y paquete completo — el alcance
+            final se acuerda contigo.
           </p>
         </header>
 
-        <div
-          ref={gridRef}
-          className={`deliverables-bento${motionOn ? " is-scroll-live" : ""}${
-            expandedIds.size > 0 ? " has-expanded" : ""
-          }`}
-          style={
-            {
-              "--deliverables-scroll": reducedMotion ? 0 : gridScroll,
-            } as CSSProperties
-          }
-        >
-          {bentoCards.map((card, i) => {
+        <div className="deliverables-vault">
+          <nav className="deliverables-vault__rail" aria-label="Paquetes de entregables">
+            <p className="deliverables-vault__rail-label">Vault / entregables</p>
+            {bentoCards.map((card) => {
+              const isActive = focusId === card.id || (focusId === null && expandedIds.has(card.id));
+              const isOn = expandedIds.has(card.id) || focusId === card.id;
+              return (
+                <button
+                  key={`rail-${card.id}`}
+                  type="button"
+                  className={`deliverables-vault__rail-btn${isOn ? " is-active" : ""}`}
+                  aria-current={isActive ? "true" : undefined}
+                  onClick={() => onCardActivate(card.id)}
+                >
+                  <span className="deliverables-vault__rail-num">{card.step}</span>
+                  <span className="deliverables-vault__rail-title">{card.title}</span>
+                </button>
+              );
+            })}
+          </nav>
+
+          <div className="deliverables-vault__stage">
+            <div
+              ref={gridRef}
+              className={`deliverables-bento${motionOn ? " is-scroll-live" : ""}${
+                expandedIds.size > 0 ? " has-expanded" : ""
+              }`}
+              style={
+                {
+                  "--deliverables-scroll": reducedMotion ? 0 : gridScroll,
+                } as CSSProperties
+              }
+            >
+              {bentoCards.map((card, i) => {
             const isExpanded = expandedIds.has(card.id);
             const isFocused = focusId === card.id;
             return (
@@ -135,6 +147,7 @@ export function DeliverablesSection() {
                 key={card.id}
                 className={[
                   "deliverables-bento__card",
+                  `deliverables-bento__card--${card.id}`,
                   `deliverables-bento__card--${card.tone}`,
                   showCards ? "is-in" : "",
                   isExpanded ? "is-expanded" : "",
@@ -173,7 +186,9 @@ export function DeliverablesSection() {
                 </span>
               </article>
             );
-          })}
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </Section>
