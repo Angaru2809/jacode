@@ -176,7 +176,7 @@ export const journeyStages: JourneyStage[] = [
   {
     id: "ship",
     number: "05",
-    label: "Implementamos",
+    label: "Desplegamos",
     description:
       "Go-live acompañado: despliegue, conexiones y handoff para que operaciones no queden a ciegas.",
     motionHint: "Deploy estable y trazabilidad.",

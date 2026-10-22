@@ -275,12 +275,50 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
+#proceso.jacode-late .process-studio__terminal-brand {
+  display: inline-flex;
+  gap: 0.12rem;
+  margin-right: 0.15rem;
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+#proceso.jacode-late .process-studio__terminal-brand-char {
+  color: rgba(255, 255, 255, 0.28);
+  transition:
+    color 0.35s ease,
+    text-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+#proceso.jacode-late .process-studio__terminal-brand-char.is-lit {
+  color: var(--lit-tone, var(--studio-tone, #e6007a));
+  text-shadow:
+    0 0 12px color-mix(in srgb, var(--lit-tone, #e6007a) 55%, transparent),
+    0 0 28px color-mix(in srgb, var(--lit-tone, #e6007a) 35%, transparent);
+  transform: scale(1.08);
+}
+
+#proceso.jacode-late .process-studio__terminal-sep {
+  color: rgba(255, 255, 255, 0.35);
+  margin-inline: 0.1rem;
+}
+
 #proceso.jacode-late .process-studio__terminal-prompt {
   color: var(--studio-tone, #e6007a);
 }
 
 #proceso.jacode-late .process-studio__terminal-cmd {
   color: rgba(255, 255, 255, 0.88);
+}
+
+#proceso.jacode-late .process-studio__verb-letter.is-lit {
+  color: var(--lit-tone, var(--studio-tone, #e6007a));
+  text-shadow: 0 0 18px color-mix(in srgb, var(--lit-tone, #e6007a) 45%, transparent);
+  font-weight: 800;
 }
 
 #proceso.jacode-late .process-studio__terminal-cursor {
@@ -364,6 +402,12 @@
 }
 
 #proceso.jacode-late .process-studio__pillars li {
+  animation: process-pill-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--pill-i, 0) * 0.06s + 0.12s);
+}
+
+#proceso.jacode-late .process-studio__pillar-btn {
+  font: inherit;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -373,8 +417,43 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   color: rgba(255, 255, 255, 0.88);
-  animation: process-pill-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--pill-i, 0) * 0.06s + 0.12s);
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+#proceso.jacode-late .process-studio__pillar-btn:hover {
+  border-color: color-mix(in srgb, var(--studio-tone, #e6007a) 35%, rgba(255, 255, 255, 0.12));
+}
+
+#proceso.jacode-late .process-studio__pillar-btn.is-active {
+  border-color: color-mix(in srgb, var(--studio-tone, #e6007a) 55%, transparent);
+  background: color-mix(in srgb, var(--studio-tone, #e6007a) 22%, rgba(255, 255, 255, 0.04));
+  box-shadow: 0 0 16px color-mix(in srgb, var(--studio-tone, #e6007a) 28%, transparent);
+}
+
+#proceso.jacode-late .process-studio__card-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+#proceso.jacode-late .process-studio.has-pillar-flash .process-studio__card.is-pillar-pulse {
+  animation: process-pillar-flash 0.55s ease;
+}
+
+@keyframes process-pillar-flash {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+  40% {
+    box-shadow: 0 0 40px color-mix(in srgb, var(--studio-tone, #e6007a) 35%, transparent);
+  }
 }
 
 @keyframes process-pill-in {
