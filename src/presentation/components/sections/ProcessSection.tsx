@@ -101,7 +101,7 @@ export function ProcessSection() {
       <div className="process-method reveal">
         <header className="process-method__head">
           <span className="section-index" aria-hidden="true">
-            04
+            05
           </span>
           <ScrollSplitTitle
             id="method-title"

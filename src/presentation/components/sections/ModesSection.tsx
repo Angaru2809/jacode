@@ -5,7 +5,7 @@ export function ModesSection() {
   return (
     <Section id="modalidades" className="section-modes" labelledBy="modes-title">
       <SectionHead
-        index="06"
+        index="07"
         title="Nos adaptamos a tu proyecto."
         lead="Elige la modalidad que mejor encaja con tu ritmo y tu alcance."
         titleId="modes-title"

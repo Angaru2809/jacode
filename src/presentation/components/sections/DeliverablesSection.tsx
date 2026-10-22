@@ -92,7 +92,7 @@ export function DeliverablesSection() {
       <div className="deliverables-bento-shell">
         <header className="deliverables-bento__head deliverables-bento__head--vault reveal">
           <span className="section-index" aria-hidden="true">
-            05
+            06
           </span>
           <ScrollSplitTitle
             id="deliverables-title"

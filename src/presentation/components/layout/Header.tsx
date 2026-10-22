@@ -54,18 +54,17 @@ export function Header() {
             <BrandMark />
           </Link>
 
-          <div className="header-nav-cluster">
-            <nav
-              id={menuId}
-              className={`nav${open ? " is-open" : ""}`}
-              aria-label="Principal"
-            >
-              <div className="nav-bubble">
-                {primaryLinks.map((link) => {
-                  const isActive = activeHref === link.href;
-                  return (
+          <nav
+            id={menuId}
+            className={`nav${open ? " is-open" : ""}`}
+            aria-label="Principal"
+          >
+            <ul className="nav-links">
+              {primaryLinks.map((link) => {
+                const isActive = activeHref === link.href;
+                return (
+                  <li key={link.href} className="nav-links__item">
                     <a
-                      key={link.href}
                       href={link.href}
                       className={`nav-link${isActive ? " is-active" : ""}`}
                       aria-current={isActive ? "location" : undefined}
@@ -73,21 +72,21 @@ export function Header() {
                     >
                       {link.label}
                     </a>
-                  );
-                })}
-              </div>
+                  </li>
+                );
+              })}
+            </ul>
 
-              {ctaLink ? (
-                <a
-                  href={ctaLink.href}
-                  className="nav-cta nav-cta--drawer"
-                  onClick={() => setOpen(false)}
-                >
-                  <span className="nav-cta__label">{ctaLink.label}</span>
-                </a>
-              ) : null}
-            </nav>
-          </div>
+            {ctaLink ? (
+              <a
+                href={ctaLink.href}
+                className="nav-cta nav-cta--drawer"
+                onClick={() => setOpen(false)}
+              >
+                <span className="nav-cta__label">{ctaLink.label}</span>
+              </a>
+            ) : null}
+          </nav>
 
           <div className="header-end">
             {ctaLink ? (

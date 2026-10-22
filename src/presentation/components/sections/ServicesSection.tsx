@@ -18,7 +18,7 @@ export function ServicesSection({ onHoverService }: ServicesSectionProps) {
           className="section-index services-intro__index reveal-stagger__item"
           aria-hidden="true"
         >
-          01
+          02
         </span>
         <h2 id="services-title" className="services-intro__title reveal-stagger__item">
           <span className="services-intro__title-line">Convertimos ideas</span>

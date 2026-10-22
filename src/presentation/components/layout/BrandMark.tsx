@@ -7,8 +7,8 @@ export function BrandMark() {
         className="brand-mark__logo brand-mark__logo--on-light"
         src={brand.logoSrc}
         alt={brand.name}
-        width={132}
-        height={36}
+        width={196}
+        height={54}
         decoding="async"
       />
       <img
@@ -16,8 +16,8 @@ export function BrandMark() {
         src={brand.logoSrcOnDark}
         alt=""
         aria-hidden="true"
-        width={132}
-        height={36}
+        width={196}
+        height={54}
         decoding="async"
       />
     </span>

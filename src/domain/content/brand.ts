@@ -5,9 +5,20 @@ export const brand = {
   tagline: "Tecnología · Innovación · Desarrollo",
   headlineIntro: ["Lo que imaginas", "puede evolucionar."],
   headlineAccent: "Lo hacemos realidad.",
-  heroBadge: "Soluciones digitales",
+  heroBadge: "Estudio de ingeniería web y software",
+  /** Above the fold — quién es el cliente y qué ofrecemos */
+  heroAudience:
+    "Para empresas y equipos que necesitan lanzar o mejorar una web, plataforma o producto digital.",
+  /** Chips alineados a servicios reales (sección 01) */
+  heroOffers: [
+    "Desarrollo web",
+    "Software a medida",
+    "Apps y plataformas",
+    "IA, automatización e integraciones",
+  ] as const,
   lead:
-    "Desarrollamos soluciones digitales que convierten ideas, procesos y problemas reales en tecnología funcional.",
+    "Diseñamos y construimos webs, plataformas y software que resuelven problemas concretos de operación y negocio.",
+  heroCtaLabel: "Hablemos de tu proyecto",
   /** Sección servicios — dos líneas en desktop */
   servicesLeadLines: [
     "Desarrollamos soluciones digitales que convierten ideas, procesos",
