@@ -179,10 +179,44 @@
   overflow: hidden;
   padding: clamp(1.35rem, 2.8vw, 2rem);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(155deg, #121218 0%, #08080b 55%, #0e0e14 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   color: #fff;
-  box-shadow: 0 28px 70px rgba(8, 8, 8, 0.35);
+  background-color: #070708;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, transparent 18%),
+    radial-gradient(
+      ellipse 140% 110% at 102% 92%,
+      color-mix(in srgb, var(--studio-tone, #e6007a) 7%, transparent) 0%,
+      color-mix(in srgb, var(--studio-tone, #e6007a) 3%, transparent) 28%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 90% 70% at 0% 100%,
+      rgba(255, 255, 255, 0.025) 0%,
+      transparent 55%
+    );
+  box-shadow:
+    0 24px 56px rgba(8, 8, 8, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+#proceso.jacode-late .process-studio__card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12%;
+  bottom: 12%;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--studio-tone, #e6007a) 55%, transparent) 35%,
+    color-mix(in srgb, var(--studio-tone, #e6007a) 55%, transparent) 65%,
+    transparent 100%
+  );
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 #proceso.jacode-late .process-studio__card.is-enter-forward {
@@ -219,42 +253,15 @@
   }
 }
 
-#proceso.jacode-late .process-studio__card-glow {
-  position: absolute;
-  width: 55%;
-  height: 70%;
-  top: -20%;
-  right: -10%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    color-mix(in srgb, var(--studio-tone, #e6007a) 35%, transparent) 0%,
-    transparent 70%
-  );
-  pointer-events: none;
-  animation: process-glow-pulse 4s ease-in-out infinite;
-}
-
-@keyframes process-glow-pulse {
-  0%,
-  100% {
-    opacity: 0.65;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
-}
-
 #proceso.jacode-late .process-studio__card-grid {
   position: absolute;
   inset: 0;
-  opacity: 0.35;
+  opacity: 0.22;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 85% 75% at 30% 40%, #000 10%, transparent 75%);
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 95% 85% at 22% 38%, #000 0%, transparent 72%);
   pointer-events: none;
 }
 
@@ -315,12 +322,6 @@
   color: rgba(255, 255, 255, 0.88);
 }
 
-#proceso.jacode-late .process-studio__verb-letter.is-lit {
-  color: var(--lit-tone, var(--studio-tone, #e6007a));
-  text-shadow: 0 0 18px color-mix(in srgb, var(--lit-tone, #e6007a) 45%, transparent);
-  font-weight: 800;
-}
-
 #proceso.jacode-late .process-studio__terminal-cursor {
   width: 0.45rem;
   height: 0.85rem;
@@ -341,6 +342,9 @@
 #proceso.jacode-late .process-studio__card-body {
   position: relative;
   z-index: 1;
+  margin-top: 0.15rem;
+  padding-top: clamp(0.85rem, 1.8vw, 1.1rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 #proceso.jacode-late .process-studio__card-meta {
@@ -533,7 +537,6 @@
 
   #proceso.jacode-late .process-studio__card.is-enter-forward,
   #proceso.jacode-late .process-studio__card.is-enter-back,
-  #proceso.jacode-late .process-studio__card-glow,
   #proceso.jacode-late .process-studio__terminal-cursor,
   #proceso.jacode-late .process-studio__pillars li {
     animation: none;
@@ -542,7 +545,6 @@
 
 html[data-motion="off"] #proceso.jacode-late .process-studio__card.is-enter-forward,
 html[data-motion="off"] #proceso.jacode-late .process-studio__card.is-enter-back,
-html[data-motion="off"] #proceso.jacode-late .process-studio__card-glow,
 html[data-motion="off"] #proceso.jacode-late .process-studio__terminal-cursor,
 html[data-motion="off"] #proceso.jacode-late .process-studio__pillars li {
   animation: none;

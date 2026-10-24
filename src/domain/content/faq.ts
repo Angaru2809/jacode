@@ -4,11 +4,34 @@ export interface FaqItem {
   answer: string;
 }
 
+export const contactSectionCopy = {
+  titlePlain: "Cuéntanos qué",
+  titleAccent: "necesitas.",
+  lead: "Te ayudamos a definir el siguiente paso con claridad.",
+  faqTitle: "Preguntas frecuentes",
+} as const;
+
+export const contactServiceOptions = [
+  { value: "", label: "Servicio que necesitas" },
+  { value: "software", label: "Software a medida" },
+  { value: "web", label: "Desarrollo web" },
+  { value: "mobile", label: "Apps móviles" },
+  { value: "ai", label: "IA y automatización" },
+  { value: "integration", label: "Integraciones / APIs" },
+  { value: "other", label: "Otro / aún lo estoy definiendo" },
+] as const;
+
+export const contactFormCopy = {
+  title: "Cuéntanos tu proyecto",
+  submitLabel: "Enviar solicitud",
+  consentLabel:
+    "Autorizo el tratamiento de mis datos personales conforme a la Ley 1581 de 2012 y el régimen de protección de datos aplicable en Colombia.",
+} as const;
+
 export const faqIntro = {
-  kicker: "Claridad & respuestas",
-  title: "Preguntas frecuentes sobre alcance, tiempos y presupuestos",
-  lead:
-    "Todo lo que necesitas saber antes de iniciar un proyecto de desarrollo con JACODE.",
+  kicker: contactSectionCopy.faqTitle,
+  title: contactSectionCopy.faqTitle,
+  lead: "",
 } as const;
 
 export const faqItems: FaqItem[] = [

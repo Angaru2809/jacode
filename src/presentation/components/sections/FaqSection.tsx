@@ -1,5 +1,5 @@
 import { useCallback, useState, type CSSProperties } from "react";
-import { faqIntro, faqItems } from "@domain/content/faq";
+import { contactSectionCopy, faqItems } from "@domain/content/faq";
 import { Section } from "@presentation/components/ui/Section";
 import { ContactLeadForm } from "@presentation/components/sections/ContactLeadForm";
 
@@ -11,61 +11,75 @@ export function FaqSection() {
   }, []);
 
   return (
-    <Section id="faq" className="section-faq" labelledBy="faq-title">
-      <div className="faq-studio reveal">
-        <header className="faq-studio__head">
-          <span className="section-index" aria-hidden="true">
+    <Section id="faq" className="section-faq" labelledBy="contact-title">
+      <div className="contact-studio reveal">
+        <header className="contact-studio__intro">
+          <span className="section-index contact-studio__index" aria-hidden="true">
             07
           </span>
-          <p className="faq-studio__kicker">{faqIntro.kicker}</p>
-          <h2 id="faq-title" className="faq-studio__title">
-            {faqIntro.title}
+          <h2 id="contact-title" className="contact-studio__title">
+            <span className="contact-studio__title-line">{contactSectionCopy.titlePlain}</span>
+            <span className="contact-studio__title-line contact-studio__title-line--accent">
+              {contactSectionCopy.titleAccent}
+            </span>
           </h2>
-          <p className="faq-studio__lead">{faqIntro.lead}</p>
+          <p className="contact-studio__lead">{contactSectionCopy.lead}</p>
         </header>
 
-        <div className="faq-studio__layout">
-          <div id="contacto" className="faq-studio__form-panel scroll-target">
+        <div className="contact-studio__layout">
+          <div id="contacto" className="contact-studio__glass scroll-target">
             <ContactLeadForm />
           </div>
 
-          <div className="faq-studio__list" role="region" aria-label="Preguntas frecuentes">
-            {faqItems.map((item, i) => {
-              const isOpen = openId === item.id;
-              return (
-                <article
-                  key={item.id}
-                  className={`faq-item${isOpen ? " is-open" : ""}`}
-                  style={{ "--faq-i": i } as CSSProperties}
-                >
-                  <h3 className="faq-item__heading">
-                    <button
-                      type="button"
-                      className="faq-item__trigger"
-                      aria-expanded={isOpen}
-                      aria-controls={`faq-panel-${item.id}`}
-                      id={`faq-trigger-${item.id}`}
-                      onClick={() => toggle(item.id)}
-                    >
-                      <span className="faq-item__q">{item.question}</span>
-                      <span className="faq-item__icon" aria-hidden="true" />
-                    </button>
-                  </h3>
-                  <div
-                    id={`faq-panel-${item.id}`}
-                    role="region"
-                    aria-labelledby={`faq-trigger-${item.id}`}
-                    className="faq-item__panel-wrap"
-                    aria-hidden={!isOpen}
+          <aside className="contact-studio__faq" aria-labelledby="faq-aside-title">
+            <header className="contact-faq__head">
+              <h3 id="faq-aside-title" className="contact-faq__title">
+                {contactSectionCopy.faqTitle}
+              </h3>
+            </header>
+
+            <div className="contact-faq__list" role="region" aria-label="Preguntas frecuentes">
+              {faqItems.map((item, i) => {
+                const isOpen = openId === item.id;
+                const num = String(i + 1).padStart(2, "0");
+                return (
+                  <article
+                    key={item.id}
+                    className={`contact-faq-item${isOpen ? " is-open" : ""}`}
+                    style={{ "--faq-i": i } as CSSProperties}
                   >
-                    <div className="faq-item__panel">
-                      <p>{item.answer}</p>
+                    <h4 className="contact-faq-item__heading">
+                      <button
+                        type="button"
+                        className="contact-faq-item__trigger"
+                        aria-expanded={isOpen}
+                        aria-controls={`faq-panel-${item.id}`}
+                        id={`faq-trigger-${item.id}`}
+                        onClick={() => toggle(item.id)}
+                      >
+                        <span className="contact-faq-item__num" aria-hidden="true">
+                          {num}
+                        </span>
+                        <span className="contact-faq-item__q">{item.question}</span>
+                        <span className="contact-faq-item__chev" aria-hidden="true" />
+                      </button>
+                    </h4>
+                    <div
+                      id={`faq-panel-${item.id}`}
+                      role="region"
+                      aria-labelledby={`faq-trigger-${item.id}`}
+                      className="contact-faq-item__panel-wrap"
+                      aria-hidden={!isOpen}
+                    >
+                      <div className="contact-faq-item__panel">
+                        <p>{item.answer}</p>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+                  </article>
+                );
+              })}
+            </div>
+          </aside>
         </div>
       </div>
     </Section>

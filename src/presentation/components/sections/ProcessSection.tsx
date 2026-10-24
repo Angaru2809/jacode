@@ -98,41 +98,6 @@ function TerminalBrand({ activeLetter, tone }: { activeLetter: string; tone: str
   );
 }
 
-/** Resalta en el verbo la letra de JACODE que corresponde a la estación (p. ej. A en Diseñamos). */
-function StageVerbLabel({
-  label,
-  letter,
-  tone,
-  highlight,
-}: {
-  label: string;
-  letter: string;
-  tone: string;
-  highlight: boolean;
-}) {
-  const idx = label.toUpperCase().indexOf(letter.toUpperCase());
-  if (idx === -1 || !highlight) {
-    return <>{label}</>;
-  }
-
-  const before = label.slice(0, idx);
-  const char = label.slice(idx, idx + 1);
-  const after = label.slice(idx + 1);
-
-  return (
-    <>
-      {before}
-      <span
-        className="process-studio__verb-letter is-lit"
-        style={{ "--lit-tone": tone } as CSSProperties}
-      >
-        {char}
-      </span>
-      {after}
-    </>
-  );
-}
-
 export function ProcessSection() {
   const { reducedMotion } = useMotionPreference();
   const [pinnedIndex, setPinnedIndex] = useState(0);
@@ -238,14 +203,7 @@ export function ProcessSection() {
                   </span>
                   <span className="process-studio__tab-copy">
                     <span className="process-studio__tab-num">{s.number}</span>
-                    <span className="process-studio__tab-label">
-                      <StageVerbLabel
-                        label={s.label}
-                        letter={s.brandLetter ?? "J"}
-                        tone={tabTone}
-                        highlight={isActive}
-                      />
-                    </span>
+                    <span className="process-studio__tab-label">{s.label}</span>
                   </span>
                 </button>
               );
@@ -265,7 +223,6 @@ export function ProcessSection() {
               aria-live="polite"
             >
               <div className="process-studio__card-noise" aria-hidden="true" />
-              <div className="process-studio__card-glow" aria-hidden="true" />
               <div className="process-studio__card-grid" aria-hidden="true" />
               <p className="process-studio__terminal" aria-hidden="true">
                 <TerminalBrand activeLetter={brandLetter} tone={tone} />
@@ -279,14 +236,7 @@ export function ProcessSection() {
                   <span className="process-studio__letter">{brandLetter}</span>
                   <p className="process-studio__hint">{stage.motionHint}</p>
                 </div>
-                <h3 className="process-studio__card-title">
-                  <StageVerbLabel
-                    label={stage.label}
-                    letter={brandLetter}
-                    tone={tone}
-                    highlight
-                  />
-                </h3>
+                <h3 className="process-studio__card-title">{stage.label}</h3>
                 <p className="process-studio__card-text">{stage.description}</p>
                 <ul className="process-studio__pillars" aria-label={`Enfoque: ${stage.label}`}>
                   {stage.pillars.map((pillar, pi) => {

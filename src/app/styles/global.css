@@ -2020,7 +2020,7 @@ button.story-phases__label:not(.is-active):hover {
   color: rgba(255, 255, 255, 0.62);
 }
 
-.stack-showcase {
+.section-stack-full .stack-showcase {
   max-width: var(--page-width);
   margin: 0 auto;
   display: grid;
@@ -2207,7 +2207,7 @@ button.story-phases__label:not(.is-active):hover {
     grid-template-columns: 1fr;
   }
 
-  .stack-showcase {
+  .section-stack-full .stack-showcase {
     grid-template-columns: 1fr;
   }
 

@@ -1,34 +1,32 @@
 import { useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
 import { brand } from "@domain/content/brand";
+import {
+  contactFormCopy,
+  contactServiceOptions,
+} from "@domain/content/faq";
 import { Button } from "@presentation/components/ui/Button";
-
-function buildWhatsAppUrl(name: string, email: string, company: string, message: string) {
-  const lines = [
-    "Hola JACODE, quiero iniciar una conversación sobre un proyecto.",
-    name ? `Nombre: ${name}` : "",
-    email ? `Email: ${email}` : "",
-    company ? `Empresa: ${company}` : "",
-    message ? `Mensaje: ${message}` : "",
-  ].filter(Boolean);
-  return `https://wa.me/${brand.whatsappPhone}?text=${encodeURIComponent(lines.join("\n"))}`;
-}
 
 export function ContactLeadForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
+  const [service, setService] = useState("");
   const [message, setMessage] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<"idle" | "sent">("idle");
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!consent) return;
+    const serviceLabel =
+      contactServiceOptions.find((o) => o.value === service)?.label ?? service;
     const subject = encodeURIComponent("Consulta desde jacode.com");
     const body = encodeURIComponent(
       [
         `Nombre: ${name}`,
         `Email: ${email}`,
         company ? `Empresa: ${company}` : "",
+        serviceLabel ? `Interés: ${serviceLabel}` : "",
         "",
         message,
       ].join("\n")
@@ -38,17 +36,12 @@ export function ContactLeadForm() {
   };
 
   return (
-    <div className="faq-form">
-      <p className="faq-form__kicker">Cuéntanos tu idea</p>
-      <h3 className="faq-form__title">¿Qué quieres crear?</h3>
-      <p className="faq-form__lead">
-        Déjanos los datos y te respondemos con alcance inicial, próximos pasos y tiempos
-        orientativos.
-      </p>
+    <div className="contact-form">
+      <h3 className="contact-form__title">{contactFormCopy.title}</h3>
 
-      <form className="faq-form__fields" onSubmit={onSubmit} noValidate>
-        <label className="faq-form__field">
-          <span>Nombre</span>
+      <form className="contact-form__grid" onSubmit={onSubmit} noValidate>
+        <label className="contact-form__field">
+          <span className="contact-form__label">Nombre completo</span>
           <input
             type="text"
             name="name"
@@ -60,8 +53,8 @@ export function ContactLeadForm() {
           />
         </label>
 
-        <label className="faq-form__field">
-          <span>Email</span>
+        <label className="contact-form__field">
+          <span className="contact-form__label">Correo electrónico</span>
           <input
             type="email"
             name="email"
@@ -73,8 +66,8 @@ export function ContactLeadForm() {
           />
         </label>
 
-        <label className="faq-form__field">
-          <span>Empresa (opcional)</span>
+        <label className="contact-form__field">
+          <span className="contact-form__label">Empresa (opcional)</span>
           <input
             type="text"
             name="company"
@@ -85,44 +78,70 @@ export function ContactLeadForm() {
           />
         </label>
 
-        <label className="faq-form__field faq-form__field--area">
-          <span>Mensaje</span>
+        <label className="contact-form__field">
+          <span className="contact-form__label">Servicio que necesitas</span>
+          <select
+            name="service"
+            required
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            className={service ? "" : "is-placeholder"}
+          >
+            {contactServiceOptions.map((opt) => (
+              <option
+                key={opt.value || "placeholder"}
+                value={opt.value}
+                disabled={opt.value === ""}
+              >
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="contact-form__field contact-form__field--wide">
+          <span className="contact-form__label">Mensaje</span>
           <textarea
             name="message"
             required
             rows={4}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Describe el reto, objetivos o contexto del proyecto."
+            placeholder="Contexto breve del proyecto."
           />
         </label>
 
-        <div className="faq-form__actions">
-          <Button type="submit" variant="primary" size="md" showArrow>
-            Enviar consulta
-          </Button>
-          <a
-            className="faq-form__whatsapp"
-            href={buildWhatsAppUrl(name, email, company, message)}
-            target="_blank"
-            rel="noopener noreferrer"
+        <label className="contact-form__consent contact-form__field--wide">
+          <input
+            type="checkbox"
+            name="data-consent"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            required
+          />
+          <span>{contactFormCopy.consentLabel}</span>
+        </label>
+
+        <div className="contact-form__submit">
+          <Button
+            type="submit"
+            variant="primary"
+            size="md"
+            showArrow
+            className="contact-form__btn"
+            disabled={!consent}
           >
-            WhatsApp
-          </a>
+            {contactFormCopy.submitLabel}
+          </Button>
         </div>
 
         {status === "sent" ? (
-          <p className="faq-form__status" role="status">
+          <p className="contact-form__status" role="status">
             Se abrió tu cliente de correo. Si no aparece, escríbenos a{" "}
             <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>.
           </p>
         ) : null}
       </form>
-
-      <p className="faq-form__footnote">
-        También puedes usar la{" "}
-        <Link to="/cotizacion">plantilla de cotización</Link>.
-      </p>
     </div>
   );
 }
