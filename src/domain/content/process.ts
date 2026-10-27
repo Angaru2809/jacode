@@ -38,6 +38,10 @@ export const processSteps: ProcessStep[] = [
     title: "Descubrimiento",
     description:
       "Escuchamos tu contexto, aclaramos la necesidad y acordamos qué éxito significa para el negocio.",
+    highlights: [
+      "Workshops y entrevistas con stakeholders",
+      "Mapa de problema, usuarios y restricciones",
+    ],
   },
   {
     id: "planning",
@@ -46,6 +50,7 @@ export const processSteps: ProcessStep[] = [
     title: "Planeación",
     description:
       "Priorizamos alcance, hitos y riesgos para que sepas qué se construye primero y por qué.",
+    highlights: ["Backlog priorizado y hitos", "Estimación y riesgos visibles"],
   },
   {
     id: "design",
@@ -54,6 +59,7 @@ export const processSteps: ProcessStep[] = [
     title: "Diseño",
     description:
       "Prototipamos flujos e interfaz contigo antes de comprometer desarrollo costoso.",
+    highlights: ["Flujos y wireframes acordados", "UI alineada a marca y conversión"],
   },
   {
     id: "development",
@@ -62,6 +68,7 @@ export const processSteps: ProcessStep[] = [
     title: "Desarrollo",
     description:
       "Implementamos con arquitectura clara, revisiones frecuentes y código listo para evolucionar.",
+    highlights: ["Entregas iterativas revisables", "Código documentado y versionado"],
   },
   {
     id: "testing",
@@ -70,6 +77,7 @@ export const processSteps: ProcessStep[] = [
     title: "Pruebas",
     description:
       "Comprobamos casos reales, datos y experiencia de uso antes de abrir a producción.",
+    highlights: ["Pruebas funcionales y de regresión", "Validación con datos reales"],
   },
   {
     id: "implementation",
@@ -78,6 +86,7 @@ export const processSteps: ProcessStep[] = [
     title: "Implementación",
     description:
       "Desplegamos, conectamos entornos y dejamos la solución operando con monitoreo básico.",
+    highlights: ["Despliegue y variables de entorno", "Monitoreo y alertas básicas"],
   },
   {
     id: "delivery",
@@ -86,8 +95,17 @@ export const processSteps: ProcessStep[] = [
     title: "Entrega",
     description:
       "Transferimos accesos, documentación y conocimiento para que tu equipo pueda operar y crecer.",
+    highlights: ["Handoff técnico y manual de uso", "Soporte inicial acordado"],
   },
 ];
+
+export const alcanceSectionCopy = {
+  index: "04",
+  titleLine1: "No solo entregamos",
+  titleAccent: "código.",
+  lead:
+    "Un proceso completo para convertir complejidad en una solución clara.",
+} as const;
 
 export const deliverables: DeliverableItem[] = [
   { id: "uiux", label: "Diseño UI/UX", slug: "design/ui" },

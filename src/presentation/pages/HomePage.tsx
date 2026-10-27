@@ -7,14 +7,14 @@ import { HeroSection } from "@presentation/components/sections/HeroSection";
 import { SituationsSection } from "@presentation/components/sections/SituationsSection";
 import { ServicesSection } from "@presentation/components/sections/ServicesSection";
 import { StackSection } from "@presentation/components/sections/StackSection";
-import { ProblemsSection } from "@presentation/components/sections/ProblemsSection";
-import { ModesSection } from "@presentation/components/sections/ModesSection";
+import { IncludeSection } from "@presentation/components/sections/IncludeSection";
 import { ProcessSection } from "@presentation/components/sections/ProcessSection";
+import { DeliverablesSection } from "@presentation/components/sections/DeliverablesSection";
+import { ModesSection } from "@presentation/components/sections/ModesSection";
 import { WhySection } from "@presentation/components/sections/WhySection";
 import { FaqSection } from "@presentation/components/sections/FaqSection";
 import { CtaSection } from "@presentation/components/sections/CtaSection";
 import { useMotionPreference } from "@app/providers/MotionProvider";
-import { MotionFab } from "@presentation/components/experience/MotionFab";
 import { WhatsAppFab } from "@presentation/components/experience/WhatsAppFab";
 
 type CubeApi = {
@@ -31,7 +31,6 @@ export function HomePage() {
     <>
       <SkipLink />
       <div className="noise" aria-hidden="true" />
-      <MotionFab />
       <WhatsAppFab />
       <Header />
       <main id="contenido">
@@ -40,9 +39,10 @@ export function HomePage() {
         <ServicesSection
           onHoverService={(i) => cubeApiRef.current?.highlight(i)}
         />
-        <ProcessSection />
-        <ProblemsSection />
         <StackSection />
+        <IncludeSection />
+        <ProcessSection />
+        <DeliverablesSection />
         <ModesSection />
         <WhySection />
         <FaqSection />

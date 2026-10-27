@@ -19,11 +19,6 @@ export const brand = {
   lead:
     "Diseñamos y construimos webs, plataformas y software que resuelven problemas concretos de operación y negocio.",
   heroCtaLabel: "Hablemos de tu proyecto",
-  /** Sección servicios — dos líneas en desktop */
-  servicesLeadLines: [
-    "Desarrollamos soluciones digitales que convierten ideas, procesos",
-    "y problemas reales en tecnología funcional.",
-  ],
   secondaryLine: "De la idea al código. Del código a la solución.",
   definition:
     "JACODE es una empresa de innovación tecnológica que transforma ideas en soluciones digitales mediante software, desarrollo e inteligencia artificial.",
@@ -55,8 +50,9 @@ export const storyLabels: Record<string, string> = {
 };
 
 export const navLinks: NavLink[] = [
+  { href: "#situaciones", label: "Situaciones" },
   { href: "#que-hacemos", label: "Qué hacemos" },
   { href: "#proceso", label: "Proceso" },
   { href: "#modalidades", label: "Modalidades" },
-  { href: "#contacto", label: "Panel cliente", cta: true },
+  { href: "#contacto", label: "Hablemos", cta: true },
 ];

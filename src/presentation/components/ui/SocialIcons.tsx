@@ -1,6 +1,4 @@
 type IconProps = { className?: string; title?: string };
-import type { StackIconKind } from "@domain/content/stack";
-
 export function InstagramIcon({ className, title = "Instagram" }: IconProps) {
   return (
     <svg
@@ -94,70 +92,4 @@ export function WhatsAppIcon({ className, title = "WhatsApp" }: IconProps) {
       />
     </svg>
   );
-}
-
-function StackGlyph({ kind }: { kind: StackIconKind }) {
-  const common = { fill: "none", stroke: "currentColor", strokeWidth: 1.6 };
-  switch (kind) {
-    case "react":
-      return (
-        <svg viewBox="0 0 32 32" width={28} height={28} aria-hidden>
-          <ellipse cx="16" cy="16" rx="12" ry="4.5" {...common} />
-          <ellipse
-            cx="16"
-            cy="16"
-            rx="12"
-            ry="4.5"
-            {...common}
-            transform="rotate(60 16 16)"
-          />
-          <ellipse
-            cx="16"
-            cy="16"
-            rx="12"
-            ry="4.5"
-            {...common}
-            transform="rotate(120 16 16)"
-          />
-          <circle cx="16" cy="16" r="2.5" fill="currentColor" stroke="none" />
-        </svg>
-      );
-    case "java":
-      return (
-        <svg viewBox="0 0 32 32" width={28} height={28} aria-hidden>
-          <path
-            {...common}
-            d="M11 22c3 2.5 7 2.5 10 0M13 18c2.5 1.5 5.5 1.5 8 0M16 8v6"
-          />
-          <path
-            fill="currentColor"
-            d="M14 26c-1 .8-2.2 1.2-3.5 1.2 1.8-.3 3.5-1.2 4.8-2.5"
-          />
-        </svg>
-      );
-    case "node":
-      return (
-        <svg viewBox="0 0 32 32" width={28} height={28} aria-hidden>
-          <path
-            {...common}
-            d="M16 6 26 12v8L16 26 6 20V12L16 6z"
-          />
-          <path {...common} d="M16 12v8M12 14l8 4" />
-        </svg>
-      );
-    case "wordpress":
-      return (
-        <svg viewBox="0 0 32 32" width={28} height={28} aria-hidden>
-          <circle cx="16" cy="16" r="10" {...common} />
-          <path
-            fill="currentColor"
-            d="M16 8c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm-3.2 4.2c.3 2.8 1.5 5.5 3.4 7.6 1.2-2.4 1.8-5 1.8-7.6H12.8zm6.4 0c0 2.1-.4 4.1-1.2 5.9 2.3-1.5 4-3.8 4.7-6.5h-3.5z"
-          />
-        </svg>
-      );
-  }
-}
-
-export function StackValueIcon({ kind }: { kind: StackIconKind }) {
-  return <StackGlyph kind={kind} />;
 }

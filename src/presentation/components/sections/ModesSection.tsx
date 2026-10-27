@@ -6,7 +6,7 @@ export function ModesSection() {
     <Section id="modalidades" className="section-modes" labelledBy="modes-title">
       <header className="section-head reveal reveal-stagger">
         <span className="section-index reveal-stagger__item" aria-hidden="true">
-          05
+          07
         </span>
         <h2 id="modes-title" className="reveal-stagger__item">
           Nos adaptamos a tu{" "}

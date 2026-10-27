@@ -1,5 +1,15 @@
 import type { ServiceItem } from "@domain/models/types";
 
+export const servicesSectionCopy = {
+  index: "02",
+  titleLine1: "Seis líneas de trabajo.",
+  titleLine2: "Un solo",
+  titleAccent: "equipo.",
+  lead:
+    "Software, web, apps, IA, automatización e integraciones: elige una línea y revisa enfoque y alcance.",
+  hint: "Selecciona un servicio para ver el detalle.",
+} as const;
+
 export const services: ServiceItem[] = [
   {
     id: "software",

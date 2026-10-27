@@ -48,6 +48,7 @@ export interface ProcessStep {
   title: string;
   description: string;
   phase: ProcessPhaseId;
+  highlights?: readonly string[];
 }
 
 export interface DeliverableItem {

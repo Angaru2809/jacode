@@ -1,4 +1,4 @@
-import { techMarqueeFeatured, techMarqueeItems } from "@domain/content/techMarquee";
+import { techMarqueeItems } from "@domain/content/techMarquee";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 
 export interface TechMarqueeProps {
@@ -12,8 +12,7 @@ export function TechMarquee({
   items,
   className = "",
 }: TechMarqueeProps) {
-  const isServices = className.includes("tech-marquee--services");
-  const list = items ?? (isServices ? techMarqueeFeatured : techMarqueeItems);
+  const list = items ?? techMarqueeItems;
   const { reducedMotion } = useMotionPreference();
   const loop = [...list, ...list];
 

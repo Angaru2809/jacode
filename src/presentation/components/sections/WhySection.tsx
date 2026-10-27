@@ -6,7 +6,7 @@ export function WhySection() {
       <div className="why-layout reveal">
         <div className="why-layout__copy">
           <span className="section-index why-layout__index" aria-hidden="true">
-            06
+            08
           </span>
           <h2 id="why-title" className="why-layout__title">
             Por qué elegir <span className="why-layout__title-accent">JACODE</span>

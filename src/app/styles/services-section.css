@@ -1,0 +1,67 @@
+/* Qué hacemos (02) — fondo oscuro alineado a las franjas */
+
+.section-services {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  --services-gutter: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(4rem, 8.5vw, 6.25rem) var(--services-gutter)
+    clamp(3.5rem, 7vw, 5.5rem);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse 90% 70% at 12% 18%,
+      rgba(255, 0, 110, 0.14) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 75% 55% at 88% 72%,
+      rgba(255, 0, 110, 0.1) 0%,
+      transparent 52%
+    ),
+    linear-gradient(168deg, #111113 0%, #080808 48%, #0c080a 100%);
+}
+
+.section-services::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.section-services__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: min(100%, calc(var(--page-width) + 5rem));
+  margin-inline: auto;
+}
+
+.section-services .services-intro__title-line {
+  color: var(--white);
+}
+
+.section-services .services-intro__title-accent {
+  color: var(--magenta);
+}
+
+.section-services .services-intro__lead {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.section-services .services-hint {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.section-services .services-showcase {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(8, 8, 8, 0.42);
+  box-shadow:
+    0 32px 72px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
