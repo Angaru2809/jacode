@@ -58,11 +58,7 @@ export function SituationsSection() {
               </span>
             </h2>
             <p className="situations-split__lead reveal-stagger__item">
-              {situationsIntro.leadBefore}
-              <span className="situations-split__lead-accent">
-                {situationsIntro.leadHighlight}
-              </span>
-              {situationsIntro.leadAfter}
+              {situationsIntro.lead}
             </p>
             <a
               href={situationsIntro.ctaHref}

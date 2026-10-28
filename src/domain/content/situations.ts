@@ -12,18 +12,16 @@ export interface SituationItem {
   description: string;
   icon: ServiceIconKind;
   tone: SituationTileTone;
-  /** Imagen en la cara frontal (opcional) */
   coverImage?: string;
   flipBack: SituationFlipBack;
 }
 
 export const situationsIntro = {
   eyebrow: "Situaciones",
-  titleLine1: "Cuatro contextos.",
-  titleLine2: "Un plan claro.",
-  leadBefore: "Identificamos en qué punto está tu negocio y ",
-  leadHighlight: "qué solución digital",
-  leadAfter: " necesitas — antes de entrar al detalle de cada servicio.",
+  titleLine1: "Identifica la etapa",
+  titleLine2: "de tu proyecto.",
+  lead:
+    "Elige la situación que mejor te representa y en JACODE te orientamos hacia la solución digital que tu negocio necesita.",
   cta: "Ver qué hacemos",
   ctaHref: "#que-hacemos",
 } as const;

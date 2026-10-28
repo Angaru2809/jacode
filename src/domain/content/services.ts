@@ -2,12 +2,12 @@ import type { ServiceItem } from "@domain/models/types";
 
 export const servicesSectionCopy = {
   index: "02",
-  titleLine1: "Seis líneas de trabajo.",
-  titleLine2: "Un solo",
-  titleAccent: "equipo.",
+  titleLine1: "¿Qué podemos desarrollar",
+  titleLine2: "para tu",
+  titleAccent: "negocio?",
   lead:
-    "Software, web, apps, IA, automatización e integraciones: elige una línea y revisa enfoque y alcance.",
-  hint: "Selecciona un servicio para ver el detalle.",
+    "Explora nuestras soluciones, descubre qué podemos desarrollar para tu negocio y encuentra la opción ideal para tu proyecto.",
+  hint: "Selecciona un servicio para conocer su alcance y cómo puede ayudarte.",
 } as const;
 
 export const services: ServiceItem[] = [
@@ -16,7 +16,8 @@ export const services: ServiceItem[] = [
     number: "01",
     title: "Desarrollo de software",
     shortLabel: "Software",
-    description: "Sistemas y plataformas diseñadas para necesidades específicas.",
+    description:
+      "Creamos sistemas a medida para resolver necesidades específicas de tu operación.",
     pieceClass: "piece-01",
     coverImage: "/assets/services/dev-software.jpg",
     icon: "terminal",
@@ -26,7 +27,8 @@ export const services: ServiceItem[] = [
     number: "02",
     title: "Desarrollo web",
     shortLabel: "Web",
-    description: "Páginas corporativas, plataformas web y e-commerce.",
+    description:
+      "Diseñamos y desarrollamos sitios web que presentan tu negocio y facilitan que tus clientes encuentren lo que necesitan.",
     pieceClass: "piece-02",
     coverImage: "/assets/services/dev-web.jpg",
     icon: "browser",
@@ -36,7 +38,8 @@ export const services: ServiceItem[] = [
     number: "03",
     title: "Aplicaciones móviles",
     shortLabel: "Móvil",
-    description: "Aplicaciones modernas para Android y iOS.",
+    description:
+      "Desarrollamos aplicaciones para ofrecer servicios y funcionalidades desde el celular.",
     pieceClass: "piece-03",
     coverImage: "/assets/services/movil.jpg",
     icon: "mobile",
@@ -47,7 +50,7 @@ export const services: ServiceItem[] = [
     title: "Inteligencia artificial",
     shortLabel: "IA",
     description:
-      "Asistentes, automatización, análisis inteligente y soluciones con IA.",
+      "Identificamos oportunidades para aplicar IA a tareas y procesos concretos de tu negocio.",
     pieceClass: "piece-04",
     coverImage: "/assets/services/ia.jpg",
     icon: "ai",
@@ -57,7 +60,8 @@ export const services: ServiceItem[] = [
     number: "05",
     title: "Automatización",
     shortLabel: "Automatizar",
-    description: "Digitalización y optimización de procesos empresariales.",
+    description:
+      "Automatizamos tareas repetitivas para reducir trabajo manual y errores.",
     pieceClass: "piece-05",
     coverImage: "/assets/services/automatizaciones.jpg",
     icon: "automation",
@@ -67,7 +71,8 @@ export const services: ServiceItem[] = [
     number: "06",
     title: "Integración de sistemas",
     shortLabel: "Integración",
-    description: "APIs, ERP, CRM, bases de datos y conexión entre plataformas.",
+    description:
+      "Conectamos tus sistemas para que compartan información y funcionen de forma coordinada.",
     pieceClass: "piece-06",
     coverImage: "/assets/services/api.jpg",
     icon: "integration",

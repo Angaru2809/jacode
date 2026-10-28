@@ -3,36 +3,54 @@ import type { NavLink } from "@domain/models/types";
 export const brand = {
   name: "JACODE",
   tagline: "Tecnología · Innovación · Desarrollo",
+  /** Frase de marca (bloque secundario bajo el H1 de conversión) */
   headlineIntro: ["Lo que imaginas", "puede evolucionar."],
   headlineAccent: "Lo hacemos realidad.",
-  heroBadge: "Estudio de ingeniería web y software",
-  /** Above the fold — quién es el cliente y qué ofrecemos */
+  heroBadge: "JACODE · DESARROLLO DIGITAL",
+  heroHeadlineLines: [
+    { text: "Creamos soluciones digitales", tone: "plain" as const },
+    { text: "e impulsamos tu negocio.", tone: "accent" as const },
+  ],
+  /** @deprecated use heroHeadlineLines */
+  heroHeadlineLine1: "Creamos soluciones digitales",
+  heroHeadlineLine2: "e impulsamos tu negocio.",
+  heroTaglineLine1: "Lo que imaginas puede evolucionar.",
+  heroTaglineAccent: "Lo hacemos realidad.",
+  heroSubhead:
+    "Desarrollamos páginas web, plataformas y software a medida para empresas y equipos que buscan resolver necesidades reales, mejorar sus procesos y llevar sus productos digitales más lejos.",
+  /** @deprecated use heroHeadlineLine1 + heroHeadlineLine2 */
+  heroHeadline: "Creamos soluciones digitales e impulsamos tu negocio.",
+  /** @deprecated use heroTaglineLine1 + heroTaglineAccent */
+  heroTagline: "Lo que imaginas puede evolucionar. Lo hacemos realidad.",
+  heroLead:
+    "Desarrollamos páginas web, plataformas y software a medida para resolver necesidades reales y ayudar a tu negocio a avanzar. Conectamos herramientas, automatizamos tareas y aplicamos inteligencia artificial cuando aporta valor.",
+  /** @deprecated use heroLead — kept for references */
   heroAudience:
-    "Para empresas y equipos que necesitan lanzar o mejorar una web, plataforma o producto digital.",
-  /** Chips alineados a servicios reales (sección 01) */
+    "Desarrollamos páginas web, plataformas y software a medida para empresas que quieren lanzar nuevas ideas, mejorar sus procesos o hacer crecer sus productos digitales.",
+  heroOffersLine:
+    "Páginas web y plataformas · Software a medida · Apps y productos digitales · Integraciones y automatización",
+  /** @deprecated use heroOffersLine */
   heroOffers: [
-    "Desarrollo web",
+    "Páginas web y plataformas",
     "Software a medida",
-    "Apps y plataformas",
-    "IA, automatización e integraciones",
+    "Apps y productos digitales",
+    "Integraciones y automatización",
   ] as const,
   lead:
-    "Diseñamos y construimos webs, plataformas y software que resuelven problemas concretos de operación y negocio.",
+    "Desarrollamos páginas web, plataformas y software a medida para empresas que quieren lanzar nuevas ideas, mejorar sus procesos o hacer crecer sus productos digitales.",
   heroCtaLabel: "Hablemos de tu proyecto",
+  heroSecondaryCtaLabel: "Explorar servicios",
   secondaryLine: "De la idea al código. Del código a la solución.",
   definition:
-    "JACODE es una empresa de innovación tecnológica que transforma ideas en soluciones digitales mediante software, desarrollo e inteligencia artificial.",
+    "JACODE desarrolla soluciones digitales a medida: webs, plataformas, software, automatizaciones e integraciones para empresas.",
   contactEmail: "info@jacode.com",
-  /** Número en formato internacional sin + (ej. 573001234567) */
   whatsappPhone: "573001234567",
   instagramUrl: "https://instagram.com/jacode",
   linkedinUrl: "https://linkedin.com/company/jacode",
   tiktokUrl: "https://tiktok.com/@jacode",
   whatsappMessage:
     "Hola JACODE, quiero convertir una idea en una solución digital.",
-  /** Logotipo negro — usar sobre fondos claros */
   logoSrc: "/assets/brand/logo-jacode-black.png",
-  /** Logotipo blanco — usar sobre fondos oscuros */
   logoSrcOnDark: "/assets/brand/logo-jacode-white.png",
   notFoundMascotSrc: "/assets/errors/404-mascot.png",
   colors: {

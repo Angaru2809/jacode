@@ -56,7 +56,7 @@ export const stackSectionCopy = {
   titleLine1: "Herramientas con",
   titleAccent: "criterio.",
   lead:
-    "Elegimos por operación, equipo, necesidad y mantenimiento a largo plazo — no por moda.",
+    "Elegimos la tecnología según las necesidades de tu negocio, la operación de tu equipo y la evolución de tu proyecto.",
   ctaLabel: "Hablemos de tu stack",
   ctaHref: "#contacto",
 } as const;

@@ -46,21 +46,23 @@ export function HeroSection({ cubeApiRef }: HeroSectionProps) {
               <span className="hero-badge__dot" aria-hidden="true" />
               {brand.heroBadge}
             </p>
+
             <h1 className="hero-headline" id="hero-title">
-              <span className="hero-headline__promise">
-                {brand.headlineIntro.join(" ")}
-              </span>
-              <span className="hero-headline__accent">{brand.headlineAccent}</span>
+              {brand.heroHeadlineLines.map((line) => (
+                <span
+                  key={line.text}
+                  className={
+                    line.tone === "accent"
+                      ? "hero-headline__accent"
+                      : "hero-headline__promise"
+                  }
+                >
+                  {line.text}
+                </span>
+              ))}
             </h1>
 
-            <p className="hero-audience">{brand.heroAudience}</p>
-            <p className="hero-lead">{brand.lead}</p>
-
-            <ul className="hero-offers" aria-label="Servicios principales">
-              {brand.heroOffers.map((offer) => (
-                <li key={offer}>{offer}</li>
-              ))}
-            </ul>
+            <p className="hero-audience">{brand.heroSubhead}</p>
 
             <span id={statusId.current} className="sr-only">
               Cubo en animación automática. Haz clic en el cubo para reorganizarlo.
