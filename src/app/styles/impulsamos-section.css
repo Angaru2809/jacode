@@ -1,0 +1,328 @@
+/* §06 — Impulsamos / «HAZLO VISIBLE» scroll (prototipo Hazlo visible.html) */
+
+.impulsamos {
+  position: relative;
+  height: 330vh;
+  background: var(--gray-50);
+}
+
+.impulsamos__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--gray-50);
+}
+
+.impulsamos__eyebrow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 22%;
+  margin: 0;
+  text-align: center;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c80066;
+}
+
+.impulsamos__word-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0;
+}
+
+.impulsamos__half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  will-change: transform;
+}
+
+.impulsamos__half > span {
+  display: block;
+  transform: translateY(-50%);
+  font-family: var(--font-hero);
+  font-size: 100px;
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  color: var(--magenta);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.impulsamos__dot {
+  font-style: normal;
+  color: var(--pitch);
+}
+
+.impulsamos__half--top > span {
+  clip-path: inset(0 0 50% 0);
+}
+
+.impulsamos__half--bot > span {
+  clip-path: inset(50% 0 0 0);
+}
+
+.impulsamos__hair {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--magenta);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.impulsamos__cue {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+
+.impulsamos__cue i {
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: #d9d9de;
+  position: relative;
+  overflow: hidden;
+}
+
+.impulsamos__cue i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--magenta);
+  transform-origin: top;
+  animation: impulsamos-cue 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes impulsamos-cue {
+  0% {
+    transform: scaleY(0);
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  50.1% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.impulsamos__band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0;
+  transform: translateY(-50%);
+  background: var(--magenta);
+  overflow: hidden;
+}
+
+.impulsamos__inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 100vh;
+  height: 100svh;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 clamp(20px, 4vw, 64px);
+}
+
+.impulsamos__label {
+  margin: 0 0 30px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pitch);
+}
+
+.impulsamos__head {
+  margin: 0;
+}
+
+.impulsamos__ln {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.05em;
+}
+
+.impulsamos__ln > span {
+  display: inline-block;
+  font-family: var(--font-hero);
+  font-size: clamp(2.5rem, 6.2vw, 6.25rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  will-change: transform;
+}
+
+.impulsamos__ink {
+  color: var(--pitch);
+}
+
+.impulsamos__body {
+  margin: 32px 0 0;
+  max-width: 50ch;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.1875rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--pitch);
+  text-wrap: pretty;
+}
+
+.impulsamos__go {
+  margin-top: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 58px;
+  padding: 0 10px 0 28px;
+  border-radius: 999px;
+  background: var(--pitch);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.impulsamos__go b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--pitch);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.impulsamos__go:hover {
+  transform: translateY(-2px);
+}
+
+.impulsamos__go:hover b {
+  transform: translateX(3px);
+}
+
+.impulsamos__go:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.impulsamos__fx {
+  will-change: transform, opacity;
+}
+
+@media (max-width: 760px) {
+  .impulsamos {
+    height: 280vh;
+  }
+
+  .impulsamos__eyebrow {
+    top: 30%;
+  }
+
+  .impulsamos__go {
+    min-height: 54px;
+    padding: 0 8px 0 20px;
+    font-size: 0.9375rem;
+    gap: 10px;
+  }
+
+  .impulsamos__go b {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.impulsamos--reduced {
+  height: auto;
+}
+
+.impulsamos--reduced .impulsamos__pin {
+  position: relative;
+  height: auto;
+  background: var(--magenta);
+}
+
+.impulsamos--reduced .impulsamos__word-wrap,
+.impulsamos--reduced .impulsamos__hair,
+.impulsamos--reduced .impulsamos__cue,
+.impulsamos--reduced .impulsamos__eyebrow {
+  display: none;
+}
+
+.impulsamos--reduced .impulsamos__band {
+  position: relative;
+  top: auto;
+  transform: none;
+  height: auto !important;
+}
+
+.impulsamos--reduced .impulsamos__inner {
+  position: relative;
+  top: auto;
+  transform: none;
+  height: auto;
+  min-height: 100vh;
+}
+
+.impulsamos--reduced .impulsamos__ln > span,
+.impulsamos--reduced .impulsamos__fx {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+html[data-motion="off"] .impulsamos__cue i::after {
+  animation: none;
+}

@@ -13,9 +13,6 @@ export function FaqSection() {
     <Section id="faq" className="section-faq" labelledBy="contact-title">
       <div className="contact-studio reveal">
         <header className="contact-studio__intro">
-          <span className="section-index contact-studio__index" aria-hidden="true">
-            09
-          </span>
           <h2 id="contact-title" className="contact-studio__title">
             <span className="contact-studio__title-line">{contactSectionCopy.titlePlain}</span>
             <span className="contact-studio__title-line contact-studio__title-line--accent">

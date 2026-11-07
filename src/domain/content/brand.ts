@@ -1,4 +1,5 @@
 import type { NavLink } from "@domain/models/types";
+import { homeNavSections } from "@domain/content/homeSections";
 
 export const brand = {
   name: "JACODE",
@@ -38,9 +39,14 @@ export const brand = {
   ] as const,
   lead:
     "Desarrollamos páginas web, plataformas y software a medida para empresas que quieren lanzar nuevas ideas, mejorar sus procesos o hacer crecer sus productos digitales.",
-  /** CTA principal único en toda la página (hero, cierre, barra móvil). */
+  /** CTA principal en hero, formulario y cierre. */
   primaryCtaLabel: "Hablemos de tu proyecto",
   primaryCtaHref: "#contacto",
+  /** Etiqueta corta del botón de contacto en la barra superior. */
+  navContactCtaLabel: "Hablemos",
+  /** Acceso área de clientes (ajusta URL cuando el panel esté en producción). */
+  clientPortalLabel: "Panel cliente",
+  clientPortalHref: "https://clientes.jacode.com",
   /** @deprecated use primaryCtaLabel */
   heroCtaLabel: "Hablemos de tu proyecto",
   heroSecondaryCtaLabel: "Explorar servicios",
@@ -77,9 +83,6 @@ export const storyLabels: Record<string, string> = {
 };
 
 export const navLinks: NavLink[] = [
-  { href: "#situaciones", label: "Situaciones" },
-  { href: "#que-hacemos", label: "Qué hacemos" },
-  { href: "#proceso", label: "Proceso" },
-  { href: "#modalidades", label: "Modalidades" },
-  { href: "#contacto", label: "Hablemos", cta: true },
+  ...homeNavSections.map(({ href, label }) => ({ href, label })),
+  { href: brand.primaryCtaHref, label: brand.navContactCtaLabel, cta: true },
 ];

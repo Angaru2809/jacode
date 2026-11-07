@@ -6,6 +6,7 @@ import type {
   WhyItem,
   WorkMode,
 } from "@domain/models/types";
+import { homeSectionIndex } from "@domain/content/homeSections";
 
 export const processPhases: ProcessPhase[] = [
   {
@@ -150,66 +151,124 @@ export const workModes: WorkMode[] = [
   },
 ];
 
+export const processMethodCopy = {
+  index: homeSectionIndex.process,
+  titlePlain: "Así afrontamos cada proyecto.",
+  titleAccent: "Seis estaciones, un solo recorrido.",
+  intro: "De la primera idea a una solución que evoluciona.",
+  panelCta: "Empecemos por el diagnóstico",
+  panelCtaHref: "#contacto",
+} as const;
+
 export const journeyStages: JourneyStage[] = [
   {
     id: "discover",
     number: "01",
     label: "Descubrimos",
+    phaseLabel: "Descubrir",
+    terminalCommand: "discover",
     description:
-      "Workshops y preguntas concretas para ver el panorama completo antes de comprometer alcance.",
-    motionHint: "Mapeo de contexto y prioridades.",
+      "Escuchamos tu contexto, aclaramos la necesidad y acordamos qué significa el éxito para tu negocio; priorizamos alcance, hitos y riesgos.",
+    motionHint: "MAPEO DE CONTEXTO Y PRIORIDADES.",
     brandLetter: "J",
-    pillars: ["Contexto", "Prioridades"],
+    pillars: ["CONTEXTO", "PRIORIDADES"],
+    inThisStep: [
+      "Sesión de diagnóstico",
+      "Mapa de problema, clientes y restricciones",
+    ],
+    deliverables: ["Diagnóstico", "Propuesta de alcance", "Plan de hitos"],
   },
   {
     id: "design",
     number: "02",
     label: "Diseñamos",
+    phaseLabel: "Diseñar",
+    terminalCommand: "design",
     description:
-      "Flujos clicables y pantallas que validas con tu equipo; el producto se siente antes de programarlo.",
-    motionHint: "Prototipo y validación con usuarios.",
+      "Prototipamos flujos e interfaz contigo antes de comprometer desarrollo costoso.",
+    motionHint: "PROTOTIPO Y VALIDACIÓN DE EXPERIENCIA.",
     brandLetter: "A",
-    pillars: ["Prototipo", "Validación"],
+    pillars: ["FLUJOS", "MARCA"],
+    inThisStep: [
+      "Flujos y wireframes acordados",
+      "UI alineada a tu marca y pensada para vender",
+    ],
+    deliverables: ["Diseño UI/UX", "Prototipo"],
   },
   {
     id: "build",
     number: "03",
     label: "Desarrollamos",
+    phaseLabel: "Construir",
+    terminalCommand: "build",
     description:
-      "Elegimos stack, arquitectura y ritmo de entrega. Código modular listo para crecer.",
-    motionHint: "Iteración continua con calidad.",
+      "Implementamos con arquitectura clara, revisiones frecuentes y código listo para evolucionar.",
+    motionHint: "ITERACIÓN Y ARQUITECTURA CLARA.",
     brandLetter: "C",
-    pillars: ["Stack", "Código"],
+    pillars: ["CÓDIGO", "REVISIONES"],
+    inThisStep: [
+      "Entregas iterativas revisables",
+      "Código documentado y versionado",
+    ],
+    deliverables: [
+      "Código fuente",
+      "Aplicación funcional",
+      "Base de datos",
+      "Integraciones",
+    ],
   },
   {
     id: "test",
     number: "04",
     label: "Probamos",
+    phaseLabel: "Construir",
+    terminalCommand: "test",
     description:
-      "Escenarios reales, permisos y datos de prueba — nada sale a producción sin pasar por aquí.",
-    motionHint: "Control de calidad y datos.",
+      "Comprobamos casos reales, datos y experiencia de uso antes de abrir al público.",
+    motionHint: "CALIDAD ANTES DEL LANZAMIENTO.",
     brandLetter: "O",
-    pillars: ["QA", "Seguridad"],
+    pillars: ["QA", "DATOS REALES"],
+    inThisStep: [
+      "Pruebas funcionales y de regresión",
+      "Validación con datos reales",
+    ],
+    deliverables: ["Reporte de pruebas"],
   },
   {
     id: "ship",
     number: "05",
     label: "Desplegamos",
+    phaseLabel: "Entregar",
+    terminalCommand: "deploy",
     description:
-      "Go-live acompañado: despliegue, conexiones y handoff para que operaciones no queden a ciegas.",
-    motionHint: "Deploy estable y trazabilidad.",
+      "Publicamos, conectamos entornos y dejamos la solución operando con monitoreo básico.",
+    motionHint: "PRODUCCIÓN ESTABLE Y MONITOREO.",
     brandLetter: "D",
-    pillars: ["Deploy", "Handoff"],
+    pillars: ["DEPLOY", "MONITOREO"],
+    inThisStep: [
+      "Dominio, hosting y despliegue",
+      "Monitoreo y alertas básicas",
+    ],
+    deliverables: ["Solución en producción", "Accesos configurados"],
   },
   {
     id: "evolve",
     number: "06",
     label: "Entregamos",
+    phaseLabel: "Entregar",
+    terminalCommand: "deliver",
     description:
-      "Transferimos accesos, documentación y operación en producción; la evolución se planifica como etapas futuras.",
-    motionHint: "Handoff claro y evolución futura.",
+      "Transferimos accesos, documentación y conocimiento para que tu equipo pueda operar y crecer.",
+    motionHint: "HANDOFF Y EVOLUCIÓN FUTURA.",
     brandLetter: "E",
-    pillars: ["Entrega", "Evolución"],
+    pillars: ["DOCUMENTACIÓN", "SOPORTE"],
+    inThisStep: ["Manual de uso y capacitación", "Soporte inicial acordado"],
+    deliverables: [
+      "Documentación",
+      "Manual de usuario",
+      "Capacitación",
+      "Soporte inicial",
+    ],
   },
 ];
 

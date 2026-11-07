@@ -5,8 +5,66 @@
   border-block: 1px solid var(--gray-200);
 }
 
-.section-modes .section-modes__title-accent {
+/* Titular §05: --font-hero, bloque a la derecha (más aire sobre las tarjetas) */
+.section-modes .modes-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  max-width: min(40rem, 100%);
+  margin-inline: 0 0;
+  margin-left: auto;
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+  padding-inline: 0;
+}
+
+.section-modes .modes-intro__index {
+  margin-bottom: 0.75rem;
+}
+
+.section-modes .modes-intro__title {
+  font-family: var(--font-hero);
+  font-size: clamp(2.35rem, 6.2vw, 3.85rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0;
+  max-width: 16em;
+}
+
+.section-modes .modes-intro__title-line {
+  display: block;
+  color: var(--pitch);
+  font-weight: 800;
+}
+
+.section-modes .modes-intro__title-accent {
   color: var(--magenta);
+  font-weight: 800;
+}
+
+.section-modes .modes-intro__lead {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.45vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--gray-600);
+  margin: clamp(0.85rem, 2vw, 1.15rem) 0 0;
+  max-width: 48ch;
+  margin-inline-start: auto;
+}
+
+@media (max-width: 720px) {
+  .section-modes .modes-intro {
+    align-items: flex-start;
+    text-align: left;
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  .section-modes .modes-intro__lead {
+    margin-inline-start: 0;
+  }
 }
 
 .section-modes .mode-plan[data-mode="proyecto"] .mode-plan__eyebrow {

@@ -1,5 +1,6 @@
 import { servicesSectionCopy } from "@domain/content/services";
 import { ServiceBlades } from "@presentation/components/sections/ServiceBlades";
+import { TechMarquee } from "@presentation/components/sections/TechMarquee";
 
 interface ServicesSectionProps {
   onHoverService?: (index: number | null) => void;
@@ -37,6 +38,11 @@ export function ServicesSection({ onHoverService }: ServicesSectionProps) {
       <p className="services-hint reveal">{servicesSectionCopy.hint}</p>
       <div className="services-showcase reveal">
         <ServiceBlades onActiveChange={onHoverService} />
+        <TechMarquee
+          className="tech-marquee--services"
+          eyebrow="Stack que usamos"
+          revealOnScroll={false}
+        />
       </div>
       </div>
     </section>

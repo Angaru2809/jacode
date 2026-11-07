@@ -26,6 +26,7 @@
 
   --radius: 2px;
   --page-width: 1360px;
+  /** Texto / secciones tipo `.section` (modalidades, etc.). */
   --page-gutter: clamp(0.875rem, 2.25vw, 1.125rem);
   --header-h: 74px;
   --header-float-pad: 0;

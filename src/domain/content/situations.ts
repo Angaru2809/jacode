@@ -1,4 +1,5 @@
 import type { ServiceIconKind } from "@domain/models/types";
+import { homeSectionIndex } from "@domain/content/homeSections";
 
 export type SituationTileTone = "light" | "dark" | "accent";
 
@@ -17,6 +18,7 @@ export interface SituationItem {
 }
 
 export const situationsIntro = {
+  index: homeSectionIndex.situations,
   eyebrow: "Situaciones",
   titleLine1: "Identifica la etapa",
   titleLine2: "de tu proyecto.",

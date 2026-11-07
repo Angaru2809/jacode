@@ -82,12 +82,20 @@ export interface JourneyStage {
   number: string;
   label: string;
   description: string;
+  /** Etiqueta de fase (Descubrir, Diseñar, …) */
+  phaseLabel: string;
+  /** Comando mostrado en la terminal (discover, design, …) */
+  terminalCommand: string;
   /** Breve metáfora del movimiento del cubo en esta etapa */
   motionHint: string;
   /** Letra de JACODE que se enciende en el cubo */
   brandLetter: string | null;
-  /** Capas de trabajo en esta estación (sin repetir otras secciones) */
+  /** Capas de trabajo en esta estación (chips) */
   pillars: string[];
+  /** Viñetas “En este paso” */
+  inThisStep: readonly string[];
+  /** Entregables “Lo que recibes” */
+  deliverables: readonly string[];
 }
 
 export interface WhyItem {

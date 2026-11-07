@@ -59,9 +59,89 @@
 }
 
 .section-services .services-showcase {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   border-color: rgba(255, 255, 255, 0.1);
   background: rgba(8, 8, 8, 0.42);
   box-shadow:
     0 32px 72px rgba(0, 0, 0, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Cinta de stack — pie del showcase (como en la versión publicada) */
+.section-services .tech-marquee.tech-marquee--services {
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
+  padding: 0.75rem clamp(0.5rem, 2vw, 1rem) 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(8, 8, 8, 0.08);
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 247, 248, 0.92) 0%,
+    var(--gray-100) 100%
+  );
+  opacity: 1;
+  transform: none;
+}
+
+.section-services .tech-marquee--services .tech-marquee__eyebrow {
+  margin-bottom: 0.65rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  color: var(--gray-400);
+}
+
+.section-services .tech-marquee--services .tech-marquee__viewport {
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 5%,
+    #000 95%,
+    transparent 100%
+  );
+}
+
+.section-services .tech-marquee--services .tech-marquee__track {
+  gap: 0;
+  animation-duration: 38s;
+}
+
+.section-services .tech-marquee--services .tech-marquee__item {
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 1.2vw, 0.9375rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--gray-600);
+  opacity: 1;
+}
+
+.section-services .tech-marquee--services .tech-marquee__item:nth-child(3n + 1),
+.section-services .tech-marquee--services .tech-marquee__item:nth-child(3n + 2) {
+  color: var(--gray-600);
+}
+
+.section-services .tech-marquee--services .tech-marquee__item::after {
+  content: "·";
+  margin-inline: clamp(1.15rem, 2.8vw, 2rem);
+  font-weight: 400;
+  color: rgba(255, 0, 110, 0.45);
+}
+
+.section-services .tech-marquee--services:hover .tech-marquee__item:hover {
+  color: var(--magenta);
+}
+
+.section-services .tech-marquee--services .tech-marquee__static-list {
+  justify-content: center;
+  gap: 0.35rem 1.15rem;
+}
+
+.section-services .tech-marquee--services .tech-marquee__static-list li {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--gray-600);
 }

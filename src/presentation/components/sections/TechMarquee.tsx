@@ -1,24 +1,29 @@
-import { techMarqueeItems } from "@domain/content/techMarquee";
+import { techMarqueeFeatured, techMarqueeItems } from "@domain/content/techMarquee";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 
 export interface TechMarqueeProps {
   eyebrow?: string;
   items?: readonly string[];
   className?: string;
+  /** Si es false, no usa `.reveal` (siempre visible; útil bajo blades). */
+  revealOnScroll?: boolean;
 }
 
 export function TechMarquee({
   eyebrow = "Tecnologías que usamos",
   items,
   className = "",
+  revealOnScroll = true,
 }: TechMarqueeProps) {
-  const list = items ?? techMarqueeItems;
+  const isServices = className.includes("tech-marquee--services");
+  const list = items ?? (isServices ? techMarqueeFeatured : techMarqueeItems);
   const { reducedMotion } = useMotionPreference();
   const loop = [...list, ...list];
 
   const rootClass = [
     "tech-marquee",
-    "reveal",
+    revealOnScroll ? "reveal" : "",
+    revealOnScroll ? "" : "is-in",
     reducedMotion ? "is-static" : "",
     className,
   ]

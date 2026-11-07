@@ -1,6 +1,6 @@
 import { useEffect, useId, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { navLinks } from "@domain/content/brand";
+import { brand, navLinks } from "@domain/content/brand";
 import { useHeaderOnDark } from "@application/hooks/useHeaderOnDark";
 import { useNavSectionActive } from "@application/hooks/useNavSectionActive";
 import { useScrolled } from "@application/hooks/useScrolled";
@@ -77,18 +77,37 @@ export function Header() {
               })}
             </ul>
 
-            {ctaLink ? (
+            <div className="nav-drawer-ctas">
               <a
-                href={ctaLink.href}
-                className="nav-cta nav-cta--drawer"
+                href={brand.clientPortalHref}
+                className="nav-client nav-client--drawer"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
               >
-                <span className="nav-cta__label">{ctaLink.label}</span>
+                {brand.clientPortalLabel}
               </a>
-            ) : null}
+              {ctaLink ? (
+                <a
+                  href={ctaLink.href}
+                  className="nav-cta nav-cta--drawer"
+                  onClick={() => setOpen(false)}
+                >
+                  <span className="nav-cta__label">{ctaLink.label}</span>
+                </a>
+              ) : null}
+            </div>
           </nav>
 
           <div className="header-end">
+            <a
+              href={brand.clientPortalHref}
+              className="nav-client nav-client--bar"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {brand.clientPortalLabel}
+            </a>
             {ctaLink ? (
               <a
                 href={ctaLink.href}

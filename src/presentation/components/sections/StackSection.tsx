@@ -39,7 +39,7 @@ export function StackSection() {
         <header className="stack-intro reveal reveal-stagger">
           <div className="stack-intro__index-row reveal-stagger__item" aria-hidden="true">
             <span className="stack-intro__index-line" />
-            <span className="section-index stack-intro__index">03</span>
+            <span className="section-index stack-intro__index">{stackSectionCopy.index}</span>
             <span className="stack-intro__index-line" />
           </div>
           <h2 id="stack-title" className="stack-intro__title reveal-stagger__item">

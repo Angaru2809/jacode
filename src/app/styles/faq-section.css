@@ -4,7 +4,7 @@
   --contact-magenta: #e6005c;
   --contact-glass: rgba(255, 255, 255, 0.92);
   --contact-line: rgba(8, 8, 8, 0.07);
-  --contact-gutter: clamp(0.75rem, 2.2vw, var(--page-gutter));
+  --contact-gutter: clamp(1rem, 3vw, 2.5rem);
   --faq-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   max-width: none;

@@ -46,7 +46,7 @@ export function SituationsSection() {
               className="situations-split__index reveal-stagger__item"
               aria-hidden="true"
             >
-              01
+              {situationsIntro.index}
             </span>
             <p className="situations-split__eyebrow reveal-stagger__item">
               {situationsIntro.eyebrow}

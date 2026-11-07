@@ -1,3 +1,5 @@
+import { homeSectionIndex } from "@domain/content/homeSections";
+
 export type StackLayerId = "frontend" | "backend" | "integrations" | "cms";
 
 export interface StackLayer {
@@ -53,6 +55,7 @@ export const stackLayers: StackLayer[] = [
 ];
 
 export const stackSectionCopy = {
+  index: homeSectionIndex.stack,
   titleLine1: "Herramientas con",
   titleAccent: "criterio.",
   lead:

@@ -1,7 +1,8 @@
 import type { ServiceItem } from "@domain/models/types";
+import { homeSectionIndex } from "@domain/content/homeSections";
 
 export const servicesSectionCopy = {
-  index: "02",
+  index: homeSectionIndex.services,
   titleLine1: "¿Qué podemos desarrollar",
   titleLine2: "para tu",
   titleAccent: "negocio?",

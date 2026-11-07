@@ -4,7 +4,7 @@
   max-width: none;
   width: 100%;
   margin-inline: 0;
-  padding: clamp(3rem, 7vw, 4.75rem) var(--page-gutter);
+  padding: clamp(3rem, 7vw, 4.75rem) clamp(1rem, 3vw, 2.5rem);
   scroll-margin-top: var(--header-h);
   background:
     linear-gradient(180deg, var(--white) 0%, #f4f4f7 100%),
@@ -18,21 +18,28 @@
 }
 
 #proceso.jacode-late .process-method__head {
-  text-align: center;
+  text-align: left;
+  max-width: 720px;
   margin-bottom: clamp(2rem, 4vw, 2.85rem);
 }
 
-#proceso.jacode-late .process-method__head .section-index {
+#proceso.jacode-late .process-method__index {
   display: inline-block;
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-hero);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--magenta);
 }
 
 #proceso.jacode-late .process-method__title {
-  margin-inline: auto;
+  margin-inline: 0;
   max-width: 16em;
   font-size: clamp(1.85rem, 3.4vw, 2.65rem);
   line-height: 1.12;
   letter-spacing: -0.03em;
+  text-align: left;
 }
 
 #proceso.jacode-late .process-method__title .jacode-scroll-title__accent {
@@ -40,10 +47,11 @@
   margin-top: 0.2em;
 }
 
-#proceso.jacode-late .process-method__lead {
-  margin: 1rem auto 0;
-  max-width: 48ch;
-  font-size: clamp(0.98rem, 1.25vw, 1.08rem);
+#proceso.jacode-late .process-method__intro {
+  margin: clamp(1.1rem, 2vw, 1.35rem) 0 0;
+  max-width: 52ch;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
   line-height: 1.65;
   color: var(--gray-600);
 }
@@ -99,8 +107,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  min-height: 4.25rem;
-  padding: 0.45rem 0.35rem;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0.55rem 0.4rem;
   border: none;
   border-radius: 999px;
   background: transparent;
@@ -128,8 +137,8 @@
 }
 
 #proceso.jacode-late .process-studio__tab-icon svg {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 #proceso.jacode-late .process-studio__tab:hover .process-studio__tab-icon {
@@ -153,19 +162,60 @@
 }
 
 #proceso.jacode-late .process-studio__tab-num {
-  font-family: var(--font-display);
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  opacity: 0.75;
+  font-family: var(--font-hero);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #c9c9cf;
+}
+
+#proceso.jacode-late .process-studio__tab.is-active .process-studio__tab-num {
+  color: #ffffff;
 }
 
 #proceso.jacode-late .process-studio__tab-label {
-  font-size: clamp(0.68rem, 0.95vw, 0.78rem);
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: 1.2;
   text-align: center;
   max-width: 9em;
+}
+
+#proceso.jacode-late .process-studio__tab:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+#proceso.jacode-late .process-studio__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.35rem;
+}
+
+#proceso.jacode-late .process-studio__step-indicator {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--gray-600);
+}
+
+#proceso.jacode-late .process-studio__progress {
+  height: 2px;
+  margin: 0 0 0.85rem;
+  border-radius: 999px;
+  background: var(--gray-200);
+  overflow: hidden;
+}
+
+#proceso.jacode-late .process-studio__progress-fill {
+  display: block;
+  height: 100%;
+  width: calc(var(--studio-progress, 16.67) * 1%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--magenta) 0%, #e6007a 100%);
+  transition: width 0.28s var(--ease);
 }
 
 /* Tarjeta escenario */
@@ -220,36 +270,32 @@
 }
 
 #proceso.jacode-late .process-studio__card.is-enter-forward {
-  animation: process-card-forward 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: process-card-forward 0.25s var(--ease) both;
 }
 
 #proceso.jacode-late .process-studio__card.is-enter-back {
-  animation: process-card-back 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: process-card-back 0.25s var(--ease) both;
 }
 
 @keyframes process-card-forward {
   from {
     opacity: 0;
-    transform: translateX(28px) scale(0.98);
-    filter: blur(4px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateX(0) scale(1);
-    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
 @keyframes process-card-back {
   from {
     opacity: 0;
-    transform: translateX(-28px) scale(0.98);
-    filter: blur(4px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateX(0) scale(1);
-    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
@@ -284,29 +330,30 @@
 
 #proceso.jacode-late .process-studio__terminal-brand {
   display: inline-flex;
-  gap: 0.12rem;
-  margin-right: 0.15rem;
-  padding: 0.12rem 0.35rem;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.04);
-  letter-spacing: 0.14em;
+  gap: 0.08rem;
+  margin-right: 0.2rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  letter-spacing: 0.1em;
   font-weight: 700;
 }
 
 #proceso.jacode-late .process-studio__terminal-brand-char {
-  color: rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.22);
   transition:
-    color 0.35s ease,
-    text-shadow 0.35s ease,
-    transform 0.35s ease;
+    color 0.28s var(--ease),
+    text-shadow 0.28s var(--ease),
+    transform 0.28s var(--ease);
 }
 
 #proceso.jacode-late .process-studio__terminal-brand-char.is-lit {
-  color: var(--lit-tone, var(--studio-tone, #e6007a));
+  color: var(--lit-tone, var(--studio-tone, #ff006e));
   text-shadow:
-    0 0 12px color-mix(in srgb, var(--lit-tone, #e6007a) 55%, transparent),
-    0 0 28px color-mix(in srgb, var(--lit-tone, #e6007a) 35%, transparent);
-  transform: scale(1.08);
+    0 0 10px color-mix(in srgb, var(--lit-tone, #ff006e) 70%, transparent),
+    0 0 22px color-mix(in srgb, var(--lit-tone, #ff006e) 45%, transparent),
+    0 0 36px color-mix(in srgb, var(--lit-tone, #ff006e) 25%, transparent);
+  transform: scale(1.12);
 }
 
 #proceso.jacode-late .process-studio__terminal-sep {
@@ -339,11 +386,14 @@
   }
 }
 
-#proceso.jacode-late .process-studio__card-body {
+#proceso.jacode-late .process-studio__card-layout {
   position: relative;
   z-index: 1;
-  margin-top: 0.15rem;
-  padding-top: clamp(0.85rem, 1.8vw, 1.1rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  margin-top: 0.25rem;
+  padding-top: clamp(0.75rem, 1.5vw, 1rem);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -375,25 +425,58 @@
 
 #proceso.jacode-late .process-studio__hint {
   margin: 0;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: #c9c9cf;
+}
+
+#proceso.jacode-late .process-studio__phase {
+  margin: 0.65rem 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #c9c9cf;
 }
 
 #proceso.jacode-late .process-studio__card-title {
   margin: 0 0 0.45rem;
-  font-family: var(--font-hero);
+  font-family: var(--font-display);
   font-size: clamp(1.35rem, 2.4vw, 1.75rem);
   letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
 #proceso.jacode-late .process-studio__card-text {
   margin: 0;
   max-width: 54ch;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.74);
+  color: #c9c9cf;
+}
+
+#proceso.jacode-late .process-studio__in-step {
+  margin-top: 1rem;
+}
+
+#proceso.jacode-late .process-studio__in-step-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+#proceso.jacode-late .process-studio__in-step ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #c9c9cf;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+#proceso.jacode-late .process-studio__in-step li + li {
+  margin-top: 0.25rem;
 }
 
 #proceso.jacode-late .process-studio__pillars {
@@ -405,37 +488,135 @@
   list-style: none;
 }
 
-#proceso.jacode-late .process-studio__pillars li {
-  animation: process-pill-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--pill-i, 0) * 0.06s + 0.12s);
-}
-
-#proceso.jacode-late .process-studio__pillar-btn {
-  font: inherit;
+#proceso.jacode-late .process-studio__pillar-chip {
+  display: inline-block;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
   padding: 0.38rem 0.7rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--gray-800);
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+}
+
+#proceso.jacode-late .process-studio__col--deliver {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(0.85rem, 1.5vw, 1.1rem);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+#proceso.jacode-late .process-studio__deliver-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+#proceso.jacode-late .process-studio__deliver-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+}
+
+#proceso.jacode-late .process-studio__deliver-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.875rem;
+  color: #c9c9cf;
+}
+
+#proceso.jacode-late .process-studio__deliver-row:last-child {
+  border-bottom: none;
+}
+
+#proceso.jacode-late .process-studio__file-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  color: var(--magenta);
+}
+
+#proceso.jacode-late .process-studio__panel-cta {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  background: #e6007a;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition:
+    background 0.22s var(--ease),
+    transform 0.22s var(--ease);
+}
+
+#proceso.jacode-late .process-studio__panel-cta:hover {
+  background: var(--magenta);
+  transform: translateY(-1px);
+}
+
+#proceso.jacode-late .process-studio__panel-cta:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+#proceso.jacode-late .process-studio__footer-nav {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+#proceso.jacode-late .process-studio__nav-btn {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--gray-800);
   background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.88);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
   transition:
-    border-color 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease;
+    border-color 0.22s var(--ease),
+    background 0.22s var(--ease);
 }
 
-#proceso.jacode-late .process-studio__pillar-btn:hover {
-  border-color: color-mix(in srgb, var(--studio-tone, #e6007a) 35%, rgba(255, 255, 255, 0.12));
+#proceso.jacode-late .process-studio__nav-btn:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--magenta) 40%, var(--gray-800));
+  background: rgba(255, 0, 110, 0.08);
 }
 
-#proceso.jacode-late .process-studio__pillar-btn.is-active {
-  border-color: color-mix(in srgb, var(--studio-tone, #e6007a) 55%, transparent);
-  background: color-mix(in srgb, var(--studio-tone, #e6007a) 22%, rgba(255, 255, 255, 0.04));
-  box-shadow: 0 0 16px color-mix(in srgb, var(--studio-tone, #e6007a) 28%, transparent);
+#proceso.jacode-late .process-studio__nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+#proceso.jacode-late .process-studio__nav-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 #proceso.jacode-late .process-studio__card-noise {
@@ -525,6 +706,29 @@
   #proceso.jacode-late .process-method__title .jacode-scroll-title__accent {
     display: inline;
     margin-top: 0;
+  }
+
+  #proceso.jacode-late .process-studio__card-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #proceso.jacode-late .process-studio__footer-nav {
+    flex-direction: column;
+  }
+
+  #proceso.jacode-late .process-studio__nav-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  #proceso.jacode-late.section-process-method {
+    padding-block: clamp(2rem, 3.5vh, 2.75rem);
+  }
+
+  #proceso.jacode-late .process-method__head {
+    margin-bottom: clamp(1.25rem, 2.5vh, 1.75rem);
   }
 }
 

@@ -7,11 +7,9 @@ import { HeroSection } from "@presentation/components/sections/HeroSection";
 import { SituationsSection } from "@presentation/components/sections/SituationsSection";
 import { ServicesSection } from "@presentation/components/sections/ServicesSection";
 import { StackSection } from "@presentation/components/sections/StackSection";
-import { IncludeSection } from "@presentation/components/sections/IncludeSection";
 import { ProcessSection } from "@presentation/components/sections/ProcessSection";
-import { DeliverablesSection } from "@presentation/components/sections/DeliverablesSection";
 import { ModesSection } from "@presentation/components/sections/ModesSection";
-import { WhySection } from "@presentation/components/sections/WhySection";
+import { ImpulsamosSection } from "@presentation/components/sections/ImpulsamosSection";
 import { FaqSection } from "@presentation/components/sections/FaqSection";
 import { CtaSection } from "@presentation/components/sections/CtaSection";
 import { useMotionPreference } from "@app/providers/MotionProvider";
@@ -40,11 +38,9 @@ export function HomePage() {
           onHoverService={(i) => cubeApiRef.current?.highlight(i)}
         />
         <StackSection />
-        <IncludeSection />
         <ProcessSection />
-        <DeliverablesSection />
         <ModesSection />
-        <WhySection />
+        <ImpulsamosSection />
         <FaqSection />
         <CtaSection />
       </main>

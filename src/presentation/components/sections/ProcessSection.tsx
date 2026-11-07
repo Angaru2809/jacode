@@ -1,19 +1,24 @@
-import { useCallback, useRef, useState, type CSSProperties } from "react";
-import { journeyStages } from "@domain/content/process";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+} from "react";
+import { journeyStages, processMethodCopy } from "@domain/content/process";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 import { Section } from "@presentation/components/ui/Section";
 import { ScrollSplitTitle } from "@presentation/components/ui/ScrollSplitTitle";
 
 const STAGE_TONE: Record<string, string> = {
-  discover: "#e6007a",
-  design: "#c026d3",
+  discover: "#ff006e",
+  design: "#e6007a",
   build: "#22d3ee",
   test: "#34d399",
   ship: "#fbbf24",
   evolve: "#ff006e",
 };
-
-const JACODE_LETTERS = ["J", "A", "C", "O", "D", "E"] as const;
 
 function StationIcon({ id }: { id: string }) {
   switch (id) {
@@ -80,6 +85,8 @@ function StationIcon({ id }: { id: string }) {
   }
 }
 
+const JACODE_LETTERS = ["J", "A", "C", "O", "D", "E"] as const;
+
 function TerminalBrand({ activeLetter, tone }: { activeLetter: string; tone: string }) {
   return (
     <span className="process-studio__terminal-brand" aria-hidden="true">
@@ -87,7 +94,9 @@ function TerminalBrand({ activeLetter, tone }: { activeLetter: string; tone: str
         <span
           key={letter}
           className={
-            letter === activeLetter ? "process-studio__terminal-brand-char is-lit" : "process-studio__terminal-brand-char"
+            letter === activeLetter
+              ? "process-studio__terminal-brand-char is-lit"
+              : "process-studio__terminal-brand-char"
           }
           style={letter === activeLetter ? ({ "--lit-tone": tone } as CSSProperties) : undefined}
         >
@@ -98,92 +107,114 @@ function TerminalBrand({ activeLetter, tone }: { activeLetter: string; tone: str
   );
 }
 
+function FileIcon() {
+  return (
+    <svg viewBox="0 0 20 20" aria-hidden className="process-studio__file-icon">
+      <path
+        d="M6 3h5.5L15 6.5V17H6V3Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinejoin="round"
+      />
+      <path d="M11.5 3v4H15" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function useTypedCommand(command: string, enabled: boolean) {
+  const [typed, setTyped] = useState(command);
+
+  useEffect(() => {
+    if (!enabled) {
+      setTyped(command);
+      return;
+    }
+    setTyped("");
+    let i = 0;
+    const timer = window.setInterval(() => {
+      i += 1;
+      setTyped(command.slice(0, i));
+      if (i >= command.length) window.clearInterval(timer);
+    }, 26);
+    return () => window.clearInterval(timer);
+  }, [command, enabled]);
+
+  return typed;
+}
+
 export function ProcessSection() {
   const { reducedMotion } = useMotionPreference();
-  const [pinnedIndex, setPinnedIndex] = useState(0);
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [activePillar, setActivePillar] = useState<string | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [motionDir, setMotionDir] = useState<"forward" | "back">("forward");
   const prevIndex = useRef(0);
 
-  const activeIndex = hoverIndex ?? pinnedIndex;
   const stage = journeyStages[activeIndex];
   const tone = STAGE_TONE[stage.id] ?? "#e6007a";
-  const brandLetter = stage.brandLetter ?? "J";
+  const typedCmd = useTypedCommand(stage.terminalCommand, !reducedMotion);
+  const progressPct = ((activeIndex + 1) / journeyStages.length) * 100;
 
   const goToStage = useCallback((index: number) => {
-    setMotionDir(index >= prevIndex.current ? "forward" : "back");
-    prevIndex.current = index;
-    setActivePillar(null);
+    const clamped = Math.max(0, Math.min(journeyStages.length - 1, index));
+    setMotionDir(clamped >= prevIndex.current ? "forward" : "back");
+    prevIndex.current = clamped;
+    setActiveIndex(clamped);
   }, []);
 
-  const onTabHover = useCallback(
-    (index: number) => {
-      goToStage(index);
-      setHoverIndex(index);
+  const onSectionKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLElement>) => {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        goToStage(activeIndex + 1);
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        goToStage(activeIndex - 1);
+      }
     },
-    [goToStage]
+    [activeIndex, goToStage]
   );
-
-  const onTabSelect = useCallback(
-    (index: number) => {
-      goToStage(index);
-      setPinnedIndex(index);
-      setHoverIndex(null);
-    },
-    [goToStage]
-  );
-
-  const clearHover = useCallback(() => {
-    setHoverIndex(null);
-  }, []);
-
-  const onPillarClick = useCallback((pillar: string) => {
-    setActivePillar((prev) => (prev === pillar ? null : pillar));
-  }, []);
 
   return (
-    <Section
-      id="proceso"
-      className="section-process-method jacode-late"
-      labelledBy="method-title"
-    >
-      <div className="process-method reveal">
+    <Section id="proceso" className="section-process-method jacode-late" labelledBy="method-title">
+      <div
+        className="process-method reveal"
+        tabIndex={0}
+        role="group"
+        aria-label="Proceso JACODE en 6 pasos"
+        onKeyDown={onSectionKeyDown}
+      >
         <header className="process-method__head">
-          <span className="section-index" aria-hidden="true">
-            05
+          <span className="section-index process-method__index" aria-hidden="true">
+            {processMethodCopy.index}
           </span>
           <ScrollSplitTitle
             id="method-title"
-            plain="Así afrontamos cada proyecto."
-            accent="Seis estaciones, un solo recorrido."
+            plain={processMethodCopy.titlePlain}
+            accent={processMethodCopy.titleAccent}
             className="process-method__title"
           />
-          <p className="process-method__intro">
-            De la primera idea a una solución que evoluciona.
-          </p>
+          <p className="process-method__intro">{processMethodCopy.intro}</p>
         </header>
 
         <div
-          className={`process-studio${activePillar ? " has-pillar-flash" : ""}`}
+          className="process-studio"
           style={
             {
               "--studio-active": activeIndex,
               "--studio-count": journeyStages.length,
               "--studio-tone": tone,
+              "--studio-progress": progressPct,
             } as CSSProperties
           }
         >
           <div
             className="process-studio__console"
             role="tablist"
-            aria-label="Estaciones JACODE"
-            onMouseLeave={clearHover}
+            aria-label="Etapas del proceso JACODE"
           >
             <span className="process-studio__glide" aria-hidden="true" />
             {journeyStages.map((s, i) => {
               const isActive = i === activeIndex;
-              const tabTone = STAGE_TONE[s.id] ?? "#e6007a";
               return (
                 <button
                   key={s.id}
@@ -192,11 +223,9 @@ export function ProcessSection() {
                   id={`studio-tab-${s.id}`}
                   aria-selected={isActive}
                   aria-controls={`studio-panel-${s.id}`}
+                  tabIndex={isActive ? 0 : -1}
                   className={`process-studio__tab${isActive ? " is-active" : ""}`}
-                  style={{ "--tab-tone": tabTone } as CSSProperties}
-                  onClick={() => onTabSelect(i)}
-                  onMouseEnter={() => onTabHover(i)}
-                  onFocus={() => onTabHover(i)}
+                  onClick={() => goToStage(i)}
                 >
                   <span className="process-studio__tab-icon">
                     <StationIcon id={s.id} />
@@ -210,6 +239,10 @@ export function ProcessSection() {
             })}
           </div>
 
+          <div className="process-studio__progress" aria-hidden="true">
+            <span className="process-studio__progress-fill" />
+          </div>
+
           <div className="process-studio__viewport">
             <article
               key={stage.id}
@@ -219,41 +252,80 @@ export function ProcessSection() {
               data-stage={stage.id}
               className={`process-studio__card${
                 reducedMotion ? "" : ` is-enter-${motionDir}`
-              }${activePillar ? " is-pillar-pulse" : ""}`}
+              }`}
               aria-live="polite"
             >
               <div className="process-studio__card-noise" aria-hidden="true" />
               <div className="process-studio__card-grid" aria-hidden="true" />
-              <p className="process-studio__terminal" aria-hidden="true">
-                <TerminalBrand activeLetter={brandLetter} tone={tone} />
+              <p className="process-studio__terminal">
+                <TerminalBrand activeLetter={stage.brandLetter ?? "J"} tone={tone} />
                 <span className="process-studio__terminal-sep">~</span>
-                <span className="process-studio__terminal-cmd">{`stage --run ${stage.id}`}</span>
-                <span className="process-studio__terminal-cursor" />
+                <span className="process-studio__terminal-prompt">stage --run </span>
+                <span className="process-studio__terminal-cmd">{typedCmd}</span>
+                <span className="process-studio__terminal-cursor" aria-hidden="true" />
               </p>
 
-              <div className="process-studio__card-body">
-                <div className="process-studio__card-meta">
-                  <span className="process-studio__letter">{brandLetter}</span>
-                  <p className="process-studio__hint">{stage.motionHint}</p>
-                </div>
-                <h3 className="process-studio__card-title">{stage.label}</h3>
-                <p className="process-studio__card-text">{stage.description}</p>
-                <ul className="process-studio__pillars" aria-label={`Enfoque: ${stage.label}`}>
-                  {stage.pillars.map((pillar, pi) => {
-                    const isPillarOn = activePillar === pillar;
-                    return (
-                      <li key={pillar} style={{ "--pill-i": pi } as CSSProperties}>
-                        <button
-                          type="button"
-                          className={`process-studio__pillar-btn${isPillarOn ? " is-active" : ""}`}
-                          onClick={() => onPillarClick(pillar)}
-                        >
-                          {pillar}
-                        </button>
+              <div className="process-studio__card-layout">
+                <div className="process-studio__col process-studio__col--main">
+                  <div className="process-studio__card-meta">
+                    <span className="process-studio__letter">{stage.brandLetter}</span>
+                    <p className="process-studio__hint">{stage.motionHint}</p>
+                  </div>
+                  <p className="process-studio__phase">Fase {stage.phaseLabel}</p>
+                  <h3 className="process-studio__card-title">{stage.label}</h3>
+                  <p className="process-studio__card-text">{stage.description}</p>
+
+                  <div className="process-studio__in-step">
+                    <p className="process-studio__in-step-label">En este paso</p>
+                    <ul>
+                      {stage.inThisStep.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <ul className="process-studio__pillars" aria-label="Enfoques del paso">
+                    {stage.pillars.map((pillar) => (
+                      <li key={pillar}>
+                        <span className="process-studio__pillar-chip">{pillar}</span>
                       </li>
-                    );
-                  })}
-                </ul>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="process-studio__col process-studio__col--deliver">
+                  <h4 className="process-studio__deliver-title">Lo que recibes</h4>
+                  <ul className="process-studio__deliver-list">
+                    {stage.deliverables.map((item) => (
+                      <li key={item} className="process-studio__deliver-row">
+                        <FileIcon />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a className="process-studio__panel-cta" href={processMethodCopy.panelCtaHref}>
+                    {processMethodCopy.panelCta}
+                  </a>
+                </div>
+              </div>
+
+              <div className="process-studio__footer-nav">
+                <button
+                  type="button"
+                  className="process-studio__nav-btn"
+                  disabled={activeIndex === 0}
+                  onClick={() => goToStage(activeIndex - 1)}
+                >
+                  ← Anterior
+                </button>
+                <button
+                  type="button"
+                  className="process-studio__nav-btn"
+                  disabled={activeIndex === journeyStages.length - 1}
+                  onClick={() => goToStage(activeIndex + 1)}
+                >
+                  Siguiente →
+                </button>
               </div>
             </article>
           </div>
