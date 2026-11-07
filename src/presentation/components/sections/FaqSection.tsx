@@ -1,15 +1,14 @@
-import { useCallback, useState, type CSSProperties } from "react";
 import { contactSectionCopy, faqItems } from "@domain/content/faq";
 import { Section } from "@presentation/components/ui/Section";
 import { ContactLeadForm } from "@presentation/components/sections/ContactLeadForm";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export function FaqSection() {
-  const [openId, setOpenId] = useState<string | null>(faqItems[1]?.id ?? null);
-
-  const toggle = useCallback((id: string) => {
-    setOpenId((prev) => (prev === id ? null : id));
-  }, []);
-
   return (
     <Section id="faq" className="section-faq" labelledBy="contact-title">
       <div className="contact-studio reveal">
@@ -38,47 +37,34 @@ export function FaqSection() {
               </h3>
             </header>
 
-            <div className="contact-faq__list" role="region" aria-label="Preguntas frecuentes">
-              {faqItems.map((item, i) => {
-                const isOpen = openId === item.id;
-                const num = String(i + 1).padStart(2, "0");
-                return (
-                  <article
-                    key={item.id}
-                    className={`contact-faq-item${isOpen ? " is-open" : ""}`}
-                    style={{ "--faq-i": i } as CSSProperties}
-                  >
-                    <h4 className="contact-faq-item__heading">
-                      <button
-                        type="button"
-                        className="contact-faq-item__trigger"
-                        aria-expanded={isOpen}
-                        aria-controls={`faq-panel-${item.id}`}
-                        id={`faq-trigger-${item.id}`}
-                        onClick={() => toggle(item.id)}
-                      >
-                        <span className="contact-faq-item__num" aria-hidden="true">
-                          {num}
-                        </span>
-                        <span className="contact-faq-item__q">{item.question}</span>
-                        <span className="contact-faq-item__chev" aria-hidden="true" />
-                      </button>
-                    </h4>
-                    <div
-                      id={`faq-panel-${item.id}`}
-                      role="region"
-                      aria-labelledby={`faq-trigger-${item.id}`}
-                      className="contact-faq-item__panel-wrap"
-                      aria-hidden={!isOpen}
+            {/* shadcn/ui Accordion (Radix): teclado, ARIA y animación de altura incluidos */}
+            <Accordion
+              type="single"
+              collapsible
+              defaultValue={faqItems[1]?.id}
+              className="flex flex-col gap-2.5"
+            >
+              {faqItems.map((item, i) => (
+                <AccordionItem
+                  key={item.id}
+                  value={item.id}
+                  className="relative overflow-hidden rounded-[14px] border border-black/[0.07] bg-white/95 transition-[border-color,box-shadow] duration-500 ease-[var(--ease)] last:border-b before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:origin-top before:scale-y-0 before:bg-primary before:transition-transform before:duration-500 hover:border-black/[0.12] data-[state=open]:border-primary/20 data-[state=open]:shadow-[0_12px_32px_rgba(255,0,110,0.06)] data-[state=open]:before:scale-y-100"
+                >
+                  <AccordionTrigger className="group grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-[14px] px-[1.15rem] py-[1.05rem] font-sans text-[0.9375rem] leading-snug font-semibold text-pitch hover:no-underline focus-visible:ring-primary/40 [&[data-state=open]>svg]:text-primary">
+                    <span
+                      aria-hidden="true"
+                      className="font-display text-[0.72rem] font-bold tracking-[0.08em] text-[#9a9aa3] transition-colors group-data-[state=open]:text-primary"
                     >
-                      <div className="contact-faq-item__panel">
-                        <p>{item.answer}</p>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>{item.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="pr-[1.15rem] pb-5 pl-4 font-sans text-sm leading-relaxed text-muted-foreground sm:pl-[2.75rem]">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </aside>
         </div>
       </div>

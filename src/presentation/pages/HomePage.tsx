@@ -16,6 +16,7 @@ import { FaqSection } from "@presentation/components/sections/FaqSection";
 import { CtaSection } from "@presentation/components/sections/CtaSection";
 import { useMotionPreference } from "@app/providers/MotionProvider";
 import { WhatsAppFab } from "@presentation/components/experience/WhatsAppFab";
+import { MobileCtaBar } from "@presentation/components/experience/MobileCtaBar";
 
 type CubeApi = {
   reorganize: () => void;
@@ -30,7 +31,6 @@ export function HomePage() {
   return (
     <>
       <SkipLink />
-      <div className="noise" aria-hidden="true" />
       <WhatsAppFab />
       <Header />
       <main id="contenido">
@@ -49,6 +49,7 @@ export function HomePage() {
         <CtaSection />
       </main>
       <Footer />
+      <MobileCtaBar />
     </>
   );
 }

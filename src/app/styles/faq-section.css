@@ -2,7 +2,7 @@
 
 .section-faq {
   --contact-magenta: #e6005c;
-  --contact-glass: rgba(255, 255, 255, 0.76);
+  --contact-glass: rgba(255, 255, 255, 0.92);
   --contact-line: rgba(8, 8, 8, 0.07);
   --contact-gutter: clamp(0.75rem, 2.2vw, var(--page-gutter));
   --faq-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -161,11 +161,9 @@
   border: 1px solid rgba(255, 255, 255, 0.82);
   background: linear-gradient(
     155deg,
-    rgba(255, 255, 255, 0.88) 0%,
-    rgba(255, 255, 255, 0.62) 100%
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(255, 255, 255, 0.9) 100%
   );
-  backdrop-filter: blur(28px) saturate(1.35);
-  -webkit-backdrop-filter: blur(28px) saturate(1.35);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
     0 20px 48px rgba(8, 8, 8, 0.045);
@@ -309,170 +307,6 @@
   color: var(--pitch);
 }
 
-.contact-faq__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.contact-faq-item {
-  --faq-accent: transparent;
-  position: relative;
-  border-radius: 14px;
-  border: 1px solid var(--contact-line);
-  background: var(--contact-glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  overflow: hidden;
-  transition:
-    border-color 0.45s var(--faq-ease),
-    background 0.45s var(--faq-ease),
-    box-shadow 0.45s var(--faq-ease);
-}
-
-.contact-faq-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--contact-magenta);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.5s var(--faq-ease);
-  border-radius: 3px 0 0 3px;
-}
-
-.contact-faq-item.is-open {
-  --faq-accent: rgba(230, 0, 92, 0.12);
-  border-color: rgba(230, 0, 92, 0.18);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 12px 32px rgba(230, 0, 92, 0.05);
-}
-
-.contact-faq-item.is-open::before {
-  transform: scaleY(1);
-}
-
-.contact-faq-item__heading {
-  margin: 0;
-}
-
-.contact-faq-item__trigger {
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 1.05rem 1.15rem;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
-  color: var(--pitch);
-}
-
-.contact-faq-item__trigger:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-  border-radius: 12px;
-}
-
-.contact-faq-item__num {
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--gray-400);
-  transition: color 0.35s var(--faq-ease);
-}
-
-.contact-faq-item.is-open .contact-faq-item__num {
-  color: var(--contact-magenta);
-}
-
-.contact-faq-item__q {
-  font-size: clamp(0.875rem, 1vw, 0.9375rem);
-  font-weight: 600;
-  line-height: 1.38;
-}
-
-.contact-faq-item__chev {
-  width: 1.45rem;
-  height: 1.45rem;
-  position: relative;
-  flex-shrink: 0;
-  transition: transform 0.55s var(--faq-ease);
-}
-
-.contact-faq-item__chev::before,
-.contact-faq-item__chev::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0.55rem;
-  height: 1.5px;
-  margin-top: -0.75px;
-  background: var(--gray-600);
-  border-radius: 2px;
-  transition:
-    background 0.35s var(--faq-ease),
-    transform 0.55s var(--faq-ease);
-}
-
-.contact-faq-item__chev::before {
-  transform: translate(-50%, -50%);
-}
-
-.contact-faq-item__chev::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.contact-faq-item.is-open .contact-faq-item__chev {
-  transform: rotate(45deg);
-}
-
-.contact-faq-item.is-open .contact-faq-item__chev::before,
-.contact-faq-item.is-open .contact-faq-item__chev::after {
-  background: var(--contact-magenta);
-}
-
-.contact-faq-item__panel-wrap {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.55s var(--faq-ease);
-}
-
-.contact-faq-item.is-open .contact-faq-item__panel-wrap {
-  grid-template-rows: 1fr;
-}
-
-.contact-faq-item__panel {
-  overflow: hidden;
-  min-height: 0;
-}
-
-.contact-faq-item__panel p {
-  margin: 0;
-  padding: 0.15rem 1.15rem 1.2rem 2.75rem;
-  font-size: 0.875rem;
-  line-height: 1.62;
-  color: var(--gray-600);
-  opacity: 0;
-  transform: translateY(-6px);
-  transition:
-    opacity 0.45s var(--faq-ease) 0.06s,
-    transform 0.55s var(--faq-ease) 0.04s;
-}
-
-.contact-faq-item.is-open .contact-faq-item__panel p {
-  opacity: 1;
-  transform: none;
-}
-
 @media (max-width: 960px) {
   .contact-studio__layout {
     grid-template-columns: 1fr;
@@ -487,25 +321,66 @@
   .contact-form__grid {
     grid-template-columns: 1fr;
   }
-
-  .contact-faq-item__panel p {
-    padding-left: 1rem;
-  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .contact-faq-item,
-  .contact-faq-item::before,
-  .contact-faq-item__panel-wrap,
-  .contact-faq-item__panel p,
-  .contact-faq-item__chev,
-  .contact-faq-item__chev::before,
-  .contact-faq-item__chev::after {
-    transition: none;
-  }
 
-  .contact-faq-item__panel p {
-    opacity: 1;
-    transform: none;
-  }
+/* Validación en línea + canal alternativo (WhatsApp) */
+.contact-form__hint {
+  margin: -0.35rem 0 1rem;
+  font-size: 0.8rem;
+  color: var(--gray-600);
+}
+
+.contact-form__error {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #c4004f;
+}
+
+.contact-form__field [aria-invalid="true"] {
+  border-color: rgba(196, 0, 79, 0.55);
+  background: #fff;
+}
+
+.contact-form__consent input[aria-invalid="true"] {
+  outline: 2px solid rgba(196, 0, 79, 0.55);
+  outline-offset: 2px;
+}
+
+.contact-form__status:empty {
+  display: none;
+}
+
+.contact-form__submit {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.contact-form__wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 211, 102, 0.45);
+  background: rgba(37, 211, 102, 0.06);
+  color: #128c4a;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+
+.contact-form__wa:hover {
+  background: rgba(37, 211, 102, 0.14);
+  border-color: #25d366;
+}
+
+.contact-form__wa svg {
+  width: 18px;
+  height: 18px;
 }

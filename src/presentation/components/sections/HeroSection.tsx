@@ -73,10 +73,10 @@ export function HeroSection({ cubeApiRef }: HeroSectionProps) {
                 variant="primary"
                 size="lg"
                 className="hero-cta interaction-halo"
-                href="#contacto"
+                href={brand.primaryCtaHref}
                 showArrow
               >
-                {brand.heroCtaLabel}
+                {brand.primaryCtaLabel}
               </Button>
             </div>
           </div>

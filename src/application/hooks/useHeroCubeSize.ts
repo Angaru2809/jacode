@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const DESKTOP = 480;
 const TABLET = 280;
-const PHONE = 248;
+const PHONE = 204;
 
 function readHeroCubeSize(): number {
   if (typeof window === "undefined") return DESKTOP;

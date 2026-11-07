@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMotionPreference } from "@app/providers/MotionProvider";
-import { brand } from "@domain/content/brand";
+import { brand, whatsappHref } from "@domain/content/brand";
 import { Button } from "@presentation/components/ui/Button";
 import { JacodeCube } from "@presentation/components/cube/JacodeCube";
 import {
@@ -11,11 +11,6 @@ import {
   TikTokIcon,
   WhatsAppIcon,
 } from "@presentation/components/ui/SocialIcons";
-
-function whatsappHref() {
-  const text = encodeURIComponent(brand.whatsappMessage);
-  return `https://wa.me/${brand.whatsappPhone}?text=${text}`;
-}
 
 const socialLinks = [
   { id: "linkedin", href: brand.linkedinUrl, label: "LinkedIn", Icon: LinkedInIcon },
@@ -65,12 +60,23 @@ export function CtaSection() {
             variant="primary"
             size="md"
             className="cta-primary-btn interaction-halo"
-            href={whatsappHref()}
+            href={brand.primaryCtaHref}
             showArrow
           >
-            Hablar con JACODE
+            {brand.primaryCtaLabel}
           </Button>
         </div>
+        <p className="mt-3 text-sm text-white/55">
+          ¿Prefieres chatear?{" "}
+          <a
+            href={whatsappHref()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-white underline decoration-white/30 underline-offset-4 transition-colors hover:text-[#25d366] hover:decoration-[#25d366]"
+          >
+            Escríbenos por WhatsApp
+          </a>
+        </p>
 
         <div className="cta-social-grid" role="list" aria-label="Redes sociales">
           {socialLinks.map(({ id, href, label, Icon }) => (

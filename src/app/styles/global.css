@@ -5,57 +5,61 @@
 
 /* Tokens live in tokens.css */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Reset base en @layer: las utilidades de Tailwind/shadcn pueden sobrescribirlo;
+   las reglas de clase existentes (sin capa) siguen ganando como antes. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + 0.5rem);
-}
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 0.5rem);
+  }
 
-body {
-  font-family: var(--font-body);
-  font-weight: 400;
-  color: var(--pitch);
-  background: var(--gray-50);
-  line-height: 1.6;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--pitch);
+    background: var(--gray-50);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
 
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-button {
-  font: inherit;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: inherit;
-}
+  button {
+    font: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+  }
 
-/* Nielsen #6 / #9 — visible focus for keyboard users */
-:focus-visible {
-  outline: 3px solid var(--magenta);
-  outline-offset: 3px;
-}
+  /* Nielsen #6 / #9 — visible focus for keyboard users */
+  :focus-visible {
+    outline: 3px solid var(--magenta);
+    outline-offset: 3px;
+  }
 
-ul,
-ol {
-  list-style: none;
+  ul,
+  ol {
+    list-style: none;
+  }
 }
 
 .skip-link {
@@ -74,16 +78,6 @@ ol {
 }
 
 /* Atmospheres */
-.noise {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
-}
-
 .grid-bg {
   pointer-events: none;
   position: fixed;
@@ -117,9 +111,9 @@ ol {
   border-radius: 0;
   border: none;
   border-bottom: 1px solid rgba(8, 8, 8, 0.08);
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(18px) saturate(1.25);
-  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 8px 28px rgba(8, 8, 8, 0.04);
   transition:
     background 0.35s var(--ease),
@@ -517,8 +511,9 @@ ol {
 .hero-ambient__orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(72px);
-  will-change: transform;
+  /* Halo suave sin filter: blur (más barato al hacer scroll) */
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
 }
 
 .hero-ambient__orb--primary {
@@ -1539,9 +1534,7 @@ button.story-phases__label:not(.is-active):hover {
   margin-inline: auto;
   padding: 0.4rem 0.45rem;
   border-radius: 10px;
-  background: rgba(8, 8, 8, 0.55);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  background: rgba(8, 8, 8, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.28);
   box-shadow: 0 8px 24px rgba(8, 8, 8, 0.28);
   pointer-events: auto;
@@ -2379,9 +2372,7 @@ button.story-phases__label:not(.is-active):hover {
   padding: clamp(1.25rem, 2.5vw, 1.75rem);
   border-radius: 18px;
   border: 1px solid var(--gray-200);
-  background: rgba(255, 255, 255, 0.82);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.97);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 24px 48px rgba(8, 8, 8, 0.06);
@@ -4167,7 +4158,7 @@ button.story-phases__label:not(.is-active):hover {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.18;
-  max-width: min(22rem, 92vw);
+  max-width: min(16ch, 92vw);
   margin-bottom: 1rem;
   text-wrap: balance;
 }
@@ -4214,10 +4205,8 @@ button.story-phases__label:not(.is-active):hover {
   height: 3.25rem;
   border-radius: 14px;
   color: rgba(255, 255, 255, 0.92);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.06);
   border: 2px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   transition:
     border-color 0.2s ease,
     box-shadow 0.25s ease,
@@ -4693,13 +4682,17 @@ button.story-phases__label:not(.is-active):hover {
     height: auto;
   }
 
+  /* En móvil las láminas son filas anchas: el chip se ajusta al texto sin partir palabras */
   .service-blade__chip {
-    width: 5.25rem;
+    width: auto;
+    min-width: 6.5rem;
     min-height: 2.55rem;
+    padding-inline: 0.85rem;
   }
 
   .service-blade__chip .service-blade__label {
     font-size: 0.625rem;
+    white-space: nowrap;
   }
 
   .mode-folder-grid {
@@ -4811,8 +4804,7 @@ button.story-phases__label:not(.is-active):hover {
     padding: 0.85rem;
     border-radius: 18px;
     border: 1px solid rgba(8, 8, 8, 0.08);
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.98);
     box-shadow: 0 20px 50px rgba(8, 8, 8, 0.12);
     transform: translateY(-12px) scale(0.98);
     opacity: 0;
@@ -4954,5 +4946,31 @@ button.story-phases__label:not(.is-active):hover {
   .journey-cube[data-journey="test"] .cube-orbit,
   .journey-stage__cube[data-journey-active] .journey-stage__cube-glow {
     animation: none !important;
+  }
+}
+
+/* Barra CTA móvil: evita que el FAB de WhatsApp se superponga */
+@media (max-width: 767px) {
+  html.has-mobile-cta .whatsapp-fab {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+  }
+}
+
+/* Hero móvil: cubo más compacto para que titular y CTA entren en la primera pantalla */
+@media (max-width: 480px) {
+  .hero-visual {
+    min-height: 12.25rem;
+  }
+
+  .hero-cube.cube-stage::after {
+    width: min(220px, 80%);
+    height: min(220px, 80%);
+  }
+
+  .hero-actions .hero-cta {
+    width: 100%;
+    justify-content: center;
   }
 }

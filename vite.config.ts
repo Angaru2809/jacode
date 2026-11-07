@@ -1,14 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { fileURLToPath, URL } from "node:url";
 
 const alias = (dir: string) =>
   fileURLToPath(new URL(`./src/${dir}`, import.meta.url));
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
+      "@": alias(""),
       "@app": alias("app"),
       "@domain": alias("domain"),
       "@application": alias("application"),

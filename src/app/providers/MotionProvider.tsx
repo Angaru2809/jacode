@@ -5,6 +5,10 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
+import { LazyMotion, MotionConfig } from "motion/react";
+
+const loadMotionFeatures = () =>
+  import("./motionFeatures").then((mod) => mod.default);
 import { usePrefersReducedMotion } from "@application/hooks/usePrefersReducedMotion";
 
 interface MotionContextValue {
@@ -23,7 +27,13 @@ export function MotionProvider({ children }: { children: ReactNode }) {
   const value = useMemo(() => ({ reducedMotion }), [reducedMotion]);
 
   return (
-    <MotionContext.Provider value={value}>{children}</MotionContext.Provider>
+    <MotionContext.Provider value={value}>
+      {/* Componentes `motion` (incl. los de 21st.dev) respetan prefers-reduced-motion */}
+      {/* LazyMotion + m.*: solo carga las features de animación DOM (bundle más ligero) */}
+      <LazyMotion features={loadMotionFeatures}>
+        <MotionConfig reducedMotion="user">{children}</MotionConfig>
+      </LazyMotion>
+    </MotionContext.Provider>
   );
 }
 

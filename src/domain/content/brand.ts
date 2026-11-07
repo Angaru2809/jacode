@@ -38,6 +38,10 @@ export const brand = {
   ] as const,
   lead:
     "Desarrollamos páginas web, plataformas y software a medida para empresas que quieren lanzar nuevas ideas, mejorar sus procesos o hacer crecer sus productos digitales.",
+  /** CTA principal único en toda la página (hero, cierre, barra móvil). */
+  primaryCtaLabel: "Hablemos de tu proyecto",
+  primaryCtaHref: "#contacto",
+  /** @deprecated use primaryCtaLabel */
   heroCtaLabel: "Hablemos de tu proyecto",
   heroSecondaryCtaLabel: "Explorar servicios",
   secondaryLine: "De la idea al código. Del código a la solución.",
@@ -59,6 +63,11 @@ export const brand = {
     white: "#FFFFFF",
   },
 } as const;
+
+/** Enlace de WhatsApp con mensaje prellenado. */
+export function whatsappHref(message: string = brand.whatsappMessage): string {
+  return `https://wa.me/${brand.whatsappPhone}?text=${encodeURIComponent(message)}`;
+}
 
 export const storyLabels: Record<string, string> = {
   scrambled: "Complejidad",

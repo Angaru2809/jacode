@@ -100,3 +100,8 @@
     transition: min-height 0.35s var(--ease), box-shadow 0.35s var(--ease);
   }
 }
+
+/* §06 Entregables (rediseño): titular más ancho para evitar viudas */
+.deliverables-v2__head {
+  max-width: 900px;
+}

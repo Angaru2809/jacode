@@ -24,8 +24,9 @@
 .stack-section__blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(64px);
-  opacity: 0.55;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  opacity: 0.38;
 }
 
 .stack-section__blob--tl {

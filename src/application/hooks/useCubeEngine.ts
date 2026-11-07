@@ -103,7 +103,6 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
         : { x: -22, y: 32, tx: -22, ty: 32 }
   );
   const drag = useRef({ active: false, lastX: 0, lastY: 0, moved: false });
-  const raf = useRef<number>(0);
   const moduleEls = useRef<HTMLElement[]>([]);
   const timers = useRef<number[]>([]);
   const looping = useRef(false);
@@ -115,6 +114,61 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
   const conceptFocusRef = useRef(conceptIndex);
   conceptFocusRef.current = conceptIndex;
   const spinBoost = useRef(0);
+
+  /** true solo si el cubo está en viewport y la pestaña está visible. */
+  const activeRef = useRef(true);
+  const resumeFns = useRef(new Set<() => void>());
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const target = root.parentElement ?? root;
+    let inView = true;
+    const update = () => {
+      const next = inView && document.visibilityState === "visible";
+      const was = activeRef.current;
+      activeRef.current = next;
+      if (next && !was) resumeFns.current.forEach((fn) => fn());
+    };
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        update();
+      },
+      { rootMargin: "120px 0px" }
+    );
+    io.observe(target);
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, []);
+
+  /** requestAnimationFrame que se detiene fuera de pantalla y se reanuda al volver. */
+  const startLoop = useCallback((frame: () => void) => {
+    let id = 0;
+    let stopped = false;
+    const tick = () => {
+      if (stopped) return;
+      if (!activeRef.current) {
+        id = 0;
+        return;
+      }
+      frame();
+      id = requestAnimationFrame(tick);
+    };
+    const resume = () => {
+      if (!stopped && !id) id = requestAnimationFrame(tick);
+    };
+    resumeFns.current.add(resume);
+    id = requestAnimationFrame(tick);
+    return () => {
+      stopped = true;
+      cancelAnimationFrame(id);
+      resumeFns.current.delete(resume);
+    };
+  }, []);
 
   const clearTimers = useCallback(() => {
     timers.current.forEach((id) => window.clearTimeout(id));
@@ -309,15 +363,9 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       return;
     }
 
-    let raf = 0;
     const start = performance.now();
-    const tick = () => {
-      applyConcept((performance.now() - start) / 1000);
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [playConceptFocus, reducedMotion, size]);
+    return startLoop(() => applyConcept((performance.now() - start) / 1000));
+  }, [playConceptFocus, reducedMotion, size, startLoop]);
 
   // Ambient pulse (CTA) — no scramble / story labels
   useEffect(() => {
@@ -339,19 +387,13 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       return;
     }
 
-    let raf = 0;
     const start = performance.now();
-
-    const tick = () => {
-      const t =
-        ((performance.now() - start) / 1000) * ambientTimeScaleRef.current;
-      applyAmbient(t);
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
-    return () => cancelAnimationFrame(raf);
-  }, [playAmbientPulse, reducedMotion, size]);
+    return startLoop(() =>
+      applyAmbient(
+        ((performance.now() - start) / 1000) * ambientTimeScaleRef.current
+      )
+    );
+  }, [playAmbientPulse, reducedMotion, size, startLoop]);
 
   const jumpToStory = useCallback(
     (state: StoryState) => {
@@ -459,15 +501,10 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       return;
     }
 
-    let raf = 0;
     const t0 = performance.now();
-    const tick = () => {
-      paint((performance.now() - t0) / 1000);
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return startLoop(() => paint((performance.now() - t0) / 1000));
   }, [
+    startLoop,
     journeyStageId,
     playConceptFocus,
     playAmbientPulse,
@@ -496,7 +533,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       (root.closest(".cube-stage") as HTMLElement | null) ?? root.parentElement;
     if (!stage) return;
 
-    const tick = () => {
+    const frame = () => {
       if (!reducedMotion && autoRotate && !drag.current.active) {
         const ambientBoost = retroSpinRef.current ? 0.092 : 0.028;
         const boost = playAmbientPulse
@@ -513,12 +550,11 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
       rot.current.x += (rot.current.tx - rot.current.x) * 0.07;
       rot.current.y += (rot.current.ty - rot.current.y) * 0.07;
       root.style.transform = `rotateX(${rot.current.x}deg) rotateY(${rot.current.y}deg)`;
-      raf.current = requestAnimationFrame(tick);
     };
-    raf.current = requestAnimationFrame(tick);
+    const stopLoop = startLoop(frame);
 
     if (!interactive) {
-      return () => cancelAnimationFrame(raf.current);
+      return stopLoop;
     }
 
     const onDown = (e: PointerEvent) => {
@@ -583,7 +619,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     stage.addEventListener("keydown", onKey);
 
     return () => {
-      cancelAnimationFrame(raf.current);
+      stopLoop();
       stage.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
@@ -599,6 +635,7 @@ export function useCubeEngine(options: UseCubeEngineOptions = {}): CubeEngineApi
     reorganize,
     tapToReorganize,
     retroSpinActive,
+    startLoop,
   ]);
 
   return {

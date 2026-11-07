@@ -22,8 +22,9 @@
 .jacode-404__orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.45;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  opacity: 0.4;
 }
 
 .jacode-404__orb--a {
